@@ -151,6 +151,9 @@ p {
 /* WordArt: banana gradient fill + hard extrusion + slight tilt */
 .wordart {
   display: inline-block;
+  /* background-clip: text only paints inside the box; pad it so descenders (g, p) keep their fill */
+  padding: 0.1em 0.06em 0.3em;
+  margin: -0.1em -0.06em -0.3em;
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.02em;
