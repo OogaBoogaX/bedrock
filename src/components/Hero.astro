@@ -1,0 +1,473 @@
+---
+import Window from "@/components/Window.astro";
+import { org } from "@/lib/tribe";
+
+const tools = ["✂", "▭", "◫", "✎", "▤", "⌫", "🔍", "A", "╱", "〜", "▭", "◯", "▱", "◭", "●", "▨"];
+const palette = [
+  "#000", "#808080", "#800000", "#808000", "#008000", "#008080", "#000080", "#800080", "#808040", "#004040", "#0080ff", "#004080", "#8000ff", "#804000",
+  "#fff", "#c0c0c0", "#f00", "#ff0", "#0f0", "#0ff", "#00f", "#f0f", "#ffff80", "#00ff80", "#80ffff", "#8080ff", "#ff0080", "#ff8040",
+];
+---
+
+<section class="hero" id="top">
+  <div class="container hero__inner">
+    <p class="hero__kicker">the official homepage of <a href={org.url} rel="noopener">Team Ooga Booga</a></p>
+    <div
+      class="hero__banana"
+      data-hero-banana
+      data-viewport
+      data-kind="banana"
+      data-login={org.login}
+      data-avatar={org.avatar}
+      data-size="256"
+      data-zoom="0.82"
+      data-tilt="0.38"
+      data-spin="1.25"
+      data-drag
+      data-kick
+      data-status-text="🍌 click the banana"
+      role="img"
+      aria-label="A spinning 3D banana wearing the Team Ooga Booga sticker"
+    >
+      <span class="hero__banana-fallback" aria-hidden="true">🍌</span>
+      <span class="hero__bubble" data-bubble aria-hidden="true">BANANA!</span>
+    </div>
+    <h1 class="hero__title"><span class="wordart">gorilla open source</span></h1>
+    <p class="hero__sub">
+      humans are getting dumber. humans are getting more powerful.<br />
+      <span class="blink">this is fine.</span>
+    </p>
+
+    <Window title="evolution.bmp - Paint" icon="🎨" class="paint" pad="0" active>
+      <div class="paint__menu" aria-hidden="true">
+        <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>I</u>mage</span><span><u>O</u>ptions</span><span><u>H</u>elp</span>
+      </div>
+      <div class="paint__work">
+        <div class="paint__tools" aria-hidden="true">
+          {tools.map((t, i) => <span class:list={["paint__tool", { "is-on": i === 3 }]}>{t}</span>)}
+        </div>
+        <figure class="paint__canvas" data-reveal>
+          <img
+            src="/img/evolution.webp"
+            width="1568"
+            height="571"
+            alt="Evolution strip: gorilla, cavemen with rock, fire and spear, a modern human, a human carrying a keyboard, a caveman staring at a phone, and finally a gorilla wearing a VR headset."
+            fetchpriority="high"
+            decoding="async"
+          />
+          <figcaption>fig. 1 — the rise and fall of the software engineer (colorized, 2026)</figcaption>
+        </figure>
+      </div>
+      <div class="paint__palette" aria-hidden="true">
+        <span class="paint__current"><i style="background:#000"></i><i style="background:#ffe135"></i></span>
+        <span class="paint__swatches">{palette.map((c) => <i style={`background:${c}`}></i>)}</span>
+      </div>
+      <div class="paint__status" aria-hidden="true">
+        <span>For Help, click Help Topics on the Help Menu.</span><span data-paint-xy>0, 0</span><span>1568 × 571</span>
+      </div>
+    </Window>
+
+    <div class="hero__gauges" data-gauges>
+      <Window title="intelligence.exe" icon="🧠" class="gauge" pad="0.9rem 1rem">
+        <div class="gauge__row">
+          <span class="gauge__label">human intelligence</span>
+          <span class="gauge__value" data-gauge-value="iq">100%</span>
+        </div>
+        <div class="progress"><div class="progress__bar" data-gauge-bar="iq" style="--value:100%"></div></div>
+        <p class="gauge__note">draining since the first prompt</p>
+      </Window>
+      <Window title="power.exe" icon="⚡" class="gauge" pad="0.9rem 1rem">
+        <div class="gauge__row">
+          <span class="gauge__label">power</span>
+          <span class="gauge__value" data-gauge-value="power">3%</span>
+        </div>
+        <div class="progress progress--banana"><div class="progress__bar" data-gauge-bar="power" style="--value:3%"></div></div>
+        <p class="gauge__note">a caveman with a clanker ships in a week</p>
+      </Window>
+    </div>
+
+    <div class="hero__cta">
+      <a class="btn btn--default btn--banana" href="#tribe">enter the cave ↓</a>
+      <a class="btn" href="/manifesto/">read the manifesto</a>
+      <a class="btn" href={org.url} rel="noopener">GitHub</a>
+      <a class="btn" href="https://x.com/w_s_bitcoin" rel="noopener">listen to a Space</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 7vw, 5rem) var(--section);
+    text-align: center;
+  }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    justify-items: center;
+  }
+  .hero__inner > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .hero__kicker {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #cfcfcf;
+  }
+  .hero__title {
+    font-size: clamp(2.6rem, 9.5vw, 7rem);
+    padding: 0.2em 0.3em;
+    margin-top: -0.35em;
+  }
+  .hero__banana {
+    position: relative;
+    width: clamp(200px, 30vw, 320px);
+    aspect-ratio: 1;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 1;
+  }
+  .hero__banana:active {
+    cursor: grabbing;
+  }
+  .hero__banana-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    place-items: center;
+    font-size: 7rem;
+    line-height: 1;
+    animation: banana-flat 4s linear infinite;
+  }
+  .hero__banana.no-webgl .hero__banana-fallback {
+    display: grid;
+  }
+  @keyframes banana-flat {
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  .hero__bubble {
+    position: absolute;
+    left: 78%;
+    top: 4%;
+    padding: 0.3rem 0.7rem;
+    background: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    box-shadow: 2px 2px 0 var(--ink);
+    transform-origin: 0 100%;
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hero__bubble::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: -9px;
+    width: 10px;
+    height: 10px;
+    background: var(--paper);
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: skewX(-20deg) rotate(45deg);
+  }
+  .hero__bubble.is-on {
+    animation: bubble 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  @keyframes bubble {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    18% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    30% {
+      transform: scale(1);
+    }
+    82% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.8) translateY(-6px);
+      opacity: 0;
+    }
+  }
+  .hero__sub {
+    margin: 0;
+    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+    color: #e8e8e8;
+  }
+  .hero__sub .blink {
+    color: var(--banana);
+    font-weight: 700;
+  }
+
+  .paint {
+    justify-self: stretch;
+    max-width: 960px;
+  }
+  .paint__menu {
+    display: flex;
+    gap: 1rem;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--face-shadow);
+    box-shadow: 0 1px var(--face-lighter);
+  }
+  .paint__work {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 3px;
+    padding: 3px;
+  }
+  .paint__tools {
+    display: grid;
+    grid-template-columns: repeat(2, 24px);
+    gap: 1px;
+    align-content: start;
+    padding: 2px;
+  }
+  .paint__tool {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    box-shadow: var(--bevel-out);
+    background: var(--face);
+  }
+  .paint__tool.is-on {
+    box-shadow: var(--bevel-in);
+    background: var(--face-light);
+  }
+  .paint__canvas {
+    margin: 0;
+    background: var(--ink);
+    box-shadow: var(--field-in);
+    padding: 3px;
+    position: relative;
+  }
+  .paint__canvas img {
+    width: 100%;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1800ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .paint__canvas.is-in img {
+    clip-path: inset(0 0 0 0);
+  }
+  .paint__canvas figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    font-size: 0.72rem;
+    color: #9a9a9a;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 500ms ease 1600ms;
+  }
+  .paint__canvas.is-in figcaption {
+    opacity: 1;
+  }
+  .paint__palette {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 3px 6px;
+  }
+  .paint__current {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    box-shadow: var(--bevel-in);
+    flex: none;
+  }
+  .paint__current i {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--face-shadow);
+  }
+  .paint__current i:first-child {
+    left: 5px;
+    top: 5px;
+    z-index: 1;
+  }
+  .paint__current i:last-child {
+    left: 11px;
+    top: 11px;
+  }
+  .paint__swatches {
+    display: grid;
+    grid-template-columns: repeat(14, 15px);
+    gap: 1px;
+  }
+  .paint__swatches i {
+    width: 15px;
+    height: 15px;
+    box-shadow: var(--bevel-in);
+  }
+  .paint__status {
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+    font-size: 0.75rem;
+    text-align: left;
+  }
+  .paint__status span {
+    padding: 1px 6px;
+    box-shadow: var(--bevel-in);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .paint__status span:first-child {
+    flex: 1;
+  }
+  .paint__status span:nth-child(2) {
+    min-width: 88px;
+    font-family: var(--mono);
+  }
+  @media (max-width: 640px) {
+    .paint__work {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .paint__tools,
+    .paint__status span:not(:first-child) {
+      display: none;
+    }
+    .paint__swatches {
+      grid-template-columns: repeat(14, 1fr);
+      flex: 1;
+    }
+    .paint__swatches i {
+      width: auto;
+      aspect-ratio: 1;
+    }
+    .paint__canvas figcaption {
+      position: static;
+      padding-top: 6px;
+    }
+  }
+
+  .hero__gauges {
+    justify-self: stretch;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: var(--gap);
+    text-align: left;
+  }
+  .gauge__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+  }
+  .gauge__label {
+    font-weight: 700;
+  }
+  .gauge__value {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .gauge__note {
+    margin: 0.5rem 0 0;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+</style>
+
+<script>
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const canvas = document.querySelector<HTMLElement>("[data-reveal]");
+  if (canvas) {
+    const reveal = () => canvas.classList.add("is-in");
+    if (reduced || document.documentElement.classList.contains("booted")) requestAnimationFrame(reveal);
+    else document.addEventListener("ooga:booted", reveal, { once: true });
+    // If the boot screen never fires (already removed), reveal on a short fallback.
+    setTimeout(reveal, 3200);
+
+    const xy = document.querySelector<HTMLElement>("[data-paint-xy]");
+    canvas.addEventListener("pointermove", (e) => {
+      if (!xy) return;
+      const r = canvas.getBoundingClientRect();
+      xy.textContent = `${Math.round(((e.clientX - r.left) / r.width) * 1568)}, ${Math.round(((e.clientY - r.top) / r.height) * 571)}`;
+    });
+  }
+
+  const heroBanana = document.querySelector<HTMLElement>("[data-hero-banana]");
+  const bubble = heroBanana?.querySelector<HTMLElement>("[data-bubble]");
+  if (heroBanana && bubble) {
+    const GRUNTS = ["BANANA!", "OOGA!", "BOOGA!", "nom.", "we eat bananas.", "1 banana = 1 commit", "merge to rock!", "where clanker?"];
+    let last = -1;
+    heroBanana.addEventListener("viewport:kick", () => {
+      let i = Math.floor(Math.random() * GRUNTS.length);
+      if (i === last) i = (i + 1) % GRUNTS.length;
+      last = i;
+      bubble.textContent = GRUNTS[i];
+      bubble.classList.remove("is-on");
+      void bubble.offsetWidth;
+      bubble.classList.add("is-on");
+    });
+  }
+
+  const gauges = document.querySelector<HTMLElement>("[data-gauges]");
+  if (gauges) {
+    const bar = (k: string) => gauges.querySelector<HTMLElement>(`[data-gauge-bar="${k}"]`);
+    const val = (k: string) => gauges.querySelector<HTMLElement>(`[data-gauge-value="${k}"]`);
+
+    const count = (el: HTMLElement | null, from: number, to: number, suffix: string, ms: number) => {
+      if (!el) return;
+      if (reduced) {
+        el.textContent = `${to}${suffix}`;
+        return;
+      }
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / ms);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = `${Math.round(from + (to - from) * eased)}${suffix}`;
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const run = () => {
+      bar("iq")?.style.setProperty("--value", "12%");
+      bar("power")?.style.setProperty("--value", "100%");
+      count(val("iq"), 100, 12, "%", 1400);
+      count(val("power"), 3, 999, "%", 1400);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        setTimeout(run, 250);
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(gauges);
+  }
+</script>

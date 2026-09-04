@@ -1,0 +1,384 @@
+---
+import Window from "@/components/Window.astro";
+import { org, repos } from "@/lib/tribe";
+
+const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
+---
+
+<section class="section" id="method">
+  <div class="container">
+    <div class="section__head">
+      <span class="section__kicker">the method</span>
+      <h2 class="section__title">how a caveman ships software</h2>
+      <p class="section__lede">
+        anyone can participate in building software. the entry fee is your will plus a clanker. you need an idea, and a room
+        that will review you in public.
+      </p>
+    </div>
+
+    <Window title="Gorilla Open Source Setup" icon="💿" class="wizard" pad="0" active>
+      <div class="wizard__body" data-wizard>
+        <aside class="wizard__side" aria-hidden="true">
+          <img src={org.avatar} alt="" width="96" height="96" loading="lazy" />
+          <span class="wizard__brand">ooga booga</span>
+          <span class="wizard__ver">setup v0.1</span>
+        </aside>
+
+        <div class="wizard__pages">
+          <section class="wizard__page is-on" data-page>
+            <h3>Welcome to the Gorilla Open Source Setup Wizard</h3>
+            <p>This wizard will install you into the tribe.</p>
+            <p>Requirements: one idea, one clanker, and the will to be reviewed in public.</p>
+            <p>No degree will be checked. No permission will be asked. Click Next to continue.</p>
+          </section>
+
+          <section class="wizard__page" data-page hidden>
+            <h3>Step 1: Have an idea</h3>
+            <p>A bitcoin tool. A sovereignty tool. Something that should exist and does not.</p>
+            <p>
+              EntropyLab started as one prompt, handed over in the middle of an X Space. There was no repo and no plan. A week
+              later it was a lab.
+            </p>
+          </section>
+
+          <section class="wizard__page" data-page hidden>
+            <h3>Step 2: Grunt at your clanker</h3>
+            <p>We talk to clankers in plain words, like cavemen pointing at a problem. Software comes back.</p>
+            <form class="grunt" data-grunt>
+              <label class="grunt__label" for="grunt-input">your grunt</label>
+              <div class="grunt__row">
+                <input id="grunt-input" class="field grunt__input" type="text" maxlength="80" placeholder="ooga booga make bitcoin thing" autocomplete="off" />
+                <button class="btn btn--default btn--banana" type="submit">grunt</button>
+              </div>
+            </form>
+            <pre class="grunt__out" data-grunt-out aria-live="polite">[clanker] waiting for grunt_</pre>
+          </section>
+
+          <section class="wizard__page" data-page hidden>
+            <h3>Step 3: Get reviewed in public</h3>
+            <p>Your code gets read by engineers and by clankers on frontier models, live on a Space.</p>
+            <p>Nobody gets judged for touching code without an engineering background. Everybody gets reviewed.</p>
+          </section>
+
+          <section class="wizard__page" data-page hidden>
+            <h3>Step 4: Merge to rock</h3>
+            <p>Our main branch is called <code>rock</code>. When your code lands there, it belongs to the tribe.</p>
+            <p>First pull requests happen live. Listeners hop on stage, learn on the spot, and land their first contribution.</p>
+          </section>
+
+          <section class="wizard__page" data-page hidden>
+            <h3>Setup complete</h3>
+            <p>You are now a caveman. Bananas will be provided by your clanker.</p>
+            <div class="wizard__launch">
+              <a class="btn" href={lab.url} rel="noopener">★ star {lab.name}</a>
+              <a class="btn" href="https://x.com/w_s_bitcoin" rel="noopener">listen to the next Space</a>
+              <a class="btn" href={org.url} rel="noopener">open the org</a>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="wizard__foot">
+        <span class="wizard__step" data-wizard-step>Step 1 of 6</span>
+        <div class="wizard__nav">
+          <button class="btn" type="button" data-wiz="back" disabled>&lt; Back</button>
+          <button class="btn btn--default" type="button" data-wiz="next">Next &gt;</button>
+          <button class="btn" type="button" data-wiz="cancel">Cancel</button>
+        </div>
+      </div>
+
+      <div class="msgbox" data-msgbox hidden>
+        <div class="win win--active msgbox__win" role="alertdialog" aria-labelledby="msgbox-title" aria-describedby="msgbox-text">
+          <div class="win__title"><span class="win__icon">⚠</span><span class="win__name" id="msgbox-title">Setup</span></div>
+          <div class="win__body msgbox__body">
+            <p id="msgbox-text">Cancel setup? Cavemen do not cancel.</p>
+            <div class="msgbox__btns">
+              <button class="btn" type="button" data-msgbox-yes>Yes, I am not a caveman</button>
+              <button class="btn btn--default" type="button" data-msgbox-no>No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .wizard {
+    max-width: 760px;
+    margin-inline: auto;
+    position: relative;
+  }
+  .wizard__body {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    min-height: 300px;
+  }
+  .wizard__side {
+    display: grid;
+    align-content: end;
+    justify-items: center;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: linear-gradient(180deg, var(--title-b) 0%, var(--title-a) 100%);
+    color: var(--paper);
+    text-align: center;
+  }
+  .wizard__side img {
+    width: 96px;
+    height: 96px;
+    border: 2px solid var(--paper);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+    margin-bottom: auto;
+    image-rendering: pixelated;
+  }
+  .wizard__brand {
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+  .wizard__ver {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    font-family: var(--mono);
+  }
+  .wizard__pages {
+    padding: 1.25rem 1.5rem;
+    background: var(--paper);
+  }
+  .wizard__page h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.9rem;
+  }
+  .wizard__page p:last-child {
+    margin-bottom: 0;
+  }
+  .wizard__page code {
+    font-family: var(--mono);
+    font-weight: 700;
+    background: var(--face-light);
+    padding: 0 0.3em;
+  }
+  .wizard__page[hidden] {
+    display: none;
+  }
+  .wizard__page.is-on {
+    animation: page-in 220ms ease;
+  }
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      transform: translateX(6px);
+    }
+  }
+  .wizard__launch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .wizard__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--face-shadow);
+    box-shadow: inset 0 1px var(--face-lighter);
+  }
+  .wizard__step {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .wizard__nav {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .grunt {
+    margin: 0.75rem 0;
+  }
+  .grunt__label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+  .grunt__row {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .grunt__input {
+    flex: 1;
+    min-width: 0;
+  }
+  .grunt__out {
+    margin: 0;
+    background: var(--ink);
+    color: var(--lime);
+    box-shadow: var(--field-in);
+    padding: 0.6rem 0.75rem;
+    font: 0.8rem/1.5 var(--mono);
+    min-height: 8.5em;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .msgbox {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 2;
+  }
+  .msgbox[hidden] {
+    display: none;
+  }
+  .msgbox__win {
+    width: min(90%, 360px);
+    animation: page-in 160ms ease;
+  }
+  .msgbox__body {
+    padding: 1rem;
+  }
+  .msgbox__btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.4rem;
+  }
+
+  @media (max-width: 600px) {
+    .wizard__body {
+      grid-template-columns: 1fr;
+    }
+    .wizard__side {
+      grid-auto-flow: column;
+      align-items: center;
+      justify-content: start;
+      padding: 0.6rem 0.9rem;
+      text-align: left;
+    }
+    .wizard__side img {
+      width: 40px;
+      height: 40px;
+      margin: 0;
+    }
+    .wizard__ver {
+      display: none;
+    }
+    .wizard__foot {
+      justify-content: center;
+    }
+    .msgbox__btns {
+      flex-wrap: wrap;
+    }
+  }
+</style>
+
+<script>
+  import { hash } from "@/lib/hash";
+  import { sleep } from "@/lib/sleep";
+
+  const wizard = document.querySelector<HTMLElement>("[data-wizard]")?.closest<HTMLElement>(".wizard");
+  if (wizard) {
+    const pages = [...wizard.querySelectorAll<HTMLElement>("[data-page]")];
+    const step = wizard.querySelector<HTMLElement>("[data-wizard-step]");
+    const back = wizard.querySelector<HTMLButtonElement>('[data-wiz="back"]');
+    const next = wizard.querySelector<HTMLButtonElement>('[data-wiz="next"]');
+    const cancel = wizard.querySelector<HTMLButtonElement>('[data-wiz="cancel"]');
+    const msgbox = wizard.querySelector<HTMLElement>("[data-msgbox]");
+    let index = 0;
+
+    const show = (i: number) => {
+      index = Math.max(0, Math.min(pages.length - 1, i));
+      pages.forEach((p, n) => {
+        p.hidden = n !== index;
+        p.classList.toggle("is-on", n === index);
+      });
+      if (step) step.textContent = `Step ${index + 1} of ${pages.length}`;
+      if (back) back.disabled = index === 0;
+      if (next) next.textContent = index === pages.length - 1 ? "Finish" : "Next >";
+    };
+
+    back?.addEventListener("click", () => show(index - 1));
+    next?.addEventListener("click", () => {
+      if (index === pages.length - 1) {
+        show(0);
+        wizard.scrollIntoView({ block: "nearest" });
+        return;
+      }
+      show(index + 1);
+    });
+    cancel?.addEventListener("click", () => {
+      if (!msgbox) return;
+      msgbox.hidden = false;
+      msgbox.querySelector<HTMLButtonElement>("[data-msgbox-no]")?.focus();
+    });
+    msgbox?.querySelector("[data-msgbox-no]")?.addEventListener("click", () => (msgbox.hidden = true));
+    msgbox?.querySelector("[data-msgbox-yes]")?.addEventListener("click", () => {
+      msgbox.hidden = true;
+      show(0);
+      const name = wizard.querySelector<HTMLElement>(".win__name");
+      if (!name) return;
+      const original = name.textContent;
+      name.textContent = "cancel failed. you are still a caveman.";
+      setTimeout(() => (name.textContent = original), 2200);
+    });
+    wizard.addEventListener("keydown", (e) => {
+      if ((e.target as HTMLElement).tagName === "INPUT") return;
+      if (e.key === "ArrowRight") next?.click();
+      if (e.key === "ArrowLeft") back?.click();
+      if (e.key === "Escape" && msgbox && !msgbox.hidden) msgbox.hidden = true;
+    });
+
+    // grunt translator
+    const form = wizard.querySelector<HTMLFormElement>("[data-grunt]");
+    const input = wizard.querySelector<HTMLInputElement>(".grunt__input");
+    const out = wizard.querySelector<HTMLElement>("[data-grunt-out]");
+    const STOP: Record<string, true> = {
+      ooga: true, booga: true, make: true, build: true, a: true, an: true, the: true, me: true, my: true, please: true,
+      want: true, need: true, i: true, we: true, to: true, for: true, of: true, with: true, and: true, thing: true,
+      some: true, it: true, that: true, this: true, new: true, app: true,
+    };
+    const FLAVOR = [
+      "[clanker] no tests. only vibes.",
+      "[clanker] also rewrote your README. you are welcome.",
+      "[clanker] added 14,000 lines. all of them necessary.",
+      "[clanker] main branch is called rock. adjusting worldview.",
+      "[clanker] found 3 bugs, introduced 2. net positive.",
+      "[clanker] question: is this air-gapped? asking for a friend.",
+    ];
+    let run = 0;
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!input || !out) return;
+      const grunt = input.value.trim() || "ooga booga";
+      const words = grunt
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .split(/\s+/)
+        .filter((w) => w && !STOP[w])
+        .slice(0, 3);
+      const seed = hash(grunt);
+      const slug = words.length ? words.join("-") : "thing";
+      const lines = [
+        `> ${grunt}`,
+        `[clanker] grunt parsed: ${words.length ? words.join(" + ") : "pure grunt"}`,
+        `[clanker] cooking ${"█".repeat(6 + (seed % 5))}${"░".repeat(4 - (seed % 5) + 4)}`,
+        `[clanker] wrote ${slug}.html (1 file, 0 deps, ${90 + (seed % 10)}% vibes)`,
+        FLAVOR[seed % FLAVOR.length],
+        "[tribe]   review tonight on the Space. bring bananas.",
+        "[rock]    merged ✓",
+      ];
+      const id = ++run;
+      out.textContent = "";
+      for (const line of lines) {
+        if (id !== run) return;
+        out.textContent += (out.textContent ? "\n" : "") + line;
+        await sleep(260 + (seed % 120));
+      }
+      input.select();
+    });
+  }
+</script>

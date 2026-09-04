@@ -1,0 +1,77 @@
+---
+import { friends, avatarUrl } from "@/lib/tribe";
+---
+
+{
+  friends.length > 0 && (
+    <div class="friends">
+      <div class="container">
+        <p class="friends__label">
+          friends of the tribe: {friends.length} more cavemen pushed to a cave without joining the org (yet)
+        </p>
+      </div>
+      <div class="marquee friends__marquee" style="--marquee-speed: 60s; --marquee-gap: 0.9rem">
+        <div class="marquee__track">
+          {[0, 1].map((copy) =>
+            friends.map((f) => (
+              <a class="friend" href={f.url} rel="noopener" aria-hidden={copy === 1 || undefined} tabindex={copy === 1 ? -1 : undefined}>
+                <img src={avatarUrl(f, 64)} alt="" width="32" height="32" loading="lazy" decoding="async" />
+                <span>{f.login}</span>
+                <span class="friend__bananas">🍌{f.bananas}</span>
+              </a>
+            )),
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .friends {
+    padding-bottom: var(--section);
+    margin-top: calc(var(--section) * -0.5);
+  }
+  .friends__label {
+    text-align: center;
+    color: #bdbdbd;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .friends__marquee {
+    padding: 0.5rem 0;
+  }
+  .friend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.7rem 0.3rem 0.3rem;
+    background: var(--face);
+    color: var(--ink);
+    box-shadow: var(--bevel-out);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: transform 120ms ease;
+  }
+  .friend:hover,
+  .friend:visited {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .friend:hover {
+    transform: translateY(-2px);
+  }
+  .friend img {
+    width: 32px;
+    height: 32px;
+    box-shadow: var(--field-in);
+    image-rendering: pixelated;
+  }
+  .friend__bananas {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: #3a3a3a;
+  }
+</style>

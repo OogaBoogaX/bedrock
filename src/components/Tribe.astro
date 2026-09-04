@@ -1,0 +1,151 @@
+---
+import Window from "@/components/Window.astro";
+import { members, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
+import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
+
+const kinds = assignKinds(members.map((m) => m.login));
+const max = Math.max(1, ...members.map((m) => m.bananas));
+---
+
+<section class="section" id="tribe">
+  <div class="container">
+    <div class="section__head">
+      <span class="section__kicker">the roster</span>
+      <h2 class="section__title">the tribe</h2>
+      <p class="section__lede">
+        {members.length} cavemen, one org, zero degrees checked. every character is random on purpose. click one to open
+        their file.
+      </p>
+    </div>
+
+    <div class="roster" data-roster>
+      {
+        members.map((m) => {
+          const rank = rankOf(m.bananas);
+          const kind = kinds.get(m.login) ?? "cube";
+          return (
+            <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`}>
+              <Window as="article" title={`${m.login}.exe`} iconSrc={avatarUrl(m, 32)} pad="0.6rem" controls="decorative">
+                <div
+                  class="card__view"
+                  data-viewport
+                  data-login={m.login}
+                  data-kind={kind}
+                  data-avatar={m.avatar}
+                  data-model={MODELS[m.login]?.url}
+                  title={MODELS[m.login]?.label ?? KIND_LABEL[kind]}
+                >
+                  <img class="card__fallback" src={avatarUrl(m, 256)} alt="" width="256" height="256" loading="lazy" decoding="async" />
+                </div>
+                <div class="card__meta">
+                  <strong class="card__name">{displayName(m)}</strong>
+                  <span class="card__login">@{m.login}</span>
+                  <span class="card__rank">{rank.name}</span>
+                  <div class="progress progress--banana card__bar" title={`${m.bananas} bananas`}>
+                    <div class="progress__bar" style={`--value:${Math.max(4, Math.round((m.bananas / max) * 100))}%`} />
+                  </div>
+                  <span class="card__bananas">🍌 {m.bananas.toLocaleString("en-US")}</span>
+                </div>
+              </Window>
+            </a>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .roster {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(215px, 100%), 1fr));
+    gap: var(--gap);
+  }
+  .card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 160ms ease;
+  }
+  .card:hover,
+  .card:focus-visible {
+    text-decoration: none;
+    transform: translate(-2px, -2px);
+  }
+  .card:hover :global(.win),
+  .card:focus-visible :global(.win) {
+    box-shadow: var(--bevel-out), 6px 6px 0 rgba(0, 0, 0, 0.7);
+  }
+  .card :global(.win.is-max) {
+    grid-column: 1 / -1;
+  }
+  .card__view {
+    position: relative;
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 42%, #3a3a3a, #050505 74%);
+    box-shadow: var(--field-in);
+    overflow: hidden;
+  }
+  .card__fallback {
+    position: absolute;
+    inset: 12%;
+    width: 76%;
+    height: 76%;
+    opacity: 0.25;
+    filter: grayscale(1);
+    transition: opacity 300ms ease;
+  }
+  .card__view.is-ready .card__fallback {
+    opacity: 0;
+  }
+  .card__view.no-webgl .card__fallback {
+    opacity: 1;
+    filter: none;
+    animation: spin-flat 6s linear infinite;
+  }
+  @keyframes spin-flat {
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  .card__meta {
+    display: grid;
+    gap: 0.15rem;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+  }
+  .card__name {
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card__login {
+    font-family: var(--mono);
+    color: #3a3a3a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .card__rank {
+    display: inline-block;
+    justify-self: start;
+    margin-top: 0.25rem;
+    padding: 0 0.4rem;
+    background: var(--ink);
+    color: var(--banana);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .card__bar {
+    height: 12px;
+    padding: 2px;
+    margin-top: 0.4rem;
+  }
+  .card__bananas {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+</style>

@@ -1,0 +1,172 @@
+---
+import Window from "@/components/Window.astro";
+import { repos, formatDate } from "@/lib/tribe";
+---
+
+<section class="section" id="caves">
+  <div class="container">
+    <div class="section__head">
+      <span class="section__kicker">the caves</span>
+      <h2 class="section__title">every cave is a repository</h2>
+      <p class="section__lede">
+        EntropyLab is the first cave: a bitcoin key lab that never generates randomness for you. bring your own entropy.
+        the next cave is whatever you grunt into existence.
+      </p>
+    </div>
+
+    <div class="caves">
+      {
+        repos.map((r) => (
+          <Window title={`C:\\TRIBE\\${r.name}`} icon="📁" class="cave" pad="0">
+            <div class="cave__bar" aria-hidden="true">
+              <span>Address</span>
+              <span class="cave__addr field">C:\TRIBE\{r.name}\{r.defaultBranch}</span>
+            </div>
+            <div class="cave__body">
+              <div class="cave__files" aria-hidden="true">
+                <span>📄 index.html</span>
+                <span>📄 README.md</span>
+                <span>📁 .github</span>
+                <span>🍌 bananas.log</span>
+              </div>
+              <div class="cave__info">
+                <h3 class="cave__name">{r.name}</h3>
+                <p class="cave__desc">{r.description}</p>
+                <dl class="cave__stats">
+                  <div>
+                    <dt>stars</dt>
+                    <dd>★ {r.stars}</dd>
+                  </div>
+                  <div>
+                    <dt>forks</dt>
+                    <dd>{r.forks}</dd>
+                  </div>
+                  <div>
+                    <dt>open issues</dt>
+                    <dd>{r.openIssues}</dd>
+                  </div>
+                  <div>
+                    <dt>branch</dt>
+                    <dd>{r.defaultBranch}</dd>
+                  </div>
+                  <div>
+                    <dt>language</dt>
+                    <dd>{r.language ?? "grunt"}</dd>
+                  </div>
+                  <div>
+                    <dt>last push</dt>
+                    <dd>{formatDate(r.pushedAt)}</dd>
+                  </div>
+                </dl>
+                <div class="cave__actions">
+                  {r.homepage && (
+                    <a class="btn btn--default btn--banana" href={r.homepage} rel="noopener">
+                      launch
+                    </a>
+                  )}
+                  <a class="btn" href={r.url} rel="noopener">
+                    open on GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Window>
+        ))
+      }
+
+      <Window title="C:\TRIBE\your-cave" icon="📁" class="cave cave--new" pad="1.25rem">
+        <h3 class="cave__name">your cave here</h3>
+        <p class="cave__desc">
+          something for bitcoin, sovereignty, or AI that should exist. one prompt is a valid starting point. that is how the
+          first cave started.
+        </p>
+        <div class="cave__actions">
+          <a class="btn btn--default" href="#method">start a grunt</a>
+        </div>
+      </Window>
+    </div>
+  </div>
+</section>
+
+<style>
+  .caves {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+    gap: var(--gap);
+    align-items: start;
+  }
+  .cave__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--face-shadow);
+    box-shadow: 0 1px var(--face-lighter);
+  }
+  .cave__addr {
+    flex: 1;
+    font-family: var(--mono);
+    padding: 2px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cave__body {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+  }
+  .cave__files {
+    display: grid;
+    align-content: start;
+    gap: 0.4rem;
+    padding: 0.9rem;
+    font-size: 0.8rem;
+    background: var(--paper);
+    box-shadow: var(--field-in);
+    white-space: nowrap;
+  }
+  .cave__info {
+    padding: 1rem 1.25rem;
+  }
+  .cave__name {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+  .cave__desc {
+    font-size: 0.9rem;
+    color: #2a2a2a;
+  }
+  .cave__stats {
+    margin: 0 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    gap: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  .cave__stats dt {
+    color: #3a3a3a;
+  }
+  .cave__stats dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .cave__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .cave--new {
+    background-image: repeating-linear-gradient(135deg, transparent 0 14px, rgba(0, 0, 0, 0.05) 14px 28px);
+  }
+  @media (max-width: 520px) {
+    .cave__body {
+      grid-template-columns: 1fr;
+    }
+    .cave__files {
+      display: none;
+    }
+  }
+</style>

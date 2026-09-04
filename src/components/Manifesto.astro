@@ -1,0 +1,167 @@
+---
+import Window from "@/components/Window.astro";
+import { manifesto } from "@/lib/manifesto";
+---
+
+<section class="section" id="manifesto">
+  <div class="container read">
+    <div class="section__head">
+      <span class="section__kicker">required reading</span>
+      <h2 class="section__title">the manifesto</h2>
+      <p class="section__lede">
+        how one prompt on a Space became EntropyLab, a tribe of cavemen with clankers, and a new way to build open source.
+        the long version, in plain words. {manifesto.minutes} minutes. zero degrees.
+      </p>
+    </div>
+
+    <Window title="Welcome to Team Ooga Booga" icon="🦍" class="welcome" pad="0" active>
+      <div class="welcome__grid">
+        <div class="welcome__banner" aria-hidden="true">
+          <span class="welcome__big">Welcome</span>
+          <span class="welcome__small">to gorilla open source</span>
+          <span class="welcome__gorilla">🦍</span>
+        </div>
+        <div class="welcome__main">
+          <p class="welcome__tip">Did you know...</p>
+          <p class="welcome__excerpt">{manifesto.excerpt}</p>
+          <h3 class="welcome__title">
+            <a href={manifesto.path}>{manifesto.title}: {manifesto.subtitle}</a>
+          </h3>
+          <p class="welcome__meta">
+            by @{manifesto.authorHandle} · {manifesto.words.toLocaleString("en-US")} words · {manifesto.minutes} min · reviewed by clankers
+          </p>
+          <ol class="welcome__toc">
+            {
+              manifesto.headings.map((h) => (
+                <li>
+                  <a href={`${manifesto.path}#${h.slug}`}>{h.text.toLowerCase()}</a>
+                </li>
+              ))
+            }
+          </ol>
+          <div class="welcome__actions">
+            <a class="btn btn--default btn--banana" href={manifesto.path}>read the manifesto</a>
+            <button class="btn" type="button" data-win="close">later</button>
+          </div>
+        </div>
+      </div>
+      <label class="check welcome__check"><input type="checkbox" checked disabled /> show this screen each time the tribe starts</label>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .read {
+    max-width: 820px;
+  }
+  .welcome__grid {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    margin: 3px;
+    box-shadow: var(--field-in);
+    background: var(--paper);
+  }
+  .welcome__banner {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+    padding: 1.25rem 0.9rem;
+    background: linear-gradient(180deg, var(--title-a) 0%, #05052e 60%, var(--ink) 100%);
+    color: var(--paper);
+    overflow: hidden;
+  }
+  .welcome__big {
+    font: italic 700 2.1rem/1 "Times New Roman", Times, serif;
+    letter-spacing: -0.02em;
+    text-shadow: 2px 2px 0 var(--ink);
+  }
+  .welcome__small {
+    font-size: 0.8rem;
+    color: #cfd6ff;
+  }
+  .welcome__gorilla {
+    margin-top: 1.5rem;
+    font-size: 4rem;
+    line-height: 1;
+    filter: drop-shadow(3px 3px 0 var(--ink));
+    justify-self: center;
+  }
+  .welcome__main {
+    padding: 1.1rem 1.25rem 1.25rem;
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+  }
+  .welcome__tip {
+    margin: 0;
+    font-weight: 700;
+    color: var(--title-a);
+  }
+  .welcome__excerpt {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    background: #ffffe1;
+    box-shadow: inset 0 0 0 1px var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .welcome__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    line-height: 1.25;
+  }
+  .welcome__title a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--banana-deep);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+  }
+  .welcome__title a:hover {
+    background: var(--banana);
+  }
+  .welcome__meta {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: #3a3a3a;
+  }
+  .welcome__toc {
+    margin: 0.25rem 0 0;
+    padding-left: 1.4rem;
+    columns: 2;
+    column-gap: 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  .welcome__toc li {
+    break-inside: avoid;
+  }
+  .welcome__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .welcome__check {
+    padding: 0.6rem 0.75rem 0.4rem;
+  }
+  @media (max-width: 560px) {
+    .welcome__grid {
+      grid-template-columns: 1fr;
+    }
+    .welcome__banner {
+      grid-auto-flow: column;
+      align-items: center;
+      justify-content: start;
+      padding: 0.75rem 1rem;
+    }
+    .welcome__gorilla {
+      margin: 0 0 0 auto;
+      font-size: 2.2rem;
+    }
+    .welcome__toc {
+      columns: 1;
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import Window from "@/components/Window.astro";
+import { org, repos } from "@/lib/tribe";
+
+const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
+const shareText = encodeURIComponent("ooga booga. I visited the tribe and now I want a clanker. we eat bananas. we make code. we give code to tribe.");
+const guestbook = `https://x.com/intent/post?text=${shareText}&url=${encodeURIComponent(org.url)}`;
+---
+
+<section class="section" id="join">
+  <div class="container join">
+    <div class="section__head">
+      <span class="section__kicker">membership</span>
+      <h2 class="section__title">join the tribe</h2>
+    </div>
+
+    <Window title="join_tribe.txt - Notepad" icon="📝" class="notepad" pad="0">
+      <div class="notepad__menu" aria-hidden="true">
+        <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>S</u>earch</span><span><u>H</u>elp</span>
+      </div>
+      <pre class="notepad__text">HOW TO JOIN TEAM OOGA BOOGA
+===========================
+
+1. listen to a Space. they happen almost nightly.
+2. grab the mic. say your idea out loud.
+3. grunt at your clanker. push to a cave.
+4. get reviewed in public. get merged to rock.
+
+entry fee ........ your will + a clanker
+application ...... none
+interview ........ none
+degree ........... none
+gatekeeping ...... none
+
+we are not the smartest group in bitcoin.
+we are the loudest one that ships.
+
+ooga booga.</pre>
+      <div class="notepad__actions">
+        <a class="btn btn--default btn--banana" href="https://x.com/w_s_bitcoin" rel="noopener">listen to a Space</a>
+        <a class="btn" href={`${lab.url}/fork`} rel="noopener">fork {lab.name}</a>
+        <a class="btn" href={guestbook} rel="noopener" data-status-text="Opens X with a pre-written grunt">sign our guestbook</a>
+      </div>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .join {
+    max-width: 720px;
+  }
+  .notepad__menu {
+    display: flex;
+    gap: 1rem;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--face-shadow);
+    box-shadow: 0 1px var(--face-lighter);
+  }
+  .notepad__text {
+    margin: 3px;
+    padding: 1rem 1.25rem;
+    background: var(--paper);
+    box-shadow: var(--field-in);
+    font: 0.95rem/1.6 var(--font);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .notepad__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+</style>

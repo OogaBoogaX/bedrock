@@ -1,0 +1,53 @@
+---
+import Base from "@/layouts/Base.astro";
+import Boot from "@/components/Boot.astro";
+import Marquee from "@/components/Marquee.astro";
+import Hero from "@/components/Hero.astro";
+import Manifesto from "@/components/Manifesto.astro";
+import Plan from "@/components/Plan.astro";
+import Wizard from "@/components/Wizard.astro";
+import Tribe from "@/components/Tribe.astro";
+import Friends from "@/components/Friends.astro";
+import Caves from "@/components/Caves.astro";
+import Join from "@/components/Join.astro";
+import Footer from "@/components/Footer.astro";
+import { members, repos } from "@/lib/tribe";
+import { manifesto } from "@/lib/manifesto";
+
+const stars = repos.reduce((n, r) => n + r.stars, 0);
+const ticker = [
+  "welcome to the official homepage of Team Ooga Booga",
+  `${members.length} cavemen · ${repos.length} cave · ${stars} stars`,
+  `new: the manifesto is out. ${manifesto.minutes} minutes, zero degrees`,
+  "we eat bananas. we make code. we give code to tribe.",
+  "prompting is grunting",
+  "main branch is called rock",
+  "best viewed at 800×600 in Netscape Navigator",
+  "meetings on X Spaces, almost nightly, anyone can grab the mic",
+  "bring your own entropy",
+];
+---
+
+<Base
+  title="Team Ooga Booga — gorilla open source"
+  description="Humans are getting dumber and more powerful at the same time. We eat bananas. We make code. We give code to tribe. The official homepage of Team Ooga Booga, builders of EntropyLab."
+>
+  <Boot />
+  <Marquee items={ticker} />
+  <main>
+    <Hero />
+    <Manifesto />
+    <Plan />
+    <Wizard />
+    <Tribe />
+    <Friends />
+    <Caves />
+    <Join />
+  </main>
+  <Footer />
+
+  <script>
+    import { mountViewports } from "@/lib/viewports";
+    mountViewports(document);
+  </script>
+</Base>

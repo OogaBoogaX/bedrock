@@ -1,0 +1,377 @@
+---
+import Window from "@/components/Window.astro";
+import { members, friends, repos, totalBananas } from "@/lib/tribe";
+
+const stars = repos.reduce((n, r) => n + r.stars, 0);
+const forks = repos.reduce((n, r) => n + r.forks, 0);
+---
+
+<section class="section plan" id="plan">
+  <div class="container">
+    <div class="section__head">
+      <span class="section__kicker">the whole business plan</span>
+      <h2 class="section__title">three sentences. zero degrees.</h2>
+    </div>
+
+    <div class="plan__grid">
+      <div class="plan__col">
+        <h3 class="plan__line" data-type="we eat bananas.">we eat bananas.</h3>
+        <Window title="bananas.exe" icon="🍌" pad="0.75rem">
+          <div class="panel banana" data-banana>
+            <svg class="banana__svg" viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <linearGradient id="bananaFill" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#fff3a0" />
+                  <stop offset="0.5" stop-color="#ffe135" />
+                  <stop offset="1" stop-color="#d9a900" />
+                </linearGradient>
+              </defs>
+              <g class="banana__fruit">
+                <path
+                  d="M38 44c-6 40 8 86 44 110 24 16 60 20 84 6 6-3 8-10 2-12-8-3-16-1-30-5-36-10-60-40-70-84-2-9-4-14-9-20-8-8-19-6-21 5z"
+                  fill="url(#bananaFill)"
+                  stroke="#3a2a00"
+                  stroke-width="3"
+                  stroke-linejoin="round"
+                />
+                <path d="M40 46c-2 34 12 74 44 96" fill="none" stroke="#b58a00" stroke-width="3" opacity=".6" />
+                <path d="M36 38l-6-12c-1-3 2-5 5-3l8 8z" fill="#5a3a00" />
+                <path d="M160 150c8 2 12 4 10 8-2 2-8 2-14 0z" fill="#5a3a00" />
+                <g class="banana__bites">
+                  <circle cx="150" cy="150" r="17" />
+                  <circle cx="112" cy="134" r="18" />
+                  <circle cx="72" cy="100" r="19" />
+                </g>
+              </g>
+              <g class="banana__peel">
+                <path d="M60 172c20-30 40-30 60-8 6 8 18 8 24 0-14 30-40 36-58 22-8 10-20 8-26-14z" fill="#e6c200" stroke="#3a2a00" stroke-width="3" stroke-linejoin="round" />
+                <path d="M100 100c-10 30-30 60-40 72M100 100c10 28 30 52 44 64" fill="none" stroke="#3a2a00" stroke-width="3" stroke-linecap="round" />
+                <path d="M88 96c-14-6-26 6-30 24 12-6 24-6 30-24z" fill="#ffe135" stroke="#3a2a00" stroke-width="3" />
+                <path d="M112 96c14-6 26 6 30 24-12-6-24-6-30-24z" fill="#ffe135" stroke="#3a2a00" stroke-width="3" />
+              </g>
+            </svg>
+            <p class="banana__caption" data-banana-caption>click to eat</p>
+            <button class="btn btn--banana banana__more" type="button" data-banana-more>more bananas</button>
+          </div>
+          <dl class="stats">
+            <div><dt>bananas eaten by the tribe</dt><dd data-status-text="1 banana = 1 commit to rock">{totalBananas.toLocaleString("en-US")}</dd></div>
+            <div><dt>eaten by you</dt><dd data-banana-count>0</dd></div>
+          </dl>
+          <p class="note">bananas are tokens. clankers run on them. we feed them in public so anyone can see where the bananas go.</p>
+        </Window>
+      </div>
+
+      <div class="plan__col">
+        <h3 class="plan__line" data-type="we make code.">we make code.</h3>
+        <Window title="MS-DOS Prompt - clanker" icon="▮" pad="0.75rem">
+          <div class="term" data-term>
+            <pre class="term__out" data-term-out aria-live="polite"></pre>
+            <span class="term__cursor" aria-hidden="true">_</span>
+            <noscript><pre class="term__out">C:\TRIBE&gt; ooga booga make bitcoin tool
+[clanker] grunt received. cooking...
+[clanker] wrote entropylab.html (1 file, 0 deps, 100% vibes)
+C:\TRIBE&gt; git push origin rock
+[rock] merged. tribe fed.</pre></noscript>
+          </div>
+          <div class="term__bar">
+            <button class="btn" type="button" data-term-replay>run again</button>
+            <span class="note">prompting is grunting. a caveman can build.</span>
+          </div>
+        </Window>
+      </div>
+
+      <div class="plan__col">
+        <h3 class="plan__line" data-type="we give code to tribe.">we give code to tribe.</h3>
+        <Window title="Tribe Properties" icon="🦍" pad="0.75rem">
+          <fieldset class="open">
+            <legend>everything in the open</legend>
+            <label class="check"><input type="checkbox" checked disabled /> meetings, live on X Spaces, almost nightly</label>
+            <label class="check"><input type="checkbox" checked disabled /> prompts, readable by anyone</label>
+            <label class="check"><input type="checkbox" checked disabled /> token spend, visible per contributor</label>
+            <label class="check"><input type="checkbox" checked disabled /> code review by engineers and clankers, in public</label>
+            <label class="check"><input type="checkbox" checked disabled /> no gatekeeping. no permission. no degree.</label>
+          </fieldset>
+          <dl class="stats stats--grid">
+            <div><dt>cavemen</dt><dd>{members.length}</dd></div>
+            <div><dt>friends</dt><dd>{friends.length}</dd></div>
+            <div><dt>caves</dt><dd>{repos.length}</dd></div>
+            <div><dt>stars</dt><dd>{stars}</dd></div>
+            <div><dt>forks</dt><dd>{forks}</dd></div>
+            <div><dt>branch</dt><dd>rock</dd></div>
+          </dl>
+        </Window>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .plan__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
+    gap: var(--gap);
+    align-items: start;
+  }
+  .plan__col {
+    display: grid;
+    gap: 0.9rem;
+  }
+  .plan__line {
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    color: var(--banana);
+    text-shadow: 2px 2px 0 var(--banana-shadow);
+    min-height: 1.2em;
+  }
+  .plan__line.is-typing::after {
+    content: "▌";
+    animation: blink 700ms steps(2, start) infinite;
+    color: var(--paper);
+  }
+
+  .banana {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .banana__svg {
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    transition: transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .banana:hover .banana__svg {
+    transform: rotate(-6deg) scale(1.04);
+  }
+  .banana.is-chomp .banana__svg {
+    animation: chomp 260ms ease;
+  }
+  @keyframes chomp {
+    30% {
+      transform: scale(0.92) rotate(4deg);
+    }
+  }
+  .banana__bites circle {
+    fill: var(--ink);
+    stroke: #3a2a00;
+    stroke-width: 3;
+    opacity: 0;
+    transform-origin: center;
+    transform: scale(0.6);
+    transition: opacity 120ms ease, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .banana[data-bites="1"] .banana__bites circle:nth-child(1),
+  .banana[data-bites="2"] .banana__bites circle:nth-child(-n + 2),
+  .banana[data-bites="3"] .banana__bites circle {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .banana__peel {
+    display: none;
+  }
+  .banana.is-gone .banana__fruit {
+    display: none;
+  }
+  .banana.is-gone .banana__peel {
+    display: block;
+  }
+  .banana__caption {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #bdbdbd;
+  }
+  .banana__more {
+    display: none;
+    margin-top: 0.5rem;
+  }
+  .banana.is-gone .banana__more {
+    display: inline-flex;
+  }
+
+  .stats {
+    margin: 0.75rem 0 0;
+    display: grid;
+    gap: 0.25rem;
+  }
+  .stats div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px dotted var(--face-shadow);
+    padding-bottom: 0.2rem;
+  }
+  .stats dt {
+    color: #3a3a3a;
+  }
+  .stats dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  .stats--grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+  }
+  .note {
+    margin: 0.75rem 0 0;
+    font-size: 0.85rem;
+    color: #3a3a3a;
+  }
+
+  .term {
+    position: relative;
+    background: var(--ink);
+    color: var(--lime);
+    box-shadow: var(--field-in);
+    padding: 0.75rem;
+    min-height: 11.5em;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .term__out {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font: inherit;
+  }
+  .term__cursor {
+    animation: blink 800ms steps(2, start) infinite;
+  }
+  .term__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  .term__bar .note {
+    margin: 0;
+  }
+
+  .open {
+    margin: 0;
+    padding: 0.5rem 0.75rem 0.75rem;
+    border: 0;
+    box-shadow: inset 1px 1px var(--face-shadow), inset -1px -1px var(--face-lighter), inset 2px 2px var(--face-lighter),
+      inset -2px -2px var(--face-shadow);
+    display: grid;
+    gap: 0.35rem;
+  }
+  .open legend {
+    padding: 0 0.3rem;
+    font-weight: 700;
+  }
+</style>
+
+<script>
+  import { sleep } from "@/lib/sleep";
+
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // typewriter headings
+  const lines = document.querySelectorAll<HTMLElement>("[data-type]");
+  if (!reduced && lines.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          io.unobserve(entry.target);
+          const el = entry.target as HTMLElement;
+          const text = el.dataset.type ?? "";
+          el.textContent = "";
+          el.classList.add("is-typing");
+          let i = 0;
+          const tick = () => {
+            el.textContent = text.slice(0, ++i);
+            if (i < text.length) setTimeout(tick, 45 + Math.random() * 60);
+            else setTimeout(() => el.classList.remove("is-typing"), 1200);
+          };
+          setTimeout(tick, 200);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    lines.forEach((l) => io.observe(l));
+  }
+
+  // banana
+  const banana = document.querySelector<HTMLElement>("[data-banana]");
+  if (banana) {
+    const caption = banana.querySelector<HTMLElement>("[data-banana-caption]");
+    const counter = document.querySelector<HTMLElement>("[data-banana-count]");
+    const more = banana.querySelector<HTMLButtonElement>("[data-banana-more]");
+    const captions = ["nom.", "nom nom.", "banana gone. tribe fed."];
+    let bites = 0;
+    let eaten = 0;
+
+    banana.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("[data-banana-more]")) {
+        bites = 0;
+        banana.dataset.bites = "0";
+        banana.classList.remove("is-gone");
+        if (caption) caption.textContent = "click to eat";
+        return;
+      }
+      if (bites >= 3) return;
+      bites++;
+      banana.dataset.bites = String(bites);
+      banana.classList.remove("is-chomp");
+      void banana.offsetWidth;
+      banana.classList.add("is-chomp");
+      if (caption) caption.textContent = captions[bites - 1];
+      if (bites === 3) {
+        eaten++;
+        if (counter) counter.textContent = String(eaten);
+        setTimeout(() => banana.classList.add("is-gone"), 260);
+      }
+    });
+    more?.addEventListener("click", (e) => e.stopPropagation());
+  }
+
+  // terminal
+  const term = document.querySelector<HTMLElement>("[data-term]");
+  const out = term?.querySelector<HTMLElement>("[data-term-out]");
+  if (term && out) {
+    const script: Array<[string, number]> = [
+      ["C:\\TRIBE> ", 0],
+      ["ooga booga make bitcoin tool", 55],
+      ["\n[clanker] grunt received. cooking", 0],
+      ["...", 260],
+      ["\n[clanker] wrote entropylab.html (1 file, 0 deps, 100% vibes)", 0],
+      ["\nC:\\TRIBE> ", 0],
+      ["git push origin rock", 55],
+      ["\n[rock] merged. tribe fed.", 0],
+    ];
+    let run = 0;
+
+    const play = async () => {
+      const id = ++run;
+      out.textContent = "";
+      for (const [chunk, perChar] of script) {
+        if (id !== run) return;
+        if (!perChar || reduced) {
+          out.textContent += chunk;
+          await sleep(reduced ? 0 : 320);
+          continue;
+        }
+        for (const ch of chunk) {
+          if (id !== run) return;
+          out.textContent += ch;
+          await sleep(perChar + Math.random() * 40);
+        }
+      }
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        play();
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(term);
+    document.querySelector("[data-term-replay]")?.addEventListener("click", play);
+  }
+</script>

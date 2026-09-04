@@ -1,0 +1,180 @@
+---
+import Card from "@/layouts/Card.astro";
+import Window from "@/components/Window.astro";
+import { members, rankOf, displayName, avatarUrl, formatDate, totalBananas, type Member } from "@/lib/tribe";
+
+export function getStaticPaths() {
+  return members.map((member) => ({ params: { login: member.login.toLowerCase() }, props: { member } }));
+}
+
+interface Props {
+  member: Member;
+}
+
+const { member } = Astro.props;
+const rank = rankOf(member.bananas);
+const share = totalBananas ? Math.round((member.bananas / totalBananas) * 100) : 0;
+---
+
+<Card title={`${member.login} Properties`}>
+  <div class="pf">
+    <p class="card__kicker">Team Ooga Booga · tribe roster</p>
+    <div class="pf__win">
+    <Window title={`${member.login} Properties`} iconSrc={avatarUrl(member, 32)} pad="8px" controls="decorative" active>
+      <div class="pf__tabs" aria-hidden="true">
+        <span class="pf__tab is-on">General</span><span class="pf__tab">Socials</span><span class="pf__tab">Bananas</span>
+      </div>
+      <div class="pf__panel">
+        <img class="pf__avatar" src={avatarUrl(member, 460)} width="250" height="250" alt="" />
+        <dl class="pf__facts">
+          <div class="pf__name">
+            <dt>name</dt>
+            <dd>{displayName(member)}</dd>
+          </div>
+          <div>
+            <dt>handle</dt>
+            <dd class="mono">@{member.login}</dd>
+          </div>
+          <div>
+            <dt>rank</dt>
+            <dd><span class="rank">{rank.name}</span> <span class="muted">{rank.blurb}</span></dd>
+          </div>
+          <div>
+            <dt>bananas</dt>
+            <dd>
+              <span class="mono">🍌 {member.bananas.toLocaleString("en-US")}</span> eaten
+              <span class="progress progress--banana pf__bar"><span class="progress__bar" style={`--value:${Math.max(share, member.bananas ? 2 : 0)}%`}></span></span>
+            </dd>
+          </div>
+          <div>
+            <dt>on GitHub since</dt>
+            <dd>{formatDate(member.createdAt)}</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="pf__foot" aria-hidden="true">
+        <span class="btn btn--default">OK</span><span class="btn">Cancel</span><span class="btn" aria-disabled="true">Apply</span>
+      </div>
+    </Window>
+    </div>
+    <p class="pf__ring">← prev · Ooga Booga Web Ring · next →</p>
+  </div>
+</Card>
+
+<style>
+  .pf {
+    height: 630px;
+    padding: 30px 130px 24px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    align-content: space-between;
+    text-align: center;
+  }
+  .pf__win {
+    text-align: left;
+    font-size: 21px;
+  }
+  .pf__tabs {
+    display: flex;
+    padding: 0 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .pf__tab {
+    padding: 4px 18px;
+    background: var(--face);
+    box-shadow: inset 1px 1px var(--face-lighter), inset -1px 0 var(--face-dark);
+    font-size: 19px;
+    margin-bottom: -1px;
+  }
+  .pf__tab.is-on {
+    padding-bottom: 7px;
+    margin-top: -3px;
+    position: relative;
+    z-index: 2;
+    font-weight: 700;
+  }
+  .pf__panel {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 28px;
+    align-items: start;
+    padding: 22px;
+    background: var(--face);
+    box-shadow: var(--bevel-out);
+  }
+  .pf__avatar {
+    display: block;
+    width: 250px;
+    height: 250px;
+    box-shadow: var(--field-in);
+    background: var(--ink);
+  }
+  .pf__facts {
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .pf__facts div {
+    display: grid;
+    grid-template-columns: 175px 1fr;
+    gap: 10px;
+    border-bottom: 1px dotted var(--face-shadow);
+    padding-bottom: 5px;
+  }
+  .pf__facts dt {
+    color: #3a3a3a;
+    font-size: 19px;
+    padding-top: 3px;
+  }
+  .pf__facts dd {
+    margin: 0;
+    line-height: 1.3;
+  }
+  .pf__name dd {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+  .mono {
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  .muted {
+    color: #3a3a3a;
+    font-size: 18px;
+  }
+  .rank {
+    display: inline-block;
+    padding: 0 8px;
+    background: var(--ink);
+    color: var(--banana);
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    vertical-align: 2px;
+  }
+  .pf__bar {
+    display: block;
+    height: 16px;
+    margin-top: 6px;
+  }
+  .pf__bar .progress__bar {
+    display: block;
+    height: 100%;
+  }
+  .pf__foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 10px;
+  }
+  .pf__foot .btn {
+    font-size: 19px;
+  }
+  .pf__ring {
+    margin: 0;
+    font-size: 19px;
+    color: #bdbdbd;
+  }
+</style>

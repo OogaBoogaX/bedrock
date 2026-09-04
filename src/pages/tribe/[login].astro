@@ -1,0 +1,411 @@
+---
+import Base from "@/layouts/Base.astro";
+import Window from "@/components/Window.astro";
+import Footer from "@/components/Footer.astro";
+import { members, rankOf, displayName, avatarUrl, memberPath, formatDate, totalBananas, RANKS, type Member } from "@/lib/tribe";
+import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
+
+export function getStaticPaths() {
+  return members.map((member, index) => ({ params: { login: member.login.toLowerCase() }, props: { member, index } }));
+}
+
+interface Props {
+  member: Member;
+  index: number;
+}
+
+const { member, index } = Astro.props;
+const kinds = assignKinds(members.map((m) => m.login));
+const kind = kinds.get(member.login) ?? "cube";
+const model = MODELS[member.login];
+const rank = rankOf(member.bananas);
+const name = displayName(member);
+const prev = members[(index - 1 + members.length) % members.length];
+const next = members[(index + 1) % members.length];
+const share = totalBananas ? Math.round((member.bananas / totalBananas) * 100) : 0;
+
+const socials = [
+  { label: "GitHub", value: `@${member.login}`, href: member.url },
+  member.twitter && { label: "X", value: `@${member.twitter}`, href: `https://x.com/${member.twitter}` },
+  member.website && { label: "website", value: member.website.replace(/^https?:\/\//, "").replace(/\/$/, ""), href: member.website },
+  member.email && { label: "email", value: member.email, href: `mailto:${member.email}` },
+  member.nostr && { label: "nostr", value: `${member.nostr.slice(0, 12)}…${member.nostr.slice(-6)}`, href: `https://njump.me/${member.nostr}` },
+].filter((s): s is { label: string; value: string; href: string } => Boolean(s));
+
+const bio = member.bio?.replace(/\bnpub1[02-9ac-hj-np-z]{58}\b/gi, "").trim() || null;
+const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga Booga with ${member.bananas} bananas eaten. ${bio ?? "Contact info, socials, and a spinning 3D caveman."}`;
+---
+
+<Base
+  title={`${member.login} Properties — Team Ooga Booga`}
+  description={description}
+  ogImage={`/og/tribe/${member.login.toLowerCase()}.png`}
+  ogImageAlt={`${member.login} Properties: a Windows 98 dialog with ${name}'s avatar, rank ${rank.name} and ${member.bananas} bananas eaten.`}
+>
+  <main class="profile">
+    <div class="container profile__inner">
+      <a class="profile__back" href="/#tribe">← back to the cave</a>
+
+      <Window title={`${member.login} Properties`} iconSrc={avatarUrl(member, 32)} class="props" pad="0.5rem" active>
+        <div class="tabs" role="tablist" aria-label="Sections">
+          <button class="tab is-on" role="tab" type="button" aria-selected="true" aria-controls="tab-general" id="tabbtn-general" data-tab="general">General</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-socials" id="tabbtn-socials" data-tab="socials" tabindex="-1">Socials</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-bananas" id="tabbtn-bananas" data-tab="bananas" tabindex="-1">Bananas</button>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="tab-general" aria-labelledby="tabbtn-general" data-panel="general">
+          <div class="general">
+            <div class="general__view">
+              <div class="viewport" data-viewport data-login={member.login} data-kind={kind} data-avatar={member.avatar} data-model={model?.url} data-size="512" data-drag>
+                <img class="viewport__fallback" src={avatarUrl(member, 460)} alt={`${name}'s GitHub avatar`} width="460" height="460" decoding="async" />
+              </div>
+              <p class="general__kind">{model?.label ?? KIND_LABEL[kind]} · drag to rotate</p>
+            </div>
+            <dl class="general__facts">
+              <div class="general__name">
+                <dt>name</dt>
+                <dd>{name}</dd>
+              </div>
+              <div>
+                <dt>handle</dt>
+                <dd class="mono">@{member.login}</dd>
+              </div>
+              <div>
+                <dt>rank</dt>
+                <dd><span class="rank">{rank.name}</span> <span class="muted">{rank.blurb}</span></dd>
+              </div>
+              {
+                bio && (
+                  <div>
+                    <dt>bio</dt>
+                    <dd>{bio}</dd>
+                  </div>
+                )
+              }
+              {
+                member.location && (
+                  <div>
+                    <dt>cave location</dt>
+                    <dd>{member.location}</dd>
+                  </div>
+                )
+              }
+              {
+                member.company && (
+                  <div>
+                    <dt>day job</dt>
+                    <dd>{member.company}</dd>
+                  </div>
+                )
+              }
+              <div>
+                <dt>on GitHub since</dt>
+                <dd>{formatDate(member.createdAt)}</dd>
+              </div>
+              <div>
+                <dt>followers</dt>
+                <dd class="mono">{member.followers.toLocaleString("en-US")}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="tab-socials" aria-labelledby="tabbtn-socials" data-panel="socials" hidden>
+          <ul class="socials">
+            {
+              socials.map((s) => (
+                <li>
+                  <span class="socials__label">{s.label}</span>
+                  <a href={s.href} rel="noopener me">{s.value}</a>
+                </li>
+              ))
+            }
+          </ul>
+          {socials.length === 1 && <p class="muted">GitHub only. this caveman does not do socials. respect.</p>}
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="tab-bananas" aria-labelledby="tabbtn-bananas" data-panel="bananas" hidden>
+          <div class="bananas">
+            <p class="bananas__big"><span class="mono">🍌 {member.bananas.toLocaleString("en-US")}</span> bananas eaten</p>
+            <p class="muted">1 banana = 1 commit landed on rock across every cave in the org.</p>
+            <div class="progress progress--banana" title={`${share}% of all tribe bananas`}>
+              <div class="progress__bar" style={`--value:${Math.max(share, member.bananas ? 2 : 0)}%`}></div>
+            </div>
+            <p class="muted">{share}% of the {totalBananas.toLocaleString("en-US")} bananas the tribe has eaten so far.</p>
+            <h3 class="bananas__h">caves</h3>
+            {
+              member.repos.length ? (
+                <ul class="caves">
+                  {member.repos.map((r) => (
+                    <li>📁 {r}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="muted">no commits yet. sharpening a spear.</p>
+              )}
+            <h3 class="bananas__h">rank ladder</h3>
+            <ol class="ladder">
+              {
+                [...RANKS].reverse().map((r) => (
+                  <li class:list={{ "is-here": r.name === rank.name }}>
+                    <span class="ladder__name">{r.name}</span>
+                    <span class="ladder__min mono">{r.min}+</span>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </div>
+
+        <div class="props__foot">
+          <a class="btn btn--default" href="/#tribe">OK</a>
+          <a class="btn" href="/#tribe">Cancel</a>
+          <button class="btn" type="button" disabled>Apply</button>
+        </div>
+      </Window>
+
+      <nav class="ring" aria-label="Ooga Booga web ring">
+        <a href={memberPath(prev)}>← {prev.login}</a>
+        <a href="/#tribe">the cave</a>
+        <a href={memberPath(next)}>{next.login} →</a>
+      </nav>
+    </div>
+  </main>
+  <Footer />
+
+  <script>
+    import { mountViewports } from "@/lib/viewports";
+    mountViewports(document);
+
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>("[data-tab]")];
+    const panels = [...document.querySelectorAll<HTMLElement>("[data-panel]")];
+    const select = (id: string) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === id;
+        t.classList.toggle("is-on", on);
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== id));
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t.dataset.tab!));
+      t.addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+        const n = (i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[n].focus();
+        select(tabs[n].dataset.tab!);
+      });
+    });
+    if (location.hash === "#socials" || location.hash === "#bananas") select(location.hash.slice(1));
+  </script>
+</Base>
+
+<style>
+  .profile {
+    padding: clamp(1.5rem, 4vw, 3rem) 0 3rem;
+  }
+  .profile__inner {
+    max-width: 780px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .profile__back {
+    justify-self: start;
+    font-size: 0.9rem;
+  }
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .tab {
+    padding: 0.3rem 0.9rem;
+    border: 0;
+    background: var(--face);
+    box-shadow: inset 1px 1px var(--face-lighter), inset -1px 0 var(--face-dark);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: -1px;
+  }
+  .tab.is-on {
+    padding-bottom: 0.45rem;
+    margin-top: -3px;
+    position: relative;
+    z-index: 2;
+    font-weight: 700;
+  }
+  .tabpanel {
+    padding: 1.25rem;
+    background: var(--face);
+    box-shadow: var(--bevel-out);
+  }
+  .tabpanel[hidden] {
+    display: none;
+  }
+  .general {
+    display: grid;
+    grid-template-columns: minmax(220px, 300px) 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .viewport {
+    position: relative;
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 42%, #2a2a2a, #000 72%);
+    box-shadow: var(--field-in);
+    cursor: grab;
+    overflow: hidden;
+  }
+  .viewport:active {
+    cursor: grabbing;
+  }
+  .viewport__fallback {
+    position: absolute;
+    inset: 12%;
+    width: 76%;
+    height: 76%;
+    opacity: 0.25;
+    filter: grayscale(1);
+    transition: opacity 300ms ease;
+  }
+  .viewport.is-ready .viewport__fallback {
+    opacity: 0;
+  }
+  .viewport.no-webgl .viewport__fallback {
+    opacity: 1;
+    filter: none;
+  }
+  .general__kind {
+    margin: 0.5rem 0 0;
+    font-size: 0.78rem;
+    color: #3a3a3a;
+    text-align: center;
+  }
+  .general__facts {
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .general__facts div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 0.5rem;
+    border-bottom: 1px dotted var(--face-shadow);
+    padding-bottom: 0.4rem;
+  }
+  .general__facts dt {
+    color: #3a3a3a;
+    font-size: 0.85rem;
+  }
+  .general__facts dd {
+    margin: 0;
+    word-break: break-word;
+  }
+  .general__name dd {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .mono {
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  .muted {
+    color: #3a3a3a;
+    font-size: 0.85rem;
+  }
+  .rank {
+    display: inline-block;
+    padding: 0 0.4rem;
+    background: var(--ink);
+    color: var(--banana);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .socials li {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+    border-bottom: 1px dotted var(--face-shadow);
+    padding-bottom: 0.4rem;
+  }
+  .socials__label {
+    color: #3a3a3a;
+    font-size: 0.85rem;
+  }
+  .socials a {
+    word-break: break-all;
+    font-weight: 700;
+  }
+  .bananas__big {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .bananas__h {
+    font-size: 1rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+  .caves {
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    list-style: none;
+    background: var(--paper);
+    box-shadow: var(--field-in);
+    font-size: 0.9rem;
+  }
+  .ladder {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 2px;
+  }
+  .ladder li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0.6rem;
+    background: var(--face-light);
+    font-size: 0.9rem;
+  }
+  .ladder li.is-here {
+    background: var(--ink);
+    color: var(--banana);
+    font-weight: 700;
+  }
+  .props__foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    padding-top: 0.75rem;
+  }
+  .ring {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 600px) {
+    .general {
+      grid-template-columns: 1fr;
+    }
+    .general__facts div {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+</style>

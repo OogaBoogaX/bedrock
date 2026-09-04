@@ -1,0 +1,36 @@
+---
+interface Props {
+  items: string[];
+  speed?: string;
+  class?: string;
+}
+const { items, speed = "38s", class: className = "" } = Astro.props;
+---
+
+<div class:list={["marquee", "ticker", className]} style={`--marquee-speed:${speed}`} role="marquee" aria-label={items.join(". ")}>
+  <div class="marquee__track">
+    {[0, 1].map((copy) => items.map((item) => <span class="ticker__item" aria-hidden={copy === 1 || undefined}>{item}</span>))}
+  </div>
+</div>
+
+<style>
+  .ticker {
+    background: var(--banana);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0;
+    box-shadow: inset 0 -2px 0 var(--banana-shadow);
+  }
+  .ticker__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 3rem;
+  }
+  .ticker__item::after {
+    content: "★";
+    font-size: 0.7em;
+  }
+</style>

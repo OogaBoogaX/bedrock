@@ -1,0 +1,532 @@
+{
+  "syncedAt": "2026-09-04T17:51:41.404Z",
+  "source": "org members",
+  "org": {
+    "login": "OogaBoogaX",
+    "name": "Team Ooga Booga",
+    "url": "https://github.com/OogaBoogaX",
+    "avatar": "https://avatars.githubusercontent.com/u/321613496?v=4",
+    "followers": 8,
+    "createdAt": "2026-08-27T02:18:16Z"
+  },
+  "repos": [
+    {
+      "name": "entropylab",
+      "url": "https://github.com/OogaBoogaX/entropylab",
+      "homepage": "https://entropylab.online/",
+      "description": "A fully offline, air-gapped Bitcoin key and wallet calculator. It turns user-supplied entropy, seed phrases, or private keys into BIP39 seeds, xpubs, descriptors, addresses, and recovery data, and can also build watch-only multisig wallets without exposing private keys online.",
+      "stars": 51,
+      "forks": 37,
+      "openIssues": 24,
+      "defaultBranch": "rock",
+      "language": "HTML",
+      "pushedAt": "2026-09-04T17:24:18Z"
+    }
+  ],
+  "members": [
+    {
+      "login": "portlandhodl",
+      "id": 3104223,
+      "name": "Portland.HODL",
+      "avatar": "https://avatars.githubusercontent.com/u/3104223?v=4",
+      "url": "https://github.com/portlandhodl",
+      "bio": "Bitcoin Entrepreneur - NyanOS - Nyan Keys Mechanical Keyboard - Coinemu Hardware Wallet - Free Agent",
+      "location": "Oregon",
+      "company": "QR Snap - Bitcoin",
+      "website": "https://qrsnap.io",
+      "twitter": "PortlandHODL",
+      "email": "admin@qrsnap.io",
+      "nostr": null,
+      "followers": 156,
+      "publicRepos": 109,
+      "createdAt": "2012-12-22T09:39:05Z",
+      "bananas": 269,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "w-s-bitcoin",
+      "id": 95375789,
+      "name": "Wicked",
+      "avatar": "https://avatars.githubusercontent.com/u/95375789?v=4",
+      "url": "https://github.com/w-s-bitcoin",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": "https://twitter.com/w_s_bitcoin",
+      "twitter": "w_s_bitcoin",
+      "email": null,
+      "nostr": null,
+      "followers": 64,
+      "publicRepos": 8,
+      "createdAt": "2021-12-01T18:06:02Z",
+      "bananas": 162,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "dplusplus1024",
+      "id": 82842780,
+      "name": "D++",
+      "avatar": "https://avatars.githubusercontent.com/u/82842780?v=4",
+      "url": "https://github.com/dplusplus1024",
+      "bio": "Bitcoin educator.",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "d_plus__plus",
+      "email": null,
+      "nostr": null,
+      "followers": 94,
+      "publicRepos": 32,
+      "createdAt": "2021-04-19T20:11:54Z",
+      "bananas": 44,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "ottorockx",
+      "id": 254922163,
+      "name": "Otto (a.k.a Gui)",
+      "avatar": "https://avatars.githubusercontent.com/u/254922163?v=4",
+      "url": "https://github.com/ottorockx",
+      "bio": "npub1h0dl6l8mvpp9plaw9f5ganjzun0hy5mf2mtwvvamrgtmwqh4m9vsg6lh3a",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "bc1gui",
+      "email": null,
+      "nostr": "npub1h0dl6l8mvpp9plaw9f5ganjzun0hy5mf2mtwvvamrgtmwqh4m9vsg6lh3a",
+      "followers": 9,
+      "publicRepos": 1,
+      "createdAt": "2026-01-14T14:21:32Z",
+      "bananas": 24,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "timechainb",
+      "id": 106615835,
+      "name": "TC",
+      "avatar": "https://avatars.githubusercontent.com/u/106615835?v=4",
+      "url": "https://github.com/timechainb",
+      "bio": "infinity / 21M",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 15,
+      "publicRepos": 4,
+      "createdAt": "2022-05-31T16:40:05Z",
+      "bananas": 24,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "MrHodlX",
+      "id": 289396684,
+      "name": null,
+      "avatar": "https://avatars.githubusercontent.com/u/289396684?v=4",
+      "url": "https://github.com/MrHodlX",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 4,
+      "publicRepos": 2,
+      "createdAt": "2026-05-31T11:35:39Z",
+      "bananas": 20,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "itme-brain",
+      "id": 83414300,
+      "name": "₿ryan",
+      "avatar": "https://avatars.githubusercontent.com/u/83414300?v=4",
+      "url": "https://github.com/itme-brain",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 23,
+      "publicRepos": 42,
+      "createdAt": "2021-04-29T14:46:05Z",
+      "bananas": 11,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "2140data",
+      "id": 72945059,
+      "name": "Ant",
+      "avatar": "https://avatars.githubusercontent.com/u/72945059?v=4",
+      "url": "https://github.com/2140data",
+      "bio": "Recent Work ->\r\nExploreTimechain.com • ExploreMempool.com • ExploreNodes.com • TimechainArcade.com • TesseractB.com •\r\nTimechainStats.com •",
+      "location": null,
+      "company": "TimechainStats.com + TimechainArcade.com",
+      "website": "https://TimechainStats.com",
+      "twitter": "2140data",
+      "email": null,
+      "nostr": null,
+      "followers": 21,
+      "publicRepos": 8,
+      "createdAt": "2020-10-15T19:38:18Z",
+      "bananas": 9,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "rules-without-rulers",
+      "id": 321615163,
+      "name": "genXbtc",
+      "avatar": "https://avatars.githubusercontent.com/u/321615163?v=4",
+      "url": "https://github.com/rules-without-rulers",
+      "bio": null,
+      "location": "USA",
+      "company": "https://without-rulers.com/",
+      "website": "https://without-rulers.com/",
+      "twitter": "without_rulers",
+      "email": "ruleswithoutrulersbitcoin@gmail.com",
+      "nostr": null,
+      "followers": 5,
+      "publicRepos": 1,
+      "createdAt": "2026-08-27T02:25:43Z",
+      "bananas": 2,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "SaniExp",
+      "id": 140608503,
+      "name": "SaniExp",
+      "avatar": "https://avatars.githubusercontent.com/u/140608503?v=4",
+      "url": "https://github.com/SaniExp",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 5,
+      "createdAt": "2023-07-26T10:50:23Z",
+      "bananas": 2,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "FNBIP",
+      "id": 130150246,
+      "name": "AN",
+      "avatar": "https://avatars.githubusercontent.com/u/130150246?v=4",
+      "url": "https://github.com/FNBIP",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 9,
+      "createdAt": "2023-04-07T11:11:01Z",
+      "bananas": 1,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "Rob1Ham",
+      "id": 6456095,
+      "name": "Rob Hamilton",
+      "avatar": "https://avatars.githubusercontent.com/u/6456095?v=4",
+      "url": "https://github.com/Rob1Ham",
+      "bio": "Bitcoin",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "Rob1Ham",
+      "email": null,
+      "nostr": null,
+      "followers": 78,
+      "publicRepos": 45,
+      "createdAt": "2014-01-21T01:41:17Z",
+      "bananas": 0,
+      "repos": []
+    }
+  ],
+  "friends": [
+    {
+      "login": "pdubl22",
+      "id": 16267790,
+      "name": "pdubl22",
+      "avatar": "https://avatars.githubusercontent.com/u/16267790?v=4",
+      "url": "https://github.com/pdubl22",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 1,
+      "createdAt": "2015-12-12T14:00:57Z",
+      "bananas": 23,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "RandyMcMillan",
+      "id": 152159,
+      "name": "randymcmillan",
+      "avatar": "https://avatars.githubusercontent.com/u/152159?v=4",
+      "url": "https://github.com/RandyMcMillan",
+      "bio": "Operations Specialist @usnavy\r\n\r\nE616FA7221A1613E5B99206297966C06 BB06757B",
+      "location": "₿:8333",
+      "company": "@bitcoincore-dev",
+      "website": "https://www.randymcmillan.net",
+      "twitter": "RandyMcMillan",
+      "email": "randymcmillan@protonmail.com",
+      "nostr": null,
+      "followers": 505,
+      "publicRepos": 1882,
+      "createdAt": "2009-11-12T06:10:29Z",
+      "bananas": 12,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "J25dunn",
+      "id": 133827581,
+      "name": "J25dunn",
+      "avatar": "https://avatars.githubusercontent.com/u/133827581?v=4",
+      "url": "https://github.com/J25dunn",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "J25dunn",
+      "email": null,
+      "nostr": null,
+      "followers": 2,
+      "publicRepos": 2,
+      "createdAt": "2023-05-17T00:36:15Z",
+      "bananas": 8,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "MHODL",
+      "id": 224054482,
+      "name": "MHODL GLOBAL",
+      "avatar": "https://avatars.githubusercontent.com/u/224054482?v=4",
+      "url": "https://github.com/MHODL",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 0,
+      "createdAt": "2025-08-01T11:39:53Z",
+      "bananas": 7,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "Jdelg718",
+      "id": 150862258,
+      "name": "FF2K",
+      "avatar": "https://avatars.githubusercontent.com/u/150862258?v=4",
+      "url": "https://github.com/Jdelg718",
+      "bio": "I'm keeping busy, messing around, learning stuff i probably shouldn't while I HODL.",
+      "location": null,
+      "company": "EverstoneBTC",
+      "website": "https://everstonebtc.com",
+      "twitter": "fartface2000",
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 11,
+      "createdAt": "2023-11-14T22:23:35Z",
+      "bananas": 5,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "BTCMcBoatface",
+      "id": 150210608,
+      "name": "Boatface",
+      "avatar": "https://avatars.githubusercontent.com/u/150210608?v=4",
+      "url": "https://github.com/BTCMcBoatface",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 3,
+      "publicRepos": 4,
+      "createdAt": "2023-11-08T03:08:45Z",
+      "bananas": 2,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "dani69654",
+      "id": 60792849,
+      "name": "Dani",
+      "avatar": "https://avatars.githubusercontent.com/u/60792849?v=4",
+      "url": "https://github.com/dani69654",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 23,
+      "publicRepos": 30,
+      "createdAt": "2020-02-07T18:16:25Z",
+      "bananas": 2,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "Hero-Gamer",
+      "id": 92864860,
+      "name": "herogamer",
+      "avatar": "https://avatars.githubusercontent.com/u/92864860?v=4",
+      "url": "https://github.com/Hero-Gamer",
+      "bio": "AI-ing",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "herogamer21btc",
+      "email": null,
+      "nostr": null,
+      "followers": 29,
+      "publicRepos": 7,
+      "createdAt": "2021-10-20T12:40:56Z",
+      "bananas": 2,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "csuwildcat",
+      "id": 131786,
+      "name": "Daniel Buchner",
+      "avatar": "https://avatars.githubusercontent.com/u/131786?v=4",
+      "url": "https://github.com/csuwildcat",
+      "bio": "Director of Digital Assets @ Proof",
+      "location": "Wouldn't you like to know",
+      "company": "Gemini",
+      "website": "http://www.backalleycoder.com",
+      "twitter": null,
+      "email": "danieljb2@gmail.com",
+      "nostr": null,
+      "followers": 589,
+      "publicRepos": 97,
+      "createdAt": "2009-09-27T05:48:11Z",
+      "bananas": 1,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "doggyballs",
+      "id": 322880795,
+      "name": null,
+      "avatar": "https://avatars.githubusercontent.com/u/322880795?v=4",
+      "url": "https://github.com/doggyballs",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 2,
+      "createdAt": "2026-08-30T17:56:03Z",
+      "bananas": 1,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "HodlDee",
+      "id": 130502840,
+      "name": "Dee",
+      "avatar": "https://avatars.githubusercontent.com/u/130502840?v=4",
+      "url": "https://github.com/HodlDee",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 3,
+      "createdAt": "2023-04-11T19:17:26Z",
+      "bananas": 1,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "zmeyer44",
+      "id": 54515037,
+      "name": "Zach Meyer",
+      "avatar": "https://avatars.githubusercontent.com/u/54515037?v=4",
+      "url": "https://github.com/zmeyer44",
+      "bio": null,
+      "location": "NYC",
+      "company": null,
+      "website": "https://zach.bot",
+      "twitter": "zachmeyer_",
+      "email": null,
+      "nostr": null,
+      "followers": 38,
+      "publicRepos": 72,
+      "createdAt": "2019-08-25T23:01:18Z",
+      "bananas": 1,
+      "repos": [
+        "entropylab"
+      ]
+    }
+  ]
+}

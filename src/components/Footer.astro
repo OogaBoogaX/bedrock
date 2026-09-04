@@ -1,0 +1,162 @@
+---
+import { members, memberPath, org, tribe, formatDate } from "@/lib/tribe";
+
+const first = members[0];
+const last = members[members.length - 1];
+const paths = members.map(memberPath);
+---
+
+<footer class="footer">
+  <hr class="hr" />
+  <div class="container footer__inner">
+    <div class="counter" data-counter>
+      <span class="counter__label">you are visitor number</span>
+      <span class="odometer" aria-live="off">
+        {[0, 1, 2, 3, 4, 5].map(() => (
+          <span class="odometer__digit">
+            <span class="odometer__strip">{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => <i>{d}</i>)}</span>
+          </span>
+        ))}
+      </span>
+      <span class="counter__note">since the first grunt. counted on fingers.</span>
+    </div>
+
+    <div class="badges" aria-label="badges">
+      <a class="badge88" href="#top">gorilla<br />open source</a>
+      <a class="badge88" href="/manifesto/" style="--badge-bg:#ffe135;--badge-fg:#000">read the<br />manifesto</a>
+      <span class="badge88 badge88--stripes">under<br />construction</span>
+      <span class="badge88" style="--badge-bg:#000;--badge-fg:#39ff14">best viewed<br />800×600</span>
+      <a class="badge88" href="#method" style="--badge-bg:#c0c0c0">made with<br />clanker</a>
+      <a class="badge88" href="#caves" style="--badge-bg:#000080;--badge-fg:#fff">bring your<br />own entropy</a>
+      <span class="badge88" style="--badge-bg:#ff00ff;--badge-fg:#fff">branch:<br />rock</span>
+      <a class="badge88" href="#tribe" style="--badge-bg:#fff">no degree<br />required</a>
+    </div>
+
+    <nav class="webring" aria-label="Ooga Booga web ring">
+      <span class="webring__name">Ooga Booga Web Ring</span>
+      <a href={memberPath(last)}>← prev</a>
+      <span aria-hidden="true">|</span>
+      <a href={memberPath(first)} data-random data-paths={JSON.stringify(paths)}>random</a>
+      <span aria-hidden="true">|</span>
+      <a href={memberPath(first)}>next →</a>
+    </nav>
+
+    <p class="footer__legal">
+      © 2026 <a href={org.url} rel="noopener">Team Ooga Booga</a>. all rights reversed. best viewed in Netscape Navigator 4.7 at
+      800×600. roster last synced {formatDate(tribe.syncedAt)}. this site uses no cookies. it does not know how.
+    </p>
+    <a class="footer__top" href="#top">back to top ↑</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-bottom: 4rem;
+  }
+  .footer__inner {
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+    text-align: center;
+  }
+  .counter {
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+  }
+  .counter__label {
+    font-size: 0.85rem;
+    color: #bdbdbd;
+  }
+  .odometer {
+    display: inline-flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--face);
+    box-shadow: var(--bevel-in);
+  }
+  .odometer__digit {
+    width: 1.1em;
+    height: 1.5em;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--lime);
+    font: 700 1.4rem/1.5 var(--mono);
+    text-align: center;
+  }
+  .odometer__strip {
+    display: block;
+    transform: translateY(calc(var(--d, 0) * -1.5em));
+    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .odometer__strip i {
+    display: block;
+    height: 1.5em;
+    font-style: normal;
+  }
+  .counter__note {
+    font-size: 0.75rem;
+    color: #8a8a8a;
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+  .webring {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px dashed var(--face-shadow);
+    font-size: 0.9rem;
+  }
+  .webring__name {
+    font-weight: 700;
+    color: var(--banana);
+  }
+  .footer__legal {
+    max-width: 640px;
+    font-size: 0.8rem;
+    color: #a8a8a8;
+    margin: 0;
+  }
+  .footer__top {
+    font-size: 0.85rem;
+  }
+</style>
+
+<script>
+  const counter = document.querySelector<HTMLElement>("[data-counter]");
+  if (counter) {
+    // Minutes since MrHodl handed Wicked the file on the Space, plus a respectable start.
+    const FIRST_GRUNT = Date.UTC(2026, 7, 24, 18, 0, 0);
+    const value = 1337 + Math.max(0, Math.floor((Date.now() - FIRST_GRUNT) / 60_000));
+    const digits = String(value).padStart(6, "0").slice(-6);
+    const strips = counter.querySelectorAll<HTMLElement>(".odometer__strip");
+    const roll = () => strips.forEach((s, i) => s.style.setProperty("--d", digits[i]));
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        setTimeout(roll, 150);
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(counter);
+  }
+
+  const random = document.querySelector<HTMLAnchorElement>("[data-random]");
+  if (random) {
+    const paths: string[] = JSON.parse(random.dataset.paths ?? "[]");
+    random.addEventListener("click", (e) => {
+      if (!paths.length) return;
+      e.preventDefault();
+      location.href = paths[Math.floor(Math.random() * paths.length)];
+    });
+  }
+</script>

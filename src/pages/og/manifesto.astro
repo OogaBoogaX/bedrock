@@ -1,0 +1,87 @@
+---
+import Card from "@/layouts/Card.astro";
+import Window from "@/components/Window.astro";
+import { manifesto } from "@/lib/manifesto";
+---
+
+<Card title={manifesto.title}>
+  <div class="mf">
+    <p class="card__kicker">the manifesto · Team Ooga Booga</p>
+    <h1 class="mf__title"><span class="wordart">{manifesto.title.toLowerCase()}</span></h1>
+    <p class="mf__sub">{manifesto.subtitle}</p>
+    <p class="mf__meta">
+      by @{manifesto.authorHandle} · {manifesto.minutes} min read · {manifesto.words.toLocaleString("en-US")} words · 0 degrees required
+    </p>
+    <div class="mf__wordpad">
+      <Window title="gorilla_open_source.doc - WordPad" icon="📄" pad="0" controls="decorative" active>
+        <div class="mf__menu" aria-hidden="true">
+          <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>I</u>nsert</span><span>F<u>o</u>rmat</span><span><u>H</u>elp</span>
+        </div>
+        <div class="mf__paper">
+          <p>{manifesto.opening}</p>
+        </div>
+      </Window>
+    </div>
+  </div>
+</Card>
+
+<style>
+  .mf {
+    position: relative;
+    height: 630px;
+    padding: 34px 70px 0;
+    text-align: center;
+  }
+  .mf__title {
+    margin: 10px 0 12px;
+    font-size: 84px;
+  }
+  .mf__sub {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--paper);
+  }
+  .mf__meta {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 19px;
+    color: #bdbdbd;
+  }
+  .mf__wordpad {
+    position: absolute;
+    left: 110px;
+    right: 110px;
+    top: 292px;
+    text-align: left;
+  }
+  .mf__menu {
+    display: flex;
+    gap: 18px;
+    padding: 3px 10px;
+    font-size: 16px;
+  }
+  .mf__paper {
+    min-height: 320px;
+    margin: 3px;
+    padding: 22px 34px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: var(--field-in);
+    font-size: 23px;
+    line-height: 1.5;
+  }
+  .mf__paper p {
+    margin: 0;
+  }
+  .mf__paper p::first-letter {
+    float: left;
+    margin: 4px 12px 0 0;
+    padding: 0 8px;
+    background: var(--banana);
+    box-shadow: 3px 3px 0 var(--banana-shadow);
+    font-size: 64px;
+    line-height: 0.9;
+    font-weight: 700;
+  }
+</style>

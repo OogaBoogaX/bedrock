@@ -1,0 +1,26 @@
+{
+  "name": "oogabooga-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.12.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "tribe:sync": "node scripts/sync-tribe.mjs",
+    "og": "node scripts/og.mjs"
+  },
+  "dependencies": {
+    "@fontsource/comic-neue": "^5.3.0",
+    "astro": "^7.3.1",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/three": "^0.185.4",
+    "puppeteer-core": "^25.10.0",
+    "typescript": "^5.9.2"
+  }
+}

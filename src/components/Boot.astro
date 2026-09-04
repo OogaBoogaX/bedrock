@@ -1,0 +1,106 @@
+---
+import { members, totalBananas } from "@/lib/tribe";
+---
+
+<script is:inline>
+  if (sessionStorage.getItem("ooga-booted") || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.classList.add("booted");
+  }
+</script>
+
+<div class="boot" data-boot aria-hidden="true">
+  <pre class="boot__text"><span class="boot__line">OOGA BOOGA BIOS v0.1  (c) 2026 Team Ooga Booga
+</span><span class="boot__line">Main branch ........................ rock
+</span><span class="boot__line">Detecting intelligence ............. <b class="boot__bad">not found</b>
+</span><span class="boot__line">Detecting cavemen .................. {members.length} found
+</span><span class="boot__line">Counting bananas ................... {totalBananas.toLocaleString("en-US")}
+</span><span class="boot__line">Loading clankers ................... OK
+</span><span class="boot__line">Connecting to tribe @ 56.6 kbps .... <span class="boot__bar" data-boot-bar></span>
+</span><span class="boot__line boot__prompt blink">Press any key to enter the cave_</span></pre>
+</div>
+
+<style>
+  .boot {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    align-content: start;
+    padding: clamp(1rem, 4vw, 3rem);
+    background: var(--ink);
+    color: #d0d0d0;
+    cursor: pointer;
+    transition: opacity 350ms ease;
+  }
+  :global(html.booted) .boot,
+  .boot.is-done {
+    opacity: 0;
+    pointer-events: none;
+  }
+  :global(html.booted) .boot {
+    display: none;
+  }
+  .boot__text {
+    margin: 0;
+    font: 700 clamp(0.75rem, 2vw, 1.05rem)/1.7 var(--mono);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .boot__line {
+    display: block;
+    opacity: 0;
+  }
+  .boot__line.is-on {
+    opacity: 1;
+  }
+  .boot__bad {
+    color: var(--magenta);
+  }
+  .boot__prompt {
+    color: var(--banana);
+    margin-top: 1em;
+  }
+  .boot__prompt:not(.is-on) {
+    animation: none;
+  }
+  .boot__bar::before {
+    content: "░░░░░░░░░░░░░░░░░░░░";
+    letter-spacing: 0.05em;
+    color: var(--face-shadow);
+  }
+  .boot__bar.is-full::before {
+    content: "████████████████████";
+    color: var(--lime);
+  }
+</style>
+
+<script>
+  const boot = document.querySelector<HTMLElement>("[data-boot]");
+  if (boot && !document.documentElement.classList.contains("booted")) {
+    const lines = [...boot.querySelectorAll<HTMLElement>(".boot__line")];
+    const bar = boot.querySelector<HTMLElement>("[data-boot-bar]");
+    const timers: number[] = [];
+    let done = false;
+
+    const finish = () => {
+      if (done) return;
+      done = true;
+      timers.forEach(clearTimeout);
+      sessionStorage.setItem("ooga-booted", "1");
+      boot.classList.add("is-done");
+      document.dispatchEvent(new CustomEvent("ooga:booted"));
+      boot.addEventListener("transitionend", () => boot.remove(), { once: true });
+      setTimeout(() => boot.remove(), 600);
+      window.removeEventListener("keydown", finish);
+    };
+
+    lines.forEach((line, i) => {
+      timers.push(window.setTimeout(() => line.classList.add("is-on"), 100 + i * 150));
+    });
+    timers.push(window.setTimeout(() => bar?.classList.add("is-full"), 100 + lines.length * 150 + 300));
+    timers.push(window.setTimeout(finish, 100 + lines.length * 150 + 1100));
+
+    boot.addEventListener("click", finish);
+    window.addEventListener("keydown", finish);
+  }
+</script>

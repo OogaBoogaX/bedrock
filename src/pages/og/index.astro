@@ -1,0 +1,70 @@
+---
+import Card from "@/layouts/Card.astro";
+import Window from "@/components/Window.astro";
+import { members, repos } from "@/lib/tribe";
+---
+
+<Card title="Team Ooga Booga">
+  <div class="home">
+    <p class="card__kicker">the official homepage of Team Ooga Booga</p>
+    <h1 class="home__title"><span class="wordart">gorilla open source</span></h1>
+    <div class="home__paint">
+      <Window title="evolution.bmp - Paint" icon="🎨" pad="0" controls="decorative" active>
+        <img src="/img/evolution.webp" width="1568" height="571" alt="" />
+      </Window>
+    </div>
+    <p class="home__tag">
+      humans are getting dumber. humans are getting more powerful. <span class="home__fine">this is fine.</span>
+    </p>
+    <div class="home__badges">
+      <span class="badge88 badge88--stripes">under<br />construction</span>
+      <span class="badge88" style="--badge-bg:#000;--badge-fg:#39ff14">best viewed<br />800×600</span>
+      <span class="badge88" style="--badge-bg:#ffe135;--badge-fg:#000">{members.length} cavemen<br />{repos.length} cave</span>
+      <span class="badge88" style="--badge-bg:#ff00ff;--badge-fg:#fff">branch:<br />rock</span>
+    </div>
+  </div>
+</Card>
+
+<style>
+  .home {
+    height: 630px;
+    padding: 34px 60px 30px;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto;
+    align-content: space-between;
+    justify-items: center;
+    text-align: center;
+  }
+  .home__title {
+    margin: 0;
+    font-size: 88px;
+  }
+  .home__paint {
+    width: 760px;
+    text-align: left;
+  }
+  .home__paint img {
+    display: block;
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    object-position: center bottom;
+    background: var(--ink);
+  }
+  .home__tag {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--paper);
+  }
+  .home__fine {
+    color: var(--banana);
+  }
+  .home__badges {
+    display: flex;
+    gap: 14px;
+    transform: scale(1.4);
+    transform-origin: center;
+    margin: 8px 0 6px;
+  }
+</style>

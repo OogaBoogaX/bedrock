@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  icon?: string;
+  iconSrc?: string;
+  id?: string;
+  class?: string;
+  active?: boolean;
+  controls?: boolean | "decorative";
+  as?: "div" | "article" | "section";
+  pad?: string;
+}
+
+const {
+  title,
+  icon = "▣",
+  iconSrc,
+  id,
+  class: className = "",
+  active = false,
+  controls = true,
+  as: Tag = "div",
+  pad,
+} = Astro.props;
+---
+
+<Tag class:list={["win", className, { "win--active": active }]} id={id} style={pad ? `--win-pad:${pad}` : undefined}>
+  <div class="win__title">
+    <span class="win__icon" aria-hidden="true">
+      {iconSrc ? <img src={iconSrc} alt="" width="16" height="16" loading="lazy" /> : icon}
+    </span>
+    <span class="win__name">{title}</span>
+    {
+      controls === "decorative" && (
+        <span class="win__controls" aria-hidden="true">
+          <span class="win__ctl">_</span>
+          <span class="win__ctl">□</span>
+          <span class="win__ctl">×</span>
+        </span>
+      )
+    }
+    {
+      controls === true && (
+        <span class="win__controls">
+          <button class="win__ctl" type="button" data-win="min" aria-label="Minimize">
+            _
+          </button>
+          <button class="win__ctl" type="button" data-win="max" aria-label="Maximize">
+            □
+          </button>
+          <button class="win__ctl" type="button" data-win="close" aria-label="Close">
+            ×
+          </button>
+        </span>
+      )
+    }
+  </div>
+  <div class="win__body">
+    <slot />
+  </div>
+</Tag>
