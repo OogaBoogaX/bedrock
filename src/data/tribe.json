@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-04T17:51:41.404Z",
+  "syncedAt": "2026-09-04T20:44:01.394Z",
   "source": "org members",
   "org": {
     "login": "OogaBoogaX",
@@ -20,7 +20,19 @@
       "openIssues": 24,
       "defaultBranch": "rock",
       "language": "HTML",
-      "pushedAt": "2026-09-04T17:24:18Z"
+      "pushedAt": "2026-09-04T20:21:43Z"
+    },
+    {
+      "name": "bedrock",
+      "url": "https://github.com/OogaBoogaX/bedrock",
+      "homepage": "https://oogabooga.rocks",
+      "description": "Team Ooga Booga homepage. gorilla open source. every cave is a repository, this is the bedrock.",
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "defaultBranch": "rock",
+      "language": "Astro",
+      "pushedAt": "2026-09-04T20:09:24Z"
     }
   ],
   "members": [
@@ -103,9 +115,10 @@
       "followers": 9,
       "publicRepos": 1,
       "createdAt": "2026-01-14T14:21:32Z",
-      "bananas": 24,
+      "bananas": 26,
       "repos": [
-        "entropylab"
+        "entropylab",
+        "bedrock"
       ]
     },
     {
@@ -230,27 +243,6 @@
       "publicRepos": 5,
       "createdAt": "2023-07-26T10:50:23Z",
       "bananas": 2,
-      "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "FNBIP",
-      "id": 130150246,
-      "name": "AN",
-      "avatar": "https://avatars.githubusercontent.com/u/130150246?v=4",
-      "url": "https://github.com/FNBIP",
-      "bio": null,
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": null,
-      "email": null,
-      "nostr": null,
-      "followers": 1,
-      "publicRepos": 9,
-      "createdAt": "2023-04-07T11:11:01Z",
-      "bananas": 1,
       "repos": [
         "entropylab"
       ]
@@ -481,6 +473,27 @@
       "followers": 0,
       "publicRepos": 2,
       "createdAt": "2026-08-30T17:56:03Z",
+      "bananas": 1,
+      "repos": [
+        "entropylab"
+      ]
+    },
+    {
+      "login": "FNBIP",
+      "id": 130150246,
+      "name": "AN",
+      "avatar": "https://avatars.githubusercontent.com/u/130150246?v=4",
+      "url": "https://github.com/FNBIP",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 9,
+      "createdAt": "2023-04-07T11:11:01Z",
       "bananas": 1,
       "repos": [
         "entropylab"

@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 
 const ORG = "OogaBoogaX";
 const INCLUDE = ["timechainb", "rules-without-rulers", "SaniExp"];
-const EXCLUDE = [];
+const EXCLUDE = ["FNBIP"];
 const OUT = resolve(dirname(fileURLToPath(import.meta.url)), "../src/data/tribe.json");
 
 const token = process.env.GITHUB_TOKEN || ghToken();
