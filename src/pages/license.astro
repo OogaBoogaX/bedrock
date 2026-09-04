@@ -1,0 +1,100 @@
+---
+import Base from "@/layouts/Base.astro";
+import Notepad from "@/components/Notepad.astro";
+import Footer from "@/components/Footer.astro";
+import license from "../../LICENSE?raw";
+import { repos } from "@/lib/tribe";
+
+const caves = repos.map((r) => r.name).join(", ");
+---
+
+<Base
+  title="The Ooga Booga License — Team Ooga Booga"
+  description="OOGA BOOGA. Me make code. Me give code to tribe. The license every cave ships under: take code, change code, share code, sell code. No ask. No pay. No club."
+  ogImageAlt="The Ooga Booga License, open in a Windows 98 Notepad window."
+>
+  <main class="lic">
+    <div class="container lic__inner">
+      <a class="lic__back" href="/">← back to the cave</a>
+      <header class="lic__head">
+        <span class="section__kicker">legal department</span>
+        <h1 class="section__title">the Ooga Booga license</h1>
+        <p class="section__lede">
+          every cave ships under it ({caves}). shorter than MIT, and honest about mammoths.
+        </p>
+      </header>
+
+      <Notepad title="LICENSE - Notepad" icon="📜" active>{license.trim()}<Fragment slot="actions">
+          <button class="btn btn--default btn--banana" type="button" data-copy data-status-text="Copies the license to your clipboard">copy license</button>
+          <a class="btn" href="https://github.com/OogaBoogaX/bedrock/blob/rock/LICENSE" rel="noopener">view on GitHub</a>
+          <a class="btn" href="/#method">take fire</a>
+        </Fragment></Notepad>
+
+      <p class="lic__note">
+        to use it: drop the text above in a file called <code>LICENSE</code> at the root of your cave. that is the whole
+        ceremony.
+      </p>
+    </div>
+  </main>
+  <Footer />
+
+  <script>
+    const button = document.querySelector<HTMLButtonElement>("[data-copy]");
+    const pre = document.querySelector<HTMLElement>(".notepad__text");
+
+    // Async clipboard first; fall back to selecting the text and the legacy copy command.
+    const copy = async (): Promise<boolean> => {
+      if (!pre) return false;
+      try {
+        await navigator.clipboard.writeText(`${pre.textContent}\n`);
+        return true;
+      } catch {}
+      const range = document.createRange();
+      range.selectNodeContents(pre);
+      const selection = getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      const ok = document.execCommand("copy");
+      if (ok) selection?.removeAllRanges();
+      return ok;
+    };
+
+    button?.addEventListener("click", async () => {
+      const label = button.textContent;
+      button.textContent = (await copy()) ? "copied. fire shared." : "clipboard said no. text is selected, press copy.";
+      setTimeout(() => (button.textContent = label), 2200);
+    });
+  </script>
+</Base>
+
+<style>
+  .lic {
+    padding: clamp(1.5rem, 4vw, 3rem) 0 3rem;
+  }
+  .lic__inner {
+    max-width: 720px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .lic__back {
+    justify-self: start;
+    font-size: 0.9rem;
+  }
+  .lic__head {
+    text-align: center;
+  }
+  .lic__head .section__title {
+    font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  }
+  .lic__note {
+    margin: 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #bdbdbd;
+  }
+  .lic__note code {
+    font-family: var(--mono);
+    color: var(--banana);
+  }
+</style>

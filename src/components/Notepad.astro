@@ -1,0 +1,53 @@
+---
+// A Notepad window: menu bar, a <pre> page of text (default slot), optional action buttons (slot "actions").
+import Window from "@/components/Window.astro";
+
+interface Props {
+  title: string;
+  icon?: string;
+  class?: string;
+  active?: boolean;
+}
+
+const { title, icon = "📝", class: className, active = false } = Astro.props;
+---
+
+<Window title={title} icon={icon} class={className} pad="0" active={active}>
+  <div class="notepad__menu" aria-hidden="true">
+    <span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>S</u>earch</span><span><u>H</u>elp</span>
+  </div>
+  <pre class="notepad__text"><slot /></pre>
+  {
+    Astro.slots.has("actions") && (
+      <div class="notepad__actions">
+        <slot name="actions" />
+      </div>
+    )
+  }
+</Window>
+
+<style>
+  .notepad__menu {
+    display: flex;
+    gap: 1rem;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--face-shadow);
+    box-shadow: 0 1px var(--face-lighter);
+  }
+  .notepad__text {
+    margin: 3px;
+    padding: 1rem 1.25rem;
+    background: var(--paper);
+    box-shadow: var(--field-in);
+    font: 0.95rem/1.6 var(--font);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .notepad__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+</style>

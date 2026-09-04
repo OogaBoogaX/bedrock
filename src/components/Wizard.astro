@@ -1,6 +1,7 @@
 ---
 import Window from "@/components/Window.astro";
 import { org, repos } from "@/lib/tribe";
+import license from "../../LICENSE?raw";
 
 const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
 ---
@@ -30,6 +31,17 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
             <p>This wizard will install you into the tribe.</p>
             <p>Requirements: one idea, one clanker, and the will to be reviewed in public.</p>
             <p>No degree will be checked. No permission will be asked. Click Next to continue.</p>
+          </section>
+
+          <section class="wizard__page" data-page data-eula hidden>
+            <h3>License Agreement</h3>
+            <p>Please read the following License Agreement. Press the PAGE DOWN key to see the rest of the agreement.</p>
+            <pre class="eula" tabindex="0" aria-label="The Ooga Booga License">{license.trim()}</pre>
+            <div class="eula__choice" role="radiogroup" aria-label="Do you accept the license?">
+              <label class="check"><input type="radio" name="eula" value="yes" data-eula-yes /> I accept the terms of the Ooga Booga License. Take fire.</label>
+              <label class="check"><input type="radio" name="eula" value="no" data-eula-no /> I do not accept.</label>
+            </div>
+            <p class="eula__link"><a href="/license/">open the license in Notepad</a></p>
           </section>
 
           <section class="wizard__page" data-page hidden>
@@ -144,6 +156,25 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
   .wizard__pages {
     padding: 1.25rem 1.5rem;
     background: var(--paper);
+  }
+  .eula {
+    margin: 0.25rem 0 0.9rem;
+    padding: 0.6rem 0.8rem;
+    height: 190px;
+    overflow: auto;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: var(--field-in);
+    font: 0.82rem/1.5 var(--mono);
+    white-space: pre-wrap;
+  }
+  .eula__choice {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .eula__link {
+    margin: 0.9rem 0 0;
+    font-size: 0.8rem;
   }
   .wizard__page h3 {
     font-size: 1.15rem;
@@ -287,7 +318,18 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
     const next = wizard.querySelector<HTMLButtonElement>('[data-wiz="next"]');
     const cancel = wizard.querySelector<HTMLButtonElement>('[data-wiz="cancel"]');
     const msgbox = wizard.querySelector<HTMLElement>("[data-msgbox]");
+    const eula = pages.findIndex((p) => p.hasAttribute("data-eula"));
+    const accept = wizard.querySelector<HTMLInputElement>("[data-eula-yes]");
+    const decline = wizard.querySelector<HTMLInputElement>("[data-eula-no]");
     let index = 0;
+
+    const say = (text: string, ms: number) => {
+      const name = wizard.querySelector<HTMLElement>(".win__name");
+      if (!name) return;
+      const original = name.textContent;
+      name.textContent = text;
+      setTimeout(() => (name.textContent = original), ms);
+    };
 
     const show = (i: number) => {
       index = Math.max(0, Math.min(pages.length - 1, i));
@@ -297,8 +339,22 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
       });
       if (step) step.textContent = `Step ${index + 1} of ${pages.length}`;
       if (back) back.disabled = index === 0;
-      if (next) next.textContent = index === pages.length - 1 ? "Finish" : "Next >";
+      if (next) {
+        next.textContent = index === pages.length - 1 ? "Finish" : "Next >";
+        next.disabled = index === eula && !accept?.checked;
+      }
     };
+
+    // The license must be accepted. Declining is not a supported operation.
+    accept?.addEventListener("change", () => show(index));
+    decline?.addEventListener("change", () => {
+      setTimeout(() => {
+        if (!accept) return;
+        accept.checked = true;
+        show(index);
+        say("declining failed. fire is yours now.", 2200);
+      }, 700);
+    });
 
     back?.addEventListener("click", () => show(index - 1));
     next?.addEventListener("click", () => {
@@ -318,11 +374,7 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
     msgbox?.querySelector("[data-msgbox-yes]")?.addEventListener("click", () => {
       msgbox.hidden = true;
       show(0);
-      const name = wizard.querySelector<HTMLElement>(".win__name");
-      if (!name) return;
-      const original = name.textContent;
-      name.textContent = "cancel failed. you are still a caveman.";
-      setTimeout(() => (name.textContent = original), 2200);
+      say("cancel failed. you are still a caveman.", 2200);
     });
     wizard.addEventListener("keydown", (e) => {
       if ((e.target as HTMLElement).tagName === "INPUT") return;

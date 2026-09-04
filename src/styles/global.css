@@ -440,6 +440,19 @@ p {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+.check input[type="radio"] {
+  border-radius: 50%;
+}
+.check input[type="radio"]:checked::after {
+  left: 3px;
+  top: 3px;
+  width: 5px;
+  height: 5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  transform: none;
+}
 
 /* 88x31 badge */
 .badge88 {
