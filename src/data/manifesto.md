@@ -71,7 +71,7 @@ The method matters more than the tool. We call it gorilla open source. Anyone ca
 
 <aside class="win win--active msgbox" role="note" aria-label="pull quote" style="--win-pad:0.9rem 1rem 0.75rem">
 <div class="win__title"><span class="win__icon" aria-hidden="true">ℹ</span><span class="win__name">gorilla open source</span></div>
-<div class="win__body"><p class="msgbox__text"><span class="msgbox__i" aria-hidden="true">i</span><del class="theme-replaced">Anyone can participate in building software, and the entry fee is your will plus a clanker.</del> <mark class="theme-update">Open door. Public review. The work is the credential.</mark></p><div class="msgbox__foot"><button class="btn btn--default" type="button" data-win="close">OK</button></div></div>
+<div class="win__body"><p class="msgbox__text"><span class="msgbox__i" aria-hidden="true">i</span><del class="theme-replaced">Anyone can participate in building software, and the entry fee is your will plus a clanker.</del> <mark class="theme-update">Anyone can participate in building software, and the entry fee is your idea plus your clankers work.</mark></p><div class="msgbox__foot"><button class="btn btn--default" type="button" data-win="close">OK</button></div></div>
 </aside>
 
 ## Gorilla open source
