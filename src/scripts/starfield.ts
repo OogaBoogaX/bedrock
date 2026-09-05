@@ -7,7 +7,6 @@ interface Star {
   radius: number;
   alpha: number;
   color: string;
-  phase: number;
 }
 
 interface Meteor {
@@ -73,7 +72,6 @@ function decodeCatalog(): Star[] {
       radius: 0.56 + Math.pow(strength, 1.5) * 2.15,
       alpha: 0.42 + Math.pow(strength, 1.15) * 0.58,
       color: temperatureColor(kelvin),
-      phase: (i * 2.399963229728653) % TAU,
     });
   }
   return stars;
@@ -137,7 +135,7 @@ export function initStarfield(): () => void {
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    drawSky(performance.now());
+    drawSky();
   };
 
   const spawnMeteor = () => {
@@ -155,7 +153,7 @@ export function initStarfield(): () => void {
     });
   };
 
-  const drawSky = (now: number) => {
+  const drawSky = () => {
     ctx.clearRect(0, 0, width, height);
     const wallTime = Date.now() * 0.001;
     const autoRotation = reduced ? 0 : (wallTime % AUTO_ROTATION_PERIOD) * AUTO_ROTATION_SPEED;
@@ -167,8 +165,6 @@ export function initStarfield(): () => void {
     const cosDec = Math.cos(centerDec);
     const sinDec = Math.sin(centerDec);
     const focal = Math.max(width * 0.31, height * 0.44);
-    const time = now * 0.001;
-
     for (const star of stars) {
       const right = -sinRa * star.x + cosRa * star.z;
       const forward = cosDec * (cosRa * star.x + sinRa * star.z) + sinDec * star.y;
@@ -177,13 +173,7 @@ export function initStarfield(): () => void {
       const sx = width * 0.5 + (right / forward) * focal;
       const sy = height * 0.5 - (up / forward) * focal;
       if (sx < -4 || sx > width + 4 || sy < -4 || sy > height + 4) continue;
-      const twinkleStrength = Math.max(0, Math.min(1, (star.radius - 0.95) / 1.0));
-      const twinkleWave = reduced
-        ? 0
-        : Math.sin(time * (1.2 + star.radius * 0.11) + star.phase) * 0.52
-          + Math.sin(time * (2.35 + star.radius * 0.08) + star.phase * 1.61) * 0.31
-          + Math.sin(time * (3.7 + star.radius * 0.05) + star.phase * 0.73) * 0.17;
-      const twinkle = 1 + twinkleWave * 0.022 * twinkleStrength;
+      const brightness = Math.max(0, Math.min(1, (star.radius - 0.95) / 1.0));
       const radius = star.radius * (0.86 + Math.min(0.3, 1 / forward) * 0.18);
       if (star.radius > 1.35) {
         const glowRadius = radius * 2.6;
@@ -191,19 +181,19 @@ export function initStarfield(): () => void {
         glow.addColorStop(0, star.color);
         glow.addColorStop(0.22, star.color);
         glow.addColorStop(1, "transparent");
-        ctx.globalAlpha = star.alpha * (0.07 + twinkleStrength * 0.04);
+        ctx.globalAlpha = star.alpha * (0.07 + brightness * 0.04);
         ctx.fillStyle = glow;
         ctx.beginPath();
         ctx.arc(sx, sy, glowRadius, 0, TAU);
         ctx.fill();
       }
-      ctx.globalAlpha = star.alpha * twinkle;
+      ctx.globalAlpha = star.alpha;
       ctx.fillStyle = star.color;
       ctx.beginPath();
       ctx.arc(sx, sy, radius, 0, TAU);
       ctx.fill();
       if (star.radius > 1.55) {
-        ctx.globalAlpha = star.alpha * (0.12 + twinkleStrength * 0.06);
+        ctx.globalAlpha = star.alpha * (0.12 + brightness * 0.06);
         ctx.fillRect(sx - radius * 2, sy - 0.25, radius * 4, 0.5);
         ctx.fillRect(sx - 0.25, sy - radius * 2, 0.5, radius * 4);
       }
@@ -264,7 +254,7 @@ export function initStarfield(): () => void {
       if (Math.abs(skyPitch) > TAU * 4) skyPitch = wrapAngle(skyPitch);
       if (skyPositionDirty && now - lastPositionSave > 500) persistSkyPosition(now);
     }
-    drawSky(now);
+    drawSky();
     if (!reduced) drawMeteors(dt, now);
     if (!reduced && !document.hidden) raf = requestAnimationFrame(frame);
   };
@@ -314,7 +304,7 @@ export function initStarfield(): () => void {
     dragTime = event.timeStamp;
     document.documentElement.classList.add("sky-dragging");
     event.preventDefault();
-    if (reduced) drawSky(performance.now());
+    if (reduced) drawSky();
   };
 
   const endSkyDrag = (event: PointerEvent) => {
