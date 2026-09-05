@@ -10,7 +10,7 @@ const paths = cavemen.map(memberPath);
   <hr class="hr" />
   <div class="container footer__inner">
     <div class="counter" data-counter>
-      <span class="counter__label"><del class="theme-replaced">you are visitor number</del>{" "}<mark class="theme-update">recorded site visits</mark></span>
+      <span class="counter__label">recorded site visits</span>
       <span class="odometer is-pending" aria-live="polite" aria-label="Loading recorded site visits">
         {[0, 1, 2, 3, 4, 5, 6, 7].map(() => (
           <span class="odometer__digit">
@@ -18,7 +18,7 @@ const paths = cavemen.map(memberPath);
           </span>
         ))}
       </span>
-      <span class="counter__note"><del class="theme-replaced">since the first grunt. counted on fingers.</del>{" "}<mark class="theme-update" data-counter-status>privacy-friendly. no cookies. updates periodically.</mark></span>
+      <span class="counter__note" data-counter-status>privacy-friendly. no cookies. updates periodically.</span>
     </div>
 
     <div class="badges" aria-label="badges">
@@ -29,7 +29,7 @@ const paths = cavemen.map(memberPath);
       <a class="badge88" href="#method" style="--badge-bg:#c0c0c0">made with<br />clanker</a>
       <a class="badge88" href="#caves" style="--badge-bg:#000080;--badge-fg:#fff">bring your<br />own entropy</a>
       <span class="badge88" style="--badge-bg:#ff00ff;--badge-fg:#fff">branch:<br />rock</span>
-      <a class="badge88 badge88--review" href="#tribe" style="--badge-bg:#fff"><del class="theme-replaced">no degree required</del> <mark class="theme-update">open door<br />public review</mark></a>
+      <a class="badge88" href="#tribe" style="--badge-bg:#fff">open door<br />public review</a>
     </div>
 
     <nav class="webring" aria-label="Ooga Booga web ring">
