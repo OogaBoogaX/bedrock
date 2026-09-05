@@ -3,7 +3,7 @@ import Window from "@/components/Window.astro";
 import { members, contributors, cavemen, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
-const kinds = assignKinds(cavemen.map((m) => m.login));
+const kinds = assignKinds(members.map((m) => m.login));
 const max = Math.max(1, ...cavemen.map((member) => member.score));
 const memberLogins = new Set(members.map((member) => member.login.toLowerCase()));
 ---
@@ -24,8 +24,9 @@ const memberLogins = new Set(members.map((member) => member.login.toLowerCase())
       {
         cavemen.map((m) => {
           const rank = rankOf(m.score);
-          const kind = kinds.get(m.login) ?? "cube";
-          const affiliation = memberLogins.has(m.login.toLowerCase()) ? "org member" : "contributor";
+          const isOrgMember = memberLogins.has(m.login.toLowerCase());
+          const kind = isOrgMember ? (kinds.get(m.login) ?? "cube") : "cube";
+          const affiliation = isOrgMember ? "org member" : "contributor";
           return (
             <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`} draggable="false">
               <Window as="article" title={`${m.login}.exe`} iconSrc={avatarUrl(m, 32)} pad="0.6rem" controls="decorative">

@@ -29,10 +29,10 @@ interface Props {
 }
 
 const { member, index } = Astro.props;
-const kinds = assignKinds(cavemen.map((m) => m.login));
-const kind = kinds.get(member.login) ?? "cube";
-const model = MODELS[member.login];
 const isOrgMember = members.some((candidate) => candidate.login.toLowerCase() === member.login.toLowerCase());
+const kinds = assignKinds(members.map((m) => m.login));
+const kind = isOrgMember ? (kinds.get(member.login) ?? "cube") : "cube";
+const model = isOrgMember ? MODELS[member.login] : undefined;
 const rank = rankOf(member.score);
 const name = displayName(member);
 const prev = cavemen[(index - 1 + cavemen.length) % cavemen.length];
