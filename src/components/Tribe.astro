@@ -1,10 +1,11 @@
 ---
 import Window from "@/components/Window.astro";
-import { members, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
+import { members, friends, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
 const kinds = assignKinds(members.map((m) => m.login));
 const max = Math.max(1, ...members.map((member) => member.score));
+const cavemen = members.length + friends.length;
 ---
 
 <section class="section" id="tribe">
@@ -13,8 +14,9 @@ const max = Math.max(1, ...members.map((member) => member.score));
       <span class="section__kicker">the roster</span>
       <h2 class="section__title">the tribe</h2>
       <p class="section__lede">
-        {members.length} cavemen, one org, <del class="theme-replaced">zero degrees checked.</del>{" "}<mark class="theme-update">their ideas and work speak for themselves.</mark> click one to open
-        their file. impact scores refresh from public GitHub activity every 15 minutes.
+        <del class="theme-replaced">{members.length} cavemen, one org, zero degrees checked.</del>{" "}
+        <mark class="theme-update">one org, {cavemen} cavemen ({members.length} members + {friends.length} contributors), ideas are welcome. the work gets reviewed.</mark>{" "}
+        click a member to open their file. impact scores refresh from public GitHub activity every 15 minutes.
       </p>
     </div>
 
