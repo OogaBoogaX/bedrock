@@ -1,11 +1,14 @@
 import {
   BoxGeometry,
+  BufferGeometry,
   CircleGeometry,
   ConeGeometry,
   CylinderGeometry,
   DataTexture,
   DodecahedronGeometry,
+  DoubleSide,
   EdgesGeometry,
+  Float32BufferAttribute,
   Group,
   LineBasicMaterial,
   LineSegments,
@@ -21,7 +24,6 @@ import {
   Texture,
   TextureLoader,
   TorusGeometry,
-  TubeGeometry,
   Vector3,
   type ColorRepresentation,
 } from "three";
@@ -68,6 +70,118 @@ function faceBox(size: number, avatar: Texture, skin: ColorRepresentation, depth
 }
 
 const pick = <T>(r: () => number, list: readonly T[]): T => list[Math.floor(r() * list.length)];
+
+/** Build a tube whose radius can change along its path. */
+function profiledTube(
+  curve: QuadraticBezierCurve3,
+  tubularSegments: number,
+  radialSegments: number,
+  radiusAt: (t: number) => number,
+): BufferGeometry {
+  const geometry = new BufferGeometry();
+  const frames = curve.computeFrenetFrames(tubularSegments, false);
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+  const point = new Vector3();
+  const offset = new Vector3();
+
+  for (let i = 0; i <= tubularSegments; i++) {
+    const t = i / tubularSegments;
+    curve.getPointAt(t, point);
+    const radius = radiusAt(t);
+
+    for (let j = 0; j <= radialSegments; j++) {
+      const angle = (j / radialSegments) * Math.PI * 2;
+      offset
+        .copy(frames.normals[i])
+        .multiplyScalar(Math.cos(angle))
+        .addScaledVector(frames.binormals[i], Math.sin(angle))
+        .multiplyScalar(radius);
+      positions.push(point.x + offset.x, point.y + offset.y, point.z + offset.z);
+      uvs.push(t, j / radialSegments);
+    }
+  }
+
+  for (let i = 0; i < tubularSegments; i++) {
+    for (let j = 0; j < radialSegments; j++) {
+      const a = i * (radialSegments + 1) + j;
+      const b = (i + 1) * (radialSegments + 1) + j;
+      const c = b + 1;
+      const d = a + 1;
+      indices.push(a, b, d, b, c, d);
+    }
+  }
+
+  geometry.setIndex(indices);
+  geometry.setAttribute("position", new Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+/** Build a circular decal that follows both the bend and roundness of a tube. */
+function curvedTubePatch(
+  curve: QuadraticBezierCurve3,
+  radiusAt: (t: number) => number,
+  halfWidth: number,
+  halfHeight: number,
+  lift: number,
+): BufferGeometry {
+  const geometry = new BufferGeometry();
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+  const curveLength = curve.getLength();
+  const rings = 8;
+  const segments = 48;
+  const point = new Vector3();
+  const tangent = new Vector3();
+  const up = new Vector3();
+
+  const addVertex = (localX: number, localY: number) => {
+    const t = Math.max(0, Math.min(1, 0.5 + localX / curveLength));
+    curve.getPointAt(t, point);
+    curve.getTangentAt(t, tangent).normalize();
+    up.set(-tangent.y, tangent.x, 0).normalize();
+    const fruitRadius = radiusAt(t);
+    const patchRadius = fruitRadius + lift;
+    const around = localY / fruitRadius;
+    positions.push(
+      point.x + up.x * Math.sin(around) * patchRadius,
+      point.y + up.y * Math.sin(around) * patchRadius,
+      point.z + Math.cos(around) * patchRadius,
+    );
+    uvs.push(0.5 + localX / (2 * halfWidth), 0.5 + localY / (2 * halfHeight));
+  };
+
+  addVertex(0, 0);
+  for (let ring = 1; ring <= rings; ring++) {
+    const scale = ring / rings;
+    for (let segment = 0; segment < segments; segment++) {
+      const angle = (segment / segments) * Math.PI * 2;
+      addVertex(Math.cos(angle) * halfWidth * scale, Math.sin(angle) * halfHeight * scale);
+    }
+  }
+
+  for (let segment = 0; segment < segments; segment++) {
+    indices.push(0, 1 + segment, 1 + ((segment + 1) % segments));
+  }
+  for (let ring = 2; ring <= rings; ring++) {
+    const inner = 1 + (ring - 2) * segments;
+    const outer = 1 + (ring - 1) * segments;
+    for (let segment = 0; segment < segments; segment++) {
+      const next = (segment + 1) % segments;
+      indices.push(inner + segment, outer + segment, outer + next, inner + segment, outer + next, inner + next);
+    }
+  }
+
+  geometry.setIndex(indices);
+  geometry.setAttribute("position", new Float32BufferAttribute(positions, 3));
+  geometry.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
+  geometry.computeVertexNormals();
+  return geometry;
+}
 
 const SKINS = [0xf1c27d, 0xe0ac69, 0xc68642, 0x8d5524, 0xffdbac] as const;
 const FURS = [0x3b2a1a, 0x1f1f1f, 0x5a3a20, 0x2a2a3a] as const;
@@ -241,29 +355,53 @@ function crt(avatar: Texture, r: () => number): Character {
 
 function banana(avatar: Texture, r: () => number): Character {
   const g = new Group();
-  const curve = new QuadraticBezierCurve3(new Vector3(-1.0, 0.6, 0), new Vector3(0, -1.1, 0), new Vector3(1.0, 0.6, 0));
-  const fruit = mesh(new TubeGeometry(curve, 28, 0.27, 12, false), toon(pick(r, [0xffe135, 0xffd400, 0xf5c400] as const)));
+  // Wide, shallow crescent: long shoulders like the low-poly reference, while
+  // the profiled tube below keeps the finished fruit smoothly rounded.
+  const curve = new QuadraticBezierCurve3(new Vector3(-1.3, 0.38, 0), new Vector3(0, -0.68, 0), new Vector3(1.3, 0.38, 0));
+  // A banana is fullest through its belly and narrows smoothly into both tips.
+  const radiusAt = (t: number) => 0.11 + 0.25 * Math.pow(Math.sin(Math.PI * t), 0.72);
+  const fruitMaterial = toon(pick(r, [0xffe135, 0xffd400, 0xf5c400] as const));
+  fruitMaterial.transparent = false;
+  fruitMaterial.opacity = 1;
+  fruitMaterial.depthTest = true;
+  fruitMaterial.depthWrite = true;
+  fruitMaterial.side = DoubleSide;
+  const fruit = mesh(profiledTube(curve, 36, 14, radiusAt), fruitMaterial);
   g.add(fruit);
   for (const t of [0, 1]) {
     const p = curve.getPoint(t);
-    const tip = mesh(new ConeGeometry(0.26, 0.4, 10), toon(0x5a3a00), p.x, p.y, p.z);
-    tip.lookAt(curve.getPoint(t === 0 ? 0.08 : 0.92));
-    tip.rotateX(-Math.PI / 2);
+    const outward = curve.getTangent(t).normalize();
+    if (t === 0) outward.negate();
+    const isBrownEnd = t === 1;
+    // Real banana ends are short continuations of the fruit's centerline:
+    // a compact green stem at the upper end and a smaller dried blossom below.
+    const tipLength = isBrownEnd ? 0.1 : 0.19;
+    const outerRadius = isBrownEnd ? 0.045 : 0.065;
+    const tipMaterial = toon(isBrownEnd ? 0x5a3a00 : 0x718c2b);
+    tipMaterial.transparent = false;
+    tipMaterial.opacity = 1;
+    tipMaterial.depthTest = true;
+    tipMaterial.depthWrite = true;
+    tipMaterial.side = DoubleSide;
+    const tip = mesh(new CylinderGeometry(outerRadius, radiusAt(t), tipLength, 16, 2), tipMaterial);
+    // CylinderGeometry points along +Y. Its base follows the tube's end ring,
+    // with a tiny inset that hides floating-point seams without a visible bulge.
+    tip.quaternion.setFromUnitVectors(new Vector3(0, 1, 0), outward);
+    tip.position.copy(p).addScaledVector(outward, tipLength / 2 - 0.008);
     g.add(tip);
   }
-  // seam lines
-  for (const s of [-1, 1]) {
-    const seam = new Mesh(new TubeGeometry(curve, 28, 0.015, 4, false), toon(0xb58a00));
-    seam.position.set(0, 0.03 * s, 0.27 * s);
-    g.add(seam);
-  }
-  // sticker
-  const sticker = new Group();
-  const mid = curve.getPoint(0.5);
-  sticker.position.set(mid.x, mid.y + 0.05, 0.3);
-  sticker.add(mesh(new CircleGeometry(0.38, 32), flat(0x1a4fbf), 0, 0, -0.005));
-  sticker.add(mesh(new CircleGeometry(0.33, 32), new MeshBasicMaterial({ map: avatar })));
-  g.add(sticker);
+  // The sticker is a curved decal rather than a flat disk. Its oversized blue
+  // backing wraps just beyond the silhouette, leaving slim top/bottom edges
+  // visible from behind while the opaque fruit hides the logo itself.
+  const stickerBlue = flat(0x1a4fbf);
+  stickerBlue.side = DoubleSide;
+  const stickerBacking = mesh(curvedTubePatch(curve, radiusAt, 0.36, 0.48, 0.012), stickerBlue);
+  // Let the artwork fill more of its backing so the blue reads as a slim
+  // sticker rim instead of a second, heavy badge around it.
+  const stickerFace = mesh(curvedTubePatch(curve, radiusAt, 0.315, 0.35, 0.018), new MeshBasicMaterial({ map: avatar }));
+  stickerBacking.name = "banana-sticker";
+  stickerFace.name = "banana-sticker";
+  g.add(stickerBacking, stickerFace);
 
   g.scale.setScalar(0.95);
   g.position.y = -0.1;

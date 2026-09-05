@@ -24,7 +24,7 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
           const rank = rankOf(m.bananas);
           const kind = kinds.get(m.login) ?? "cube";
           return (
-            <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`}>
+            <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`} draggable="false">
               <Window as="article" title={`${m.login}.exe`} iconSrc={avatarUrl(m, 32)} pad="0.6rem" controls="decorative">
                 <div
                   class="card__view"
@@ -33,9 +33,10 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
                   data-kind={kind}
                   data-avatar={m.avatar}
                   data-model={MODELS[m.login]?.url}
+                  data-drag
                   title={MODELS[m.login]?.label ?? KIND_LABEL[kind]}
                 >
-                  <img class="card__fallback" src={avatarUrl(m, 256)} alt="" width="256" height="256" loading="lazy" decoding="async" />
+                  <img class="card__fallback" src={avatarUrl(m, 256)} alt="" width="256" height="256" loading="lazy" decoding="async" draggable="false" />
                 </div>
                 <div class="card__meta">
                   <strong class="card__name">{displayName(m)}</strong>
@@ -85,6 +86,13 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
     background: radial-gradient(circle at 50% 42%, #3a3a3a, #050505 74%);
     box-shadow: var(--field-in);
     overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+  }
+  .card__view:active {
+    cursor: grabbing;
   }
   .card__fallback {
     position: absolute;
@@ -94,6 +102,8 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
     opacity: 0.25;
     filter: grayscale(1);
     transition: opacity 300ms ease;
+    pointer-events: none;
+    -webkit-user-drag: none;
   }
   .card__view.is-ready .card__fallback {
     opacity: 0;

@@ -64,12 +64,29 @@ body {
   line-height: 1.5;
   color: var(--paper);
   background-color: var(--ink);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='12' cy='30' r='1'/%3E%3Ccircle cx='70' cy='12' r='.7'/%3E%3Ccircle cx='150' cy='40' r='1.2'/%3E%3Ccircle cx='210' cy='90' r='.8'/%3E%3Ccircle cx='40' cy='120' r='.6'/%3E%3Ccircle cx='120' cy='140' r='1'/%3E%3Ccircle cx='190' cy='180' r='.7'/%3E%3Ccircle cx='80' cy='200' r='1.1'/%3E%3Ccircle cx='230' cy='230' r='.6'/%3E%3Ccircle cx='160' cy='215' r='.9'/%3E%3C/g%3E%3Cg fill='%23fff' opacity='.35'%3E%3Ccircle cx='100' cy='70' r='.7'/%3E%3Ccircle cx='25' cy='170' r='.8'/%3E%3Ccircle cx='200' cy='20' r='.6'/%3E%3Ccircle cx='60' cy='60' r='.5'/%3E%3Ccircle cx='140' cy='100' r='.5'/%3E%3C/g%3E%3C/svg%3E");
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 3l3 2c-1 7 2 14 9 17l-1 3C7 22 2 12 5 3z' fill='%23ffe135' stroke='%23000' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M5 3l3 2c0 2 0 4 1 6' fill='none' stroke='%23000' stroke-width='1' opacity='.4'/%3E%3Cpath d='M4 2l2 1-1 2z' fill='%235a3a00'/%3E%3C/svg%3E")
+  position: relative;
+  isolation: isolate;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 3L7.1 4.4C6.9 10.8 11 18 19.3 21.1L18 23.5C8.5 22.5 1.5 13.1 5 3Z' fill='%23ffe135' stroke='%23000' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M5.2 3.4L7 4.7C7.2 8.2 8.2 11.7 10.4 15' fill='none' stroke='%23000' stroke-width='1' opacity='.4'/%3E%3Cpath d='M4.5 2.4L6.2 3L7.1 4.4L5.9 5.1L5 3Z' fill='%23718c2b'/%3E%3Cpath d='M19.3 21.1L18 23.5L16.9 22.7L18.3 20.8Z' fill='%235a3a00'/%3E%3C/svg%3E")
       2 2,
     auto;
   overflow-x: hidden;
   padding-bottom: 24px;
+}
+
+.starfield-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+html.sky-dragging,
+html.sky-dragging * {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }
 
 ::selection {
@@ -155,7 +172,10 @@ p {
   padding: 0.1em 0.06em 0.3em;
   margin: -0.1em -0.06em -0.3em;
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 1.05;
+  /* Keep descenders and their drop-shadow extrusion inside the paint area. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
   letter-spacing: -0.02em;
   color: var(--banana);
   background: linear-gradient(180deg, #fff7b0 0%, var(--banana) 45%, var(--banana-deep) 100%);
@@ -385,15 +405,18 @@ p {
 .marquee__track {
   display: inline-flex;
   width: max-content;
-  gap: var(--marquee-gap, 3rem);
   padding-left: 0;
   animation: marquee var(--marquee-speed, 30s) linear infinite;
   will-change: transform;
 }
-.marquee__track > * {
+.marquee__group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--marquee-gap, 3rem);
+  padding-right: var(--marquee-gap, 3rem);
   flex: none;
 }
-.marquee:hover .marquee__track {
+.marquee:not([data-draggable-marquee]):hover .marquee__track {
   animation-play-state: paused;
 }
 @keyframes marquee {
@@ -414,17 +437,18 @@ p {
 /* Win98 checkbox */
 .check {
   display: flex;
-  gap: 0.5rem;
-  align-items: baseline;
+  gap: 0.65rem;
+  align-items: flex-start;
   font-size: 0.9rem;
+  line-height: 1.45;
 }
 .check input {
   appearance: none;
   flex: none;
-  width: 13px;
-  height: 13px;
-  margin: 0;
-  transform: translateY(3px);
+  width: 18px;
+  height: 18px;
+  margin: 0.12em 0 0;
+  transform: none;
   background: var(--paper);
   box-shadow: var(--field-in);
   position: relative;
@@ -432,13 +456,14 @@ p {
 .check input:checked::after {
   content: "";
   position: absolute;
-  left: 4px;
-  top: 1px;
-  width: 3px;
-  height: 7px;
-  border: solid var(--ink);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+  left: 3px;
+  top: 3px;
+  width: 12px;
+  height: 12px;
+  border: 0;
+  background: var(--ink);
+  clip-path: polygon(0 45%, 18% 27%, 41% 50%, 80% 0, 100% 17%, 42% 100%);
+  transform: none;
 }
 .check input[type="radio"] {
   border-radius: 50%;
@@ -524,17 +549,6 @@ p {
     transform: translateY(14px) scale(0.2) rotate(90deg);
     opacity: 0;
   }
-}
-
-/* CRT scanlines, barely there */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  pointer-events: none;
-  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 3px);
-  mix-blend-mode: overlay;
 }
 
 @media (prefers-reduced-motion: reduce) {
