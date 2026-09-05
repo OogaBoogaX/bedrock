@@ -95,6 +95,13 @@ html.sky-dragging * {
 }
 
 /* Temporary review marker for the open-door/public-review copy pass. */
+.theme-replaced {
+  text-decoration-line: line-through;
+  text-decoration-color: #f00;
+  text-decoration-thickness: 0.14em;
+  text-decoration-skip-ink: none;
+}
+
 .theme-update {
   padding: 0 0.16em;
   color: #fff !important;
@@ -511,6 +518,11 @@ p {
 .badge88:hover {
   color: var(--badge-fg, var(--ink));
   text-decoration: none;
+}
+.badge88--review {
+  width: 132px;
+  height: 35px;
+  font-size: 9px;
 }
 .badge88--stripes {
   background: repeating-linear-gradient(135deg, var(--banana) 0 8px, var(--ink) 8px 16px);

@@ -61,17 +61,17 @@ All of it happened on live X Spaces. Listeners who had never opened a pull reque
 
 That same week, on one of the nightly Spaces, Brian gave the group its name. The joke underneath it is that prompting is grunting. We talk to clankers in plain words, like cavemen pointing at a problem, and software comes back. A caveman could do the same, because building software now takes an ask, and intelligence is available to anyone who asks, no matter where they start. We have been getting smarter since the first prompt, but the name stays. A caveman can build. Engineers had been teasing that anyone can prompt and call themselves an engineer now, and instead of arguing we made it the brand. We renamed the main branch of the repo to rock.
 
-The organization runs like the joke, out in the open. Meetings happen on Wicked's X Spaces, almost daily, and anyone can listen or grab the mic, from technical decisions to organizational ones. <mark class="theme-update">The door is open, the work is public, and nobody is pretending to be the smartest group in bitcoin.</mark>
+The organization runs like the joke, out in the open. Meetings happen on Wicked's X Spaces, almost daily, and anyone can listen or grab the mic, from technical decisions to organizational ones. <del class="theme-replaced">The repo is public and anyone can contribute. We are not gatekeeping intelligence, and we are not pretending to be the smartest group in bitcoin.</del> <mark class="theme-update">The door is open, the work is public, and nobody is pretending to be the smartest group in bitcoin.</mark>
 
 ## Clankers reviewing clankers
 
 The obvious objection is that this produces AI slop. Some of it starts that way. The fix is review, and clankers changed the economics of review too. Open source has always depended on many people reading the code, and agents multiply the readers. On EntropyLab, code written by non-engineers gets reviewed by engineers and by agents on frontier models, in public, with the discussion happening on a live Space.
 
-The method matters more than the tool. We call it gorilla open source. Anyone can participate in building software, and the entry fee is your will plus a clanker. <mark class="theme-update">You do not need permission to begin. Bring an idea, show your work, and let the room review it in public.</mark>
+The method matters more than the tool. We call it gorilla open source. Anyone can participate in building software, and the entry fee is your will plus a clanker. <del class="theme-replaced">You do not need a degree or permission. You need an idea, and a room that will review you in public.</del> <mark class="theme-update">You do not need permission to begin. Bring an idea, show your work, and let the room review it in public.</mark>
 
 <aside class="win win--active msgbox" role="note" aria-label="pull quote" style="--win-pad:0.9rem 1rem 0.75rem">
 <div class="win__title"><span class="win__icon" aria-hidden="true">ℹ</span><span class="win__name">gorilla open source</span></div>
-<div class="win__body"><p class="msgbox__text"><span class="msgbox__i" aria-hidden="true">i</span><mark class="theme-update">Open door. Public review. The work is the credential.</mark></p><div class="msgbox__foot"><button class="btn btn--default" type="button" data-win="close">OK</button></div></div>
+<div class="win__body"><p class="msgbox__text"><span class="msgbox__i" aria-hidden="true">i</span><del class="theme-replaced">Anyone can participate in building software, and the entry fee is your will plus a clanker.</del> <mark class="theme-update">Open door. Public review. The work is the credential.</mark></p><div class="msgbox__foot"><button class="btn btn--default" type="button" data-win="close">OK</button></div></div>
 </aside>
 
 ## Gorilla open source

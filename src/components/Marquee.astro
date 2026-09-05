@@ -1,6 +1,6 @@
 ---
 interface Props {
-  items: Array<string | { text: string; highlighted?: boolean }>;
+  items: Array<string | { text: string; highlighted?: boolean; previous?: string }>;
   speed?: string;
   class?: string;
 }
@@ -20,7 +20,12 @@ const textOf = (item: Props["items"][number]) => typeof item === "string" ? item
       <span class="marquee__group" aria-hidden={copy === 1 || undefined}>
         {items.map((item) => (
           <span class="ticker__item">
-            {typeof item === "string" || !item.highlighted ? textOf(item) : <mark class="theme-update">{item.text}</mark>}
+            {typeof item === "string" || !item.highlighted ? textOf(item) : (
+              <>
+                {item.previous && <><del class="theme-replaced">{item.previous}</del>{" "}</>}
+                <mark class="theme-update">{item.text}</mark>
+              </>
+            )}
           </span>
         ))}
       </span>
