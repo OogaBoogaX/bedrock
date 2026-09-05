@@ -82,7 +82,7 @@ That openness is also becoming a game. We are building one where anyone can see 
 
 <figure class="win shot" style="--win-pad:0">
 <div class="win__title"><span class="win__icon" aria-hidden="true">🦍</span><span class="win__name">ooga_booga_land.exe</span><span class="win__controls" aria-hidden="true"><span class="win__ctl">_</span><span class="win__ctl">□</span><span class="win__ctl">×</span></span></div>
-<div class="win__body"><img src="/img/ooga-booga-land.webp" width="1600" height="1017" alt="Screenshot of Ooga Booga Land, an island of caves: a voxel arena where blocky cavemen crowd around a pile of bananas shouting BOOGA! and BANANA!, with a bananas bar at the top, an EntropyLab sign in the world, and a loot toast at the bottom." loading="lazy" decoding="async" /></div>
+<div class="win__body"><img src="/img/ooga-booga-land.webp" width="3443" height="1925" alt="Screenshot of Ooga Booga Land: a voxel island with branching paths, caves, trees, scattered crates, and an EntropyLab building around a central campfire." loading="lazy" decoding="async" /></div>
 <figcaption>fig. 5, Ooga Booga Land. every cave is a repository. GitHub keeps score. the cavemen are us.</figcaption>
 </figure>
 

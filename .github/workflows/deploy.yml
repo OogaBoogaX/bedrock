@@ -20,6 +20,8 @@ jobs:
     name: Build · Astro site
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      PUBLIC_VISITS_API_URL: ${{ vars.VISITS_API_URL }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -29,6 +31,8 @@ jobs:
           cache: pnpm
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
+      - name: Test visit-count proxy
+        run: pnpm visits:test
       - name: Sync GitHub members, contributors, and impact scores
         # A read:org PAT in TRIBE_GITHUB_TOKEN also discovers private memberships;
         # the workflow token still covers all public scoring data.

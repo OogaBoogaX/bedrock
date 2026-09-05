@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "oogabooga-visits",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-05",
+  "workers_dev": true,
+  "preview_urls": false,
+  "secrets": {
+    "required": ["GOATCOUNTER_API_TOKEN"]
+  }
+}
