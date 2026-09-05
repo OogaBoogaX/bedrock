@@ -10,7 +10,7 @@ import { manifesto } from "@/lib/manifesto";
     <h1 class="mf__title"><span class="wordart">{manifesto.title.toLowerCase()}</span></h1>
     <p class="mf__sub">{manifesto.subtitle}</p>
     <p class="mf__meta">
-      by @{manifesto.authorHandle} · {manifesto.minutes} min read · {manifesto.words.toLocaleString("en-US")} words · <del class="theme-replaced">0 degrees required</del>{" "}<mark class="theme-update">built in public</mark>
+      by @{manifesto.authorHandle} · <del class="theme-replaced">{manifesto.minutes} min read</del>{" "}<mark class="theme-update">{manifesto.minutes} minute read</mark> · {manifesto.words.toLocaleString("en-US")} words · <del class="theme-replaced">0 degrees required</del>{" "}<mark class="theme-update">how one prompt became a tribe.</mark>
     </p>
     <div class="mf__wordpad">
       <Window title="gorilla_open_source.doc - WordPad" icon="📄" pad="0" controls="decorative" active>
