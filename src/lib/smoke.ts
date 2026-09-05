@@ -50,7 +50,7 @@ export function addMrHodlSmokeScene(container: Group, bounds: Box3): (time: numb
   const height = bounds.max.y - bounds.min.y;
   const depth = bounds.max.z - bounds.min.z;
 
-  const particles: SmokeParticle[] = Array.from({ length: 38 }, (_, index) => {
+  const particles: SmokeParticle[] = Array.from({ length: 44 }, (_, index) => {
     const material = new SpriteMaterial({
       map: texture(),
       color: index % 5 === 0 ? 0x9da9a3 : 0xc2cbc7,
@@ -76,7 +76,7 @@ export function addMrHodlSmokeScene(container: Group, bounds: Box3): (time: numb
       z: (sequence(index, 5) - 0.5) * depth * 1.45,
       drift: (sequence(index, 6) - 0.5) * width * 0.3,
       lift: 0.76 + sequence(index, 7) * 0.46,
-      size: 0.72 + sequence(index, 8) * 0.54,
+      size: 0.78 + sequence(index, 8) * 0.58,
       spin: (sequence(index, 9) - 0.5) * 0.3,
     };
   });
@@ -100,14 +100,14 @@ export function addMrHodlSmokeScene(container: Group, bounds: Box3): (time: numb
         particle.z + turbulentZ,
       );
 
-      const scale = (0.08 + smoothstep(0.02, 1, age) * width * 0.3) * particle.size;
+      const scale = (0.08 + smoothstep(0.02, 1, age) * width * 0.32) * particle.size;
       particle.sprite.scale.set(scale, scale * (0.82 + age * 0.28), 1);
       particle.material.rotation = particle.seed + t * particle.spin + age * 1.4;
 
       const form = smoothstep(0.015, 0.11, age);
-      const dissipate = 1 - smoothstep(0.58, 1, age);
+      const dissipate = 1 - smoothstep(0.62, 1, age);
       const densityVariation = 0.72 + Math.sin(particle.seed * 2.3) * 0.14;
-      particle.material.opacity = form * dissipate * densityVariation * 0.24;
+      particle.material.opacity = form * dissipate * densityVariation * 0.27;
       particle.sprite.visible = particle.material.opacity > 0.002;
     }
   };

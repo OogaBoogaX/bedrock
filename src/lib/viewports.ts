@@ -1,4 +1,4 @@
-import { DirectionalLight, Group, HemisphereLight, PerspectiveCamera, Scene, Timer, Vector3, WebGLRenderer } from "three";
+import { DirectionalLight, Group, HemisphereLight, PerspectiveCamera, Raycaster, Scene, Timer, Vector2, Vector3, WebGLRenderer } from "three";
 import { buildCharacter, loadAvatar, type Character } from "./characters";
 import { hash } from "./hash";
 import type { Kind } from "./kinds";
@@ -79,9 +79,19 @@ export function mountViewports(root: ParentNode): () => void {
   const views: View[] = [];
   let raf = 0;
   let disposed = false;
+  let canvasScrollX = Number.NaN;
+  let canvasScrollY = Number.NaN;
+
+  const anchorCanvas = () => {
+    if (scrollX === canvasScrollX && scrollY === canvasScrollY) return;
+    canvasScrollX = scrollX;
+    canvasScrollY = scrollY;
+    canvas.style.transform = `translate3d(${canvasScrollX}px, ${canvasScrollY}px, 0)`;
+  };
 
   const resize = () => {
     renderer.setSize(innerWidth, innerHeight, false);
+    anchorCanvas();
   };
   resize();
   addEventListener("resize", resize);
@@ -234,9 +244,21 @@ export function mountViewports(root: ParentNode): () => void {
       });
     }
     if (wheelZoom) {
+      const raycaster = new Raycaster();
+      const pointer = new Vector2();
       el.addEventListener(
         "wheel",
         (e) => {
+          if (!view.character) return;
+          const rect = el.getBoundingClientRect();
+          const overflow = rect.height * view.overflowY;
+          const renderHeight = rect.height + overflow * 2;
+          pointer.set(
+            ((e.clientX - rect.left) / rect.width) * 2 - 1,
+            1 - ((e.clientY - rect.top + overflow) / renderHeight) * 2,
+          );
+          raycaster.setFromCamera(pointer, view.camera);
+          if (!raycaster.intersectObject(view.rig, true).length) return;
           e.preventDefault();
           const direction = Math.sign(e.deltaY);
           const magnitude = e.deltaMode === WheelEvent.DOM_DELTA_PIXEL ? Math.min(1, Math.abs(e.deltaY) / 100) : 1;
@@ -269,6 +291,7 @@ export function mountViewports(root: ParentNode): () => void {
     const dt = Math.min(timer.getDelta(), 0.05);
     const t = timer.getElapsed();
     const h = innerHeight;
+    anchorCanvas();
 
     for (const view of views) {
       if (!view.visible || !view.character) continue;

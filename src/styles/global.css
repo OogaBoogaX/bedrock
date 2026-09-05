@@ -195,12 +195,14 @@ p {
 
 /* One WebGL canvas for every 3D viewport on the page; content stays clickable. */
 .viewports-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
   z-index: 5;
   pointer-events: none;
+  will-change: transform;
 }
 
 /* Windows 98 window */
