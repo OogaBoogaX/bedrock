@@ -1,6 +1,6 @@
 ---
 import Window from "@/components/Window.astro";
-import { members, friends, org, repos, totalScore } from "@/lib/tribe";
+import { cavemen, contributors, org, repos, totalScore } from "@/lib/tribe";
 
 const stars = repos.reduce((n, r) => n + r.stars, 0);
 const forks = repos.reduce((n, r) => n + r.forks, 0);
@@ -84,8 +84,8 @@ C:\TRIBE&gt; git push origin rock
             <label class="check"><input type="checkbox" checked disabled /> <del class="theme-replaced">no gatekeeping. no permission. no degree.</del>{" "}<mark class="theme-update">open entry. public review.</mark></label>
           </fieldset>
           <dl class="stats stats--grid">
-            <div><dt>cavemen</dt><dd>{members.length}</dd></div>
-            <div><dt>friends</dt><dd>{friends.length}</dd></div>
+            <div><dt>cavemen</dt><dd>{cavemen.length}</dd></div>
+            <div><dt>contributors</dt><dd>{contributors.length}</dd></div>
             <div><dt>caves</dt><dd>{repos.length}</dd></div>
             <div><dt>stars</dt><dd>{stars}</dd></div>
             <div><dt>forks</dt><dd>{forks}</dd></div>

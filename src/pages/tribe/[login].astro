@@ -4,6 +4,7 @@ import Window from "@/components/Window.astro";
 import Footer from "@/components/Footer.astro";
 import {
   members,
+  cavemen,
   rankOf,
   displayName,
   avatarUrl,
@@ -19,7 +20,7 @@ import {
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
 export function getStaticPaths() {
-  return members.map((member, index) => ({ params: { login: member.login.toLowerCase() }, props: { member, index } }));
+  return cavemen.map((member, index) => ({ params: { login: member.login.toLowerCase() }, props: { member, index } }));
 }
 
 interface Props {
@@ -28,13 +29,14 @@ interface Props {
 }
 
 const { member, index } = Astro.props;
-const kinds = assignKinds(members.map((m) => m.login));
+const kinds = assignKinds(cavemen.map((m) => m.login));
 const kind = kinds.get(member.login) ?? "cube";
 const model = MODELS[member.login];
+const isOrgMember = members.some((candidate) => candidate.login.toLowerCase() === member.login.toLowerCase());
 const rank = rankOf(member.score);
 const name = displayName(member);
-const prev = members[(index - 1 + members.length) % members.length];
-const next = members[(index + 1) % members.length];
+const prev = cavemen[(index - 1 + cavemen.length) % cavemen.length];
+const next = cavemen[(index + 1) % cavemen.length];
 const share = totalScore ? Math.round((member.score / totalScore) * 100) : 0;
 
 const socials = [
@@ -46,13 +48,13 @@ const socials = [
 ].filter((s): s is { label: string; value: string; href: string } => Boolean(s));
 
 const bio = member.bio?.replace(/\bnpub1[02-9ac-hj-np-z]{58}\b/gi, "").trim() || null;
-const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga Booga with a GitHub impact score of ${member.score}. ${bio ?? "Contact info, socials, and a spinning 3D caveman."}`;
+const description = `${name} (@${member.login}) is ${isOrgMember ? "an org member" : "a contributor"} with a ${rank.name} rank and GitHub impact score of ${member.score}. ${bio ?? "Contact info, socials, and a spinning 3D caveman."}`;
 ---
 
 <Base
   title={`${member.login} Properties — Team Ooga Booga`}
   description={description}
-  ogImage={`/og/tribe/${member.login.toLowerCase()}.png`}
+  ogImage={model ? `/og/tribe/${member.login.toLowerCase()}.png` : member.avatar}
   ogImageAlt={`${member.login} Properties: a Windows 98 dialog with ${name}'s avatar, rank ${rank.name} and GitHub impact score ${member.score}.`}
 >
   <main class="profile">

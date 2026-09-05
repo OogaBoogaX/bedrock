@@ -29,10 +29,9 @@ jobs:
           cache: pnpm
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
-      - name: Sync GitHub roster and impact scores
+      - name: Sync GitHub members, contributors, and impact scores
         # A read:org PAT in TRIBE_GITHUB_TOKEN also discovers private memberships;
         # the workflow token still covers all public scoring data.
-        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.TRIBE_GITHUB_TOKEN || github.token }}
         run: pnpm tribe:sync

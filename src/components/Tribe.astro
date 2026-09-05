@@ -1,11 +1,11 @@
 ---
 import Window from "@/components/Window.astro";
-import { members, friends, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
+import { members, contributors, cavemen, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
-const kinds = assignKinds(members.map((m) => m.login));
-const max = Math.max(1, ...members.map((member) => member.score));
-const cavemen = members.length + friends.length;
+const kinds = assignKinds(cavemen.map((m) => m.login));
+const max = Math.max(1, ...cavemen.map((member) => member.score));
+const memberLogins = new Set(members.map((member) => member.login.toLowerCase()));
 ---
 
 <section class="section" id="tribe">
@@ -15,16 +15,17 @@ const cavemen = members.length + friends.length;
       <h2 class="section__title">the tribe</h2>
       <p class="section__lede">
         <del class="theme-replaced">{members.length} cavemen, one org, zero degrees checked.</del>{" "}
-        <mark class="theme-update">one org, {cavemen} cavemen ({members.length} members + {friends.length} contributors), ideas are welcome. the work gets reviewed.</mark>{" "}
-        click a member to open their file. impact scores refresh from public GitHub activity every 15 minutes.
+        <mark class="theme-update">one org, {cavemen.length} cavemen ({members.length} members + {contributors.length} contributors), ideas are welcome. the work gets reviewed.</mark>{" "}
+        click a caveman to open their file. roster and impact scores refresh from public GitHub activity every 15 minutes.
       </p>
     </div>
 
     <div class="roster" data-roster>
       {
-        members.map((m) => {
+        cavemen.map((m) => {
           const rank = rankOf(m.score);
           const kind = kinds.get(m.login) ?? "cube";
+          const affiliation = memberLogins.has(m.login.toLowerCase()) ? "org member" : "contributor";
           return (
             <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`} draggable="false">
               <Window as="article" title={`${m.login}.exe`} iconSrc={avatarUrl(m, 32)} pad="0.6rem" controls="decorative">
@@ -42,7 +43,7 @@ const cavemen = members.length + friends.length;
                 </div>
                 <div class="card__meta">
                   <strong class="card__name">{displayName(m)}</strong>
-                  <span class="card__login">@{m.login}</span>
+                  <span class="card__login">@{m.login} · {affiliation}</span>
                   <span class="card__rank">{rank.name}</span>
                   <div class="progress progress--banana card__bar" title={`Impact score: ${m.score}`}>
                     <div class="progress__bar" style={`--value:${Math.max(4, Math.round((m.score / max) * 100))}%`} />

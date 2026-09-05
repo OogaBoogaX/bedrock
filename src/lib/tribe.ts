@@ -48,12 +48,14 @@ export interface Repo {
 
 export const tribe = data;
 export const members: Member[] = data.members;
-export const friends: Member[] = data.friends;
+export const contributors: Member[] = data.friends;
+export const friends = contributors;
+export const cavemen: Member[] = [...members, ...contributors];
 export const repos: Repo[] = data.repos;
 export const org = data.org;
 export const scoring = data.scoring;
 
-export const totalScore = [...members, ...friends].reduce((total, member) => total + member.score, 0);
+export const totalScore = cavemen.reduce((total, member) => total + member.score, 0);
 
 export const RANKS = [
   { min: 500, name: "silverback", blurb: "sustained impact across the caves" },

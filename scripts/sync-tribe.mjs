@@ -8,7 +8,8 @@
 //
 // Score = default-branch commits + merged PRs + substantive PR reviews
 //       + resolved issues, using the transparent weights below.
-// Contributors who are not members land in `friends` (no 3D card, just credit).
+// Contributors who are not members land in `friends` in the serialized snapshot;
+// the site combines both groups into one live character-card roster.
 //
 // Token lookup: $GITHUB_TOKEN, else `gh auth token`.
 
@@ -275,5 +276,5 @@ for (const person of people) {
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify(data, null, 2) + "\n");
 console.log(
-  `tribe.json: ${data.members.length} members (${source}), ${data.friends.length} friends, ${data.repos.length} repos${token ? "" : " [unauthenticated]"}`,
+  `tribe.json: ${data.members.length} members (${source}), ${data.friends.length} contributors, ${data.repos.length} repos${token ? "" : " [unauthenticated]"}`,
 );

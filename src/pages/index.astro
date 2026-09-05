@@ -7,17 +7,16 @@ import Manifesto from "@/components/Manifesto.astro";
 import Plan from "@/components/Plan.astro";
 import Wizard from "@/components/Wizard.astro";
 import Tribe from "@/components/Tribe.astro";
-import Friends from "@/components/Friends.astro";
 import Caves from "@/components/Caves.astro";
 import Join from "@/components/Join.astro";
 import Footer from "@/components/Footer.astro";
-import { members, repos } from "@/lib/tribe";
+import { cavemen, repos } from "@/lib/tribe";
 import { manifesto } from "@/lib/manifesto";
 
 const stars = repos.reduce((n, r) => n + r.stars, 0);
 const ticker = [
   "welcome to the official homepage of Team Ooga Booga",
-  `${members.length} cavemen · ${repos.length} cave · ${stars} stars`,
+  `${cavemen.length} cavemen · ${repos.length} cave · ${stars} stars`,
   {
     previous: `new: the manifesto is out. ${manifesto.minutes} minutes, zero degrees`,
     text: `new: the manifesto is out. ${manifesto.minutes} minute read. how one prompt became a tribe.`,
@@ -44,7 +43,6 @@ const ticker = [
     <Plan />
     <Wizard />
     <Tribe />
-    <Friends />
     <Caves />
     <Join />
   </main>

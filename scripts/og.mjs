@@ -17,7 +17,7 @@ const SCALE = 2;
 const cards = [
   { route: "og", file: "home.png" },
   { route: "og/manifesto", file: "manifesto.png" },
-  ...tribe.members.map((m) => ({ route: `og/tribe/${m.login.toLowerCase()}`, file: `tribe/${m.login.toLowerCase()}.png` })),
+  ...[...tribe.members, ...tribe.friends].map((m) => ({ route: `og/tribe/${m.login.toLowerCase()}`, file: `tribe/${m.login.toLowerCase()}.png` })),
 ];
 
 const build = spawnSync("pnpm", ["exec", "astro", "build"], { cwd: root, stdio: "inherit" });

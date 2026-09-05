@@ -1,10 +1,10 @@
 ---
 import Card from "@/layouts/Card.astro";
 import Window from "@/components/Window.astro";
-import { members, rankOf, displayName, avatarUrl, formatDate, totalScore, type Member } from "@/lib/tribe";
+import { cavemen, rankOf, displayName, avatarUrl, formatDate, totalScore, type Member } from "@/lib/tribe";
 
 export function getStaticPaths() {
-  return members.map((member) => ({ params: { login: member.login.toLowerCase() }, props: { member } }));
+  return cavemen.map((member) => ({ params: { login: member.login.toLowerCase() }, props: { member } }));
 }
 
 interface Props {
