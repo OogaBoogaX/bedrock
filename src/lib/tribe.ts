@@ -41,6 +41,7 @@ export interface Repo {
   stars: number;
   forks: number;
   openIssues: number;
+  openPulls: number;
   defaultBranch: string;
   language: string | null;
   pushedAt: string;
@@ -62,7 +63,7 @@ export const RANKS = [
   { min: 200, name: "cave architect", blurb: "ships and helps others ship" },
   { min: 75, name: "fire keeper", blurb: "keeps the repositories moving" },
   { min: 20, name: "rock shaper", blurb: "turns ideas into merged work" },
-  { min: 1, name: "contributor", blurb: "made a verified GitHub contribution" },
+  { min: 1, name: "first grunt", blurb: "made a verified GitHub contribution" },
   { min: 0, name: "cave guest", blurb: "in the cave, sharpening a spear" },
 ] as const;
 

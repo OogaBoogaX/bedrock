@@ -157,6 +157,7 @@ function credit(login, repoName, metric, amount = 1) {
 
 const org = await gh(`/orgs/${ORG}`);
 const repos = (await ghAll(`/orgs/${ORG}/repos?type=public`)).filter((r) => !r.archived);
+const repoOpenPulls = new Map();
 
 for (const repo of repos) {
   const [contributors, pulls, issues] = await Promise.all([
@@ -164,6 +165,7 @@ for (const repo of repos) {
     ghAll(`/repos/${ORG}/${repo.name}/pulls?state=all&sort=created&direction=asc`),
     ghAll(`/repos/${ORG}/${repo.name}/issues?state=closed&sort=created&direction=asc`),
   ]);
+  repoOpenPulls.set(repo.name, pulls.filter((pull) => pull.state === "open").length);
 
   for (const c of contributors) {
     if (c.type !== "User") continue;
@@ -240,18 +242,22 @@ const data = {
     followers: org.followers,
     createdAt: org.created_at,
   },
-  repos: repos.map((r) => ({
-    name: r.name,
-    url: r.html_url,
-    homepage: normalizeUrl(r.homepage),
-    description: r.description,
-    stars: r.stargazers_count,
-    forks: r.forks_count,
-    openIssues: r.open_issues_count,
-    defaultBranch: r.default_branch,
-    language: r.language,
-    pushedAt: r.pushed_at,
-  })),
+  repos: repos.map((r) => {
+    const openPulls = repoOpenPulls.get(r.name) ?? 0;
+    return {
+      name: r.name,
+      url: r.html_url,
+      homepage: normalizeUrl(r.homepage),
+      description: r.description,
+      stars: r.stargazers_count,
+      forks: r.forks_count,
+      openIssues: Math.max(0, r.open_issues_count - openPulls),
+      openPulls,
+      defaultBranch: r.default_branch,
+      language: r.language,
+      pushedAt: r.pushed_at,
+    };
+  }),
   members: build([...memberSet]),
   friends: build([...activities.keys()].filter((login) => !memberSet.has(login))),
 };

@@ -1,10 +1,8 @@
 ---
-import Notepad from "@/components/Notepad.astro";
-import { org, repos } from "@/lib/tribe";
+import Window from "@/components/Window.astro";
+import { repos } from "@/lib/tribe";
 
 const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
-const shareText = encodeURIComponent("ooga booga. I visited the tribe and now I want a clanker. we eat bananas. we make code. we give code to tribe.");
-const guestbook = `https://x.com/intent/post?text=${shareText}&url=${encodeURIComponent(org.url)}`;
 ---
 
 <section class="section" id="join">
@@ -14,33 +12,163 @@ const guestbook = `https://x.com/intent/post?text=${shareText}&url=${encodeURICo
       <h2 class="section__title">join the tribe</h2>
     </div>
 
-    <Notepad title="join_tribe.txt - Notepad">HOW TO JOIN TEAM OOGA BOOGA
-===========================
+    <Window title="join_tribe.exe" icon="🔥" pad="0" active>
+      <div class="join__panel">
+        <div class="join__intro">
+          <span class="join__eyebrow">4 steps · no application</span>
+          <h3>bring idea. build in public.</h3>
+        </div>
 
-1. listen to a space
-2. grab the mic. say your idea out loud.
-3. grunt at your clanker. push to a rock.
-4. get merged to rock.
+        <ol class="join__steps" aria-label="How to join Team Ooga Booga">
+          <li><span class="join__number">1</span><p><strong>listen to a Space.</strong></p></li>
+          <li><span class="join__number">2</span><p><strong>grab the mic.</strong> say your idea out loud.</p></li>
+          <li><span class="join__number">3</span><p><strong>grunt at your clanker.</strong> push to a rock.</p></li>
+          <li><span class="join__number">4</span><p><strong>get merged to rock.</strong></p></li>
+        </ol>
 
-entry fee ........ your idea + a clanker
-door ............. open
-résumé ........... optional
-work ............. public
-review ........... required
+        <div class="join__entry">
+          <div>
+            <span class="join__entry-label">entry fee</span>
+            <strong>your idea + a clanker</strong>
+          </div>
+          <p>door open · résumé optional · work in public · review required</p>
+        </div>
 
-we are not the smartest group in bitcoin.
-we help each other turn ideas into working code.
+        <p class="join__message">
+          we are not the smartest group in bitcoin. we help each other turn ideas into working code.
+        </p>
+      </div>
 
-ooga booga.<Fragment slot="actions">
+      <div class="join__actions">
         <a class="btn btn--default btn--banana" href="https://x.com/w_s_bitcoin" rel="noopener">listen to a Space</a>
         <a class="btn" href={`${lab.url}/fork`} rel="noopener">fork {lab.name}</a>
-        <a class="btn" href={guestbook} rel="noopener" data-status-text="Opens X with a pre-written grunt">sign our guestbook</a>
-      </Fragment></Notepad>
+        <button class="btn" type="button" disabled title="Guestbook temporarily unavailable">sign our guestbook</button>
+      </div>
+    </Window>
   </div>
 </section>
 
 <style>
   .join {
     max-width: 720px;
+  }
+  .join__panel {
+    display: grid;
+    gap: 0;
+    padding: 1.25rem;
+    background: var(--paper);
+    box-shadow: var(--field-in);
+  }
+  .join__intro {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--face-shadow);
+  }
+  .join__eyebrow {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--face-dark);
+    font: 700 0.72rem/1.2 var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .join__intro h3 {
+    margin: 0;
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    line-height: 1.15;
+  }
+  .join__steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--face-shadow);
+  }
+  .join__steps li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 4.25rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--face-shadow);
+  }
+  .join__steps li:nth-child(odd) {
+    border-right: 1px solid var(--face-shadow);
+  }
+  .join__steps li:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+  .join__steps p {
+    margin: 0;
+    line-height: 1.35;
+  }
+  .join__number {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    color: #fff;
+    background: var(--title-a);
+    box-shadow: 2px 2px 0 #000;
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  .join__entry {
+    display: grid;
+    grid-template-columns: minmax(13rem, auto) 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--face-shadow);
+  }
+  .join__entry > div {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .join__entry-label {
+    color: var(--face-dark);
+    font: 700 0.7rem/1.2 var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .join__entry p {
+    margin: 0;
+    color: var(--face-dark);
+    line-height: 1.4;
+  }
+  .join__message {
+    margin: 0;
+    padding: 1rem 0.75rem 0;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  .join__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+  @media (max-width: 620px) {
+    .join__steps {
+      grid-template-columns: 1fr;
+    }
+    .join__steps li,
+    .join__steps li:nth-child(odd),
+    .join__steps li:nth-last-child(-n + 2) {
+      border-right: 0;
+      border-bottom: 1px solid var(--face-shadow);
+    }
+    .join__steps li:last-child {
+      border-bottom: 0;
+    }
+    .join__entry {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+    .join__actions .btn {
+      flex: 1 1 auto;
+      text-align: center;
+    }
   }
 </style>

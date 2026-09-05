@@ -3,6 +3,8 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 import { GLTFLoader, type GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 import type { Character } from "./characters";
+import { addRobRainScene } from "./rain";
+import { addMrHodlSmokeScene } from "./smoke";
 
 // Loaded on demand: only pages with a `data-model` viewport pay for GLTFLoader.
 
@@ -135,6 +137,73 @@ function styleAnt(model: Group, container: Group): (t: number) => void {
   return (t) => timeUniforms.forEach((uniform) => (uniform.value = t));
 }
 
+function styleRulesBust(model: Group): void {
+  model.traverse((object) => {
+    if (!(object instanceof Mesh)) return;
+    const tone = (source: Material): Material => {
+      const material = source.clone();
+      if (!(material instanceof MeshStandardMaterial)) return material;
+      material.color.set(0xffffff);
+      material.roughness = Math.max(0.84, material.roughness);
+      material.metalness = Math.min(0.08, material.metalness);
+      material.envMapIntensity = 0.28;
+      material.onBeforeCompile = (shader) => {
+        shader.fragmentShader = shader.fragmentShader.replace(
+          "#include <map_fragment>",
+          `#include <map_fragment>
+float rulesTone = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+float rulesMid = smoothstep(0.24, 0.56, rulesTone);
+float rulesHighlight = smoothstep(0.58, 0.82, rulesTone);
+vec3 rulesGrade = mix(vec3(0.012), vec3(0.18), rulesMid);
+rulesGrade = mix(rulesGrade, vec3(0.82), rulesHighlight);
+diffuseColor.rgb = rulesGrade;`,
+        );
+      };
+      material.customProgramCacheKey = () => "rules-high-contrast-ink-v1";
+      material.needsUpdate = true;
+      return material;
+    };
+    object.material = Array.isArray(object.material) ? object.material.map(tone) : tone(object.material);
+  });
+}
+
+function styleMrHodl(model: Group, container: Group): void {
+  model.traverse((object) => {
+    if (!(object instanceof Mesh)) return;
+    const grade = (source: Material): Material => {
+      const material = source.clone();
+      if (!(material instanceof MeshStandardMaterial)) return material;
+      material.onBeforeCompile = (shader) => {
+        shader.fragmentShader = shader.fragmentShader
+          .replace(
+            "#include <map_fragment>",
+            `float mrHodlBadge = 0.0;
+#include <map_fragment>
+float mrHodlTone = dot(diffuseColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+float mrHodlGreenLead = diffuseColor.g - max(diffuseColor.r, diffuseColor.b);
+mrHodlBadge = smoothstep(0.025, 0.16, mrHodlGreenLead) * smoothstep(0.18, 0.58, diffuseColor.g);
+float mrHodlCloth = (1.0 - smoothstep(0.34, 0.64, mrHodlTone)) * (1.0 - mrHodlBadge);
+diffuseColor.rgb *= mix(vec3(1.0), vec3(0.78, 0.80, 0.79), mrHodlCloth);
+diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.015, 1.0, 0.085), mrHodlBadge * 0.92);`,
+          )
+          .replace(
+            "#include <emissivemap_fragment>",
+            `#include <emissivemap_fragment>
+totalEmissiveRadiance += vec3(0.008, 4.8, 0.055) * mrHodlBadge;`,
+          );
+      };
+      material.customProgramCacheKey = () => "mrhodl-dark-cloth-neon-badge-v1";
+      material.needsUpdate = true;
+      return material;
+    };
+    object.material = Array.isArray(object.material) ? object.material.map(grade) : grade(object.material);
+  });
+
+  const badgeGlow = new PointLight(0x20ff55, 0.9, 0.46, 2);
+  badgeGlow.position.set(-0.48, -0.03, 0.62);
+  container.add(badgeGlow);
+}
+
 // PBR materials need an environment to read as anything but mud; one shared room map.
 export function environment(renderer: WebGLRenderer): Texture {
   if (env) return env;
@@ -164,12 +233,19 @@ export async function loadModel(url: string): Promise<Character> {
 
   const g = new Group();
   g.add(model);
+  const fittedBox = new Box3().setFromObject(model);
+  if (url.endsWith("/rules-without-rulers.glb")) styleRulesBust(model);
+  if (url.endsWith("/mrhodlx.glb")) styleMrHodl(model, g);
   const updateAnt = url.endsWith("/2140data.glb") ? styleAnt(model, g) : null;
+  const updateRobRain = url.endsWith("/rob1ham.glb") ? addRobRainScene(g, fittedBox.min.y) : null;
+  const updateMrHodlSmoke = url.endsWith("/mrhodlx.glb") ? addMrHodlSmokeScene(g, fittedBox) : null;
   return {
     group: g,
     update: (t) => {
-      g.position.y = Math.sin(t * 1.7) * 0.04;
+      g.position.y = updateRobRain || updateMrHodlSmoke ? 0 : Math.sin(t * 1.7) * 0.04;
       updateAnt?.(t);
+      updateRobRain?.(t);
+      updateMrHodlSmoke?.(t);
     },
   };
 }

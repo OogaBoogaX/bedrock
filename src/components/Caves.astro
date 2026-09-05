@@ -9,8 +9,8 @@ import { repos, formatDate } from "@/lib/tribe";
       <span class="section__kicker">the caves</span>
       <h2 class="section__title">every cave is a repository</h2>
       <p class="section__lede">
-        EntropyLab is the first cave: a bitcoin key lab that never generates randomness for you. bring your own entropy.
-        the next cave is whatever you grunt into existence.
+        EntropyLab was the first cave: a bitcoin key lab that never generates randomness for you. bring your own entropy.
+        the next cave could be whatever you grunt into existence.
       </p>
     </div>
 
@@ -44,6 +44,10 @@ import { repos, formatDate } from "@/lib/tribe";
                   <div>
                     <dt>open issues</dt>
                     <dd>{r.openIssues}</dd>
+                  </div>
+                  <div>
+                    <dt>open PRs</dt>
+                    <dd>{r.openPulls}</dd>
                   </div>
                   <div>
                     <dt>branch</dt>
