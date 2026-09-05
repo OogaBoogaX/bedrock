@@ -1,7 +1,7 @@
 ---
 import Card from "@/layouts/Card.astro";
 import Window from "@/components/Window.astro";
-import { members, repos } from "@/lib/tribe";
+import { cavemen, repos } from "@/lib/tribe";
 ---
 
 <Card title="Team Ooga Booga">
@@ -19,7 +19,7 @@ import { members, repos } from "@/lib/tribe";
     <div class="home__badges">
       <span class="badge88 badge88--stripes">under<br />construction</span>
       <span class="badge88" style="--badge-bg:#000;--badge-fg:#39ff14">best viewed<br />800×600</span>
-      <span class="badge88" style="--badge-bg:#ffe135;--badge-fg:#000">{members.length} cavemen<br />{repos.length} cave</span>
+      <span class="badge88" style="--badge-bg:#ffe135;--badge-fg:#000">{cavemen.length} cavemen<br />{repos.length} cave</span>
       <span class="badge88" style="--badge-bg:#ff00ff;--badge-fg:#fff">branch:<br />rock</span>
     </div>
   </div>

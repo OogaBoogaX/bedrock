@@ -2,11 +2,25 @@
 import Base from "@/layouts/Base.astro";
 import Window from "@/components/Window.astro";
 import Footer from "@/components/Footer.astro";
-import { members, rankOf, displayName, avatarUrl, memberPath, formatDate, totalBananas, RANKS, type Member } from "@/lib/tribe";
+import {
+  members,
+  cavemen,
+  rankOf,
+  displayName,
+  avatarUrl,
+  memberPath,
+  formatDate,
+  formatDateTime,
+  totalScore,
+  scoring,
+  tribe,
+  RANKS,
+  type Member,
+} from "@/lib/tribe";
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
 export function getStaticPaths() {
-  return members.map((member, index) => ({ params: { login: member.login.toLowerCase() }, props: { member, index } }));
+  return cavemen.map((member, index) => ({ params: { login: member.login.toLowerCase() }, props: { member, index } }));
 }
 
 interface Props {
@@ -15,14 +29,15 @@ interface Props {
 }
 
 const { member, index } = Astro.props;
+const isOrgMember = members.some((candidate) => candidate.login.toLowerCase() === member.login.toLowerCase());
 const kinds = assignKinds(members.map((m) => m.login));
-const kind = kinds.get(member.login) ?? "cube";
-const model = MODELS[member.login];
-const rank = rankOf(member.bananas);
+const kind = isOrgMember ? (kinds.get(member.login) ?? "cube") : "cube";
+const model = isOrgMember ? MODELS[member.login] : undefined;
+const rank = rankOf(member.score);
 const name = displayName(member);
-const prev = members[(index - 1 + members.length) % members.length];
-const next = members[(index + 1) % members.length];
-const share = totalBananas ? Math.round((member.bananas / totalBananas) * 100) : 0;
+const prev = cavemen[(index - 1 + cavemen.length) % cavemen.length];
+const next = cavemen[(index + 1) % cavemen.length];
+const share = totalScore ? Math.round((member.score / totalScore) * 100) : 0;
 
 const socials = [
   { label: "GitHub", value: `@${member.login}`, href: member.url },
@@ -33,14 +48,14 @@ const socials = [
 ].filter((s): s is { label: string; value: string; href: string } => Boolean(s));
 
 const bio = member.bio?.replace(/\bnpub1[02-9ac-hj-np-z]{58}\b/gi, "").trim() || null;
-const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga Booga with ${member.bananas} bananas eaten. ${bio ?? "Contact info, socials, and a spinning 3D caveman."}`;
+const description = `${name} (@${member.login}) is ${isOrgMember ? "an org member" : "a contributor"} with a ${rank.name} rank and GitHub impact score of ${member.score}. ${bio ?? "Contact info, socials, and a spinning 3D caveman."}`;
 ---
 
 <Base
   title={`${member.login} Properties — Team Ooga Booga`}
   description={description}
-  ogImage={`/og/tribe/${member.login.toLowerCase()}.png`}
-  ogImageAlt={`${member.login} Properties: a Windows 98 dialog with ${name}'s avatar, rank ${rank.name} and ${member.bananas} bananas eaten.`}
+  ogImage={model ? `/og/tribe/${member.login.toLowerCase()}.png` : member.avatar}
+  ogImageAlt={`${member.login} Properties: a Windows 98 dialog with ${name}'s avatar, rank ${rank.name} and GitHub impact score ${member.score}.`}
 >
   <main class="profile">
     <div class="container profile__inner">
@@ -50,13 +65,22 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
         <div class="tabs" role="tablist" aria-label="Sections">
           <button class="tab is-on" role="tab" type="button" aria-selected="true" aria-controls="tab-general" id="tabbtn-general" data-tab="general">General</button>
           <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-socials" id="tabbtn-socials" data-tab="socials" tabindex="-1">Socials</button>
-          <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-bananas" id="tabbtn-bananas" data-tab="bananas" tabindex="-1">Bananas</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-impact" id="tabbtn-impact" data-tab="impact" tabindex="-1">Impact</button>
         </div>
 
         <div class="tabpanel" role="tabpanel" id="tab-general" aria-labelledby="tabbtn-general" data-panel="general">
           <div class="general">
             <div class="general__view">
-              <div class="viewport" data-viewport data-login={member.login} data-kind={kind} data-avatar={member.avatar} data-model={model?.url} data-size="512" data-drag>
+              <div
+                class="viewport"
+                data-viewport
+                data-login={member.login}
+                data-kind={kind}
+                data-avatar={member.avatar}
+                data-model={model?.url}
+                data-size="512"
+                data-drag
+              >
                 <img class="viewport__fallback" src={avatarUrl(member, 460)} alt={`${name}'s GitHub avatar`} width="460" height="460" decoding="async" draggable="false" />
               </div>
               <p class="general__kind">{model?.label ?? KIND_LABEL[kind]} · drag to rotate</p>
@@ -124,26 +148,33 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
           {socials.length === 1 && <p class="muted">GitHub only. this caveman does not do socials. respect.</p>}
         </div>
 
-        <div class="tabpanel" role="tabpanel" id="tab-bananas" aria-labelledby="tabbtn-bananas" data-panel="bananas" hidden>
-          <div class="bananas">
-            <p class="bananas__big"><span class="mono">🍌 {member.bananas.toLocaleString("en-US")}</span> bananas eaten</p>
-            <p class="muted">1 banana = 1 commit landed on rock across every cave in the org.</p>
-            <div class="progress progress--banana" title={`${share}% of all tribe bananas`}>
-              <div class="progress__bar" style={`--value:${Math.max(share, member.bananas ? 2 : 0)}%`}></div>
+        <div class="tabpanel" role="tabpanel" id="tab-impact" aria-labelledby="tabbtn-impact" data-panel="impact" hidden>
+          <div class="impact">
+            <p class="impact__big"><span class="mono">◆ {member.score.toLocaleString("en-US")}</span> impact score</p>
+            <p class="muted">Verified GitHub work across every public cave in the org.</p>
+            <div class="progress progress--banana" title={`${share}% of all tribe impact`}>
+              <div class="progress__bar" style={`--value:${Math.max(share, member.score ? 2 : 0)}%`}></div>
             </div>
-            <p class="muted">{share}% of the {totalBananas.toLocaleString("en-US")} bananas the tribe has eaten so far.</p>
-            <h3 class="bananas__h">caves</h3>
+            <p class="muted">{share}% of the tribe's {totalScore.toLocaleString("en-US")} total impact.</p>
+            <dl class="impact__breakdown">
+              <div><dt>default-branch commits</dt><dd>{member.contributions.commits} × {scoring.weights.commit}</dd></div>
+              <div><dt>merged pull requests</dt><dd>{member.contributions.mergedPulls} × {scoring.weights.mergedPull}</dd></div>
+              <div><dt>reviewed pull requests</dt><dd>{member.contributions.reviews} × {scoring.weights.review}</dd></div>
+              <div><dt>resolved issues reported</dt><dd>{member.contributions.resolvedIssues} × {scoring.weights.resolvedIssue}</dd></div>
+            </dl>
+            <p class="muted impact__sync">GitHub synced every 15 minutes · last update <time datetime={tribe.syncedAt}>{formatDateTime(tribe.syncedAt)}</time></p>
+            <h3 class="impact__h">caves</h3>
             {
               member.repos.length ? (
                 <ul class="caves">
-                  {member.repos.map((r) => (
-                    <li>📁 {r}</li>
+                  {member.repos.map((repo) => (
+                    <li><span>📁 {repo.name}</span><strong class="mono">◆ {repo.score}</strong></li>
                   ))}
                 </ul>
               ) : (
-                <p class="muted">no commits yet. sharpening a spear.</p>
+                <p class="muted">no scored GitHub activity yet. sharpening a spear.</p>
               )}
-            <h3 class="bananas__h">rank ladder</h3>
+            <h3 class="impact__h">rank ladder</h3>
             <ol class="ladder">
               {
                 [...RANKS].reverse().map((r) => (
@@ -197,7 +228,8 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
         select(tabs[n].dataset.tab!);
       });
     });
-    if (location.hash === "#socials" || location.hash === "#bananas") select(location.hash.slice(1));
+    if (location.hash === "#socials" || location.hash === "#impact") select(location.hash.slice(1));
+    if (location.hash === "#bananas") select("impact");
   </script>
 </Base>
 
@@ -355,12 +387,12 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
     word-break: break-all;
     font-weight: 700;
   }
-  .bananas__big {
+  .impact__big {
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 0.25rem;
   }
-  .bananas__h {
+  .impact__h {
     font-size: 1rem;
     margin: 1.25rem 0 0.5rem;
   }
@@ -371,6 +403,32 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
     background: var(--paper);
     box-shadow: var(--field-in);
     font-size: 0.9rem;
+  }
+  .caves li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .impact__breakdown {
+    display: grid;
+    gap: 0.25rem;
+    margin: 1rem 0 0;
+  }
+  .impact__breakdown div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px dotted var(--face-shadow);
+  }
+  .impact__breakdown dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .impact__sync {
+    margin-top: 0.75rem;
   }
   .ladder {
     margin: 0;

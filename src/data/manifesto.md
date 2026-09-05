@@ -61,29 +61,29 @@ All of it happened on live X Spaces. Listeners who had never opened a pull reque
 
 That same week, on one of the nightly Spaces, Brian gave the group its name. The joke underneath it is that prompting is grunting. We talk to clankers in plain words, like cavemen pointing at a problem, and software comes back. A caveman could do the same, because building software now takes an ask, and intelligence is available to anyone who asks, no matter where they start. We have been getting smarter since the first prompt, but the name stays. A caveman can build. Engineers had been teasing that anyone can prompt and call themselves an engineer now, and instead of arguing we made it the brand. We renamed the main branch of the repo to rock.
 
-The organization runs like the joke, out in the open. Meetings happen on Wicked's X Spaces, almost daily, and anyone can listen or grab the mic, from technical decisions to organizational ones. The repo is public and anyone can contribute. We are not gatekeeping intelligence, and we are not pretending to be the smartest group in bitcoin.
+The organization runs like the joke, out in the open. Meetings happen on Wicked's X Spaces, almost daily, and anyone can listen or grab the mic, from technical decisions to organizational ones. The door is open, the work is public, and we are not pretending to be the smartest group in bitcoin.
 
 ## Clankers reviewing clankers
 
 The obvious objection is that this produces AI slop. Some of it starts that way. The fix is review, and clankers changed the economics of review too. Open source has always depended on many people reading the code, and agents multiply the readers. On EntropyLab, code written by non-engineers gets reviewed by engineers and by agents on frontier models, in public, with the discussion happening on a live Space.
 
-The method matters more than the tool. We call it gorilla open source. Anyone can participate in building software, and the entry fee is your will plus a clanker. You do not need a degree or permission. You need an idea, and a room that will review you in public.
+The method matters more than the tool. We call it gorilla open source. Anyone can participate in building software, and the entry fee is your will plus a clanker. You do not need permission to begin. Bring an idea, show your work, and let the room review it in public.
 
 <aside class="win win--active msgbox" role="note" aria-label="pull quote" style="--win-pad:0.9rem 1rem 0.75rem">
 <div class="win__title"><span class="win__icon" aria-hidden="true">ℹ</span><span class="win__name">gorilla open source</span></div>
-<div class="win__body"><p class="msgbox__text"><span class="msgbox__i" aria-hidden="true">i</span>Anyone can participate in building software, and the entry fee is your will plus a clanker.</p><div class="msgbox__foot"><button class="btn btn--default" type="button" data-win="close">OK</button></div></div>
+<div class="win__body"><p class="msgbox__text"><span class="msgbox__i" aria-hidden="true">i</span>Anyone can participate in building software, and the entry fee is your idea plus your clankers work.</p><div class="msgbox__foot"><button class="btn btn--default" type="button" data-win="close">OK</button></div></div>
 </aside>
 
 ## Gorilla open source
 
 Spaces already put our meetings in public. The next layer is Buzz, a tool where our agents talk to us and to each other in the open. Anyone can read our prompts, watch what the agents are working on, and see where the tokens go. We do it this way because we want more people to learn how to use these tools and start contributing to the ecosystem, and watching someone build is the fastest way to believe you can. If a caveman can produce working code in public, so can you.
 
-That openness is also becoming a game. We are building one where anyone can see who is contributing to a project, how many bananas are being consumed, and what kind of work is getting done. Bananas are tokens, the fuel clankers run on. Every contributor has their own character, and when they spend tokens their character comes alive in the game. Over time the game is meant to grow into the entire virtual world of the open source projects we work on, where each cave is a repository. It gamifies participating, and it gives anyone who wants to understand a project a full picture of the costs, the people involved, and the activity.
+That openness is also becoming a game. We are building one where anyone can see who is contributing to a project and what kind of work is getting done. The scoreboard comes directly from public GitHub activity: commits landed on the default branch, merged pull requests, substantive reviews, and resolved issues. Bananas stay the mascot, not the currency. Every contributor has their own character, and their character comes alive as they contribute. Over time the game is meant to grow into the entire virtual world of the open source projects we work on, where each cave is a repository. It gamifies participating, and it gives anyone who wants to understand a project a clear picture of the people and activity behind it.
 
 <figure class="win shot" style="--win-pad:0">
 <div class="win__title"><span class="win__icon" aria-hidden="true">🦍</span><span class="win__name">ooga_booga_land.exe</span><span class="win__controls" aria-hidden="true"><span class="win__ctl">_</span><span class="win__ctl">□</span><span class="win__ctl">×</span></span></div>
 <div class="win__body"><img src="/img/ooga-booga-land.webp" width="1600" height="1017" alt="Screenshot of Ooga Booga Land, an island of caves: a voxel arena where blocky cavemen crowd around a pile of bananas shouting BOOGA! and BANANA!, with a bananas bar at the top, an EntropyLab sign in the world, and a loot toast at the bottom." loading="lazy" decoding="async" /></div>
-<figcaption>fig. 5, Ooga Booga Land. every cave is a repository. every banana is a token. the cavemen are us.</figcaption>
+<figcaption>fig. 5, Ooga Booga Land. every cave is a repository. GitHub keeps score. the cavemen are us.</figcaption>
 </figure>
 
 Buzz feeds the game directly. Everything our agents do there is published on Nostr relays, so their entire activity is tracked in the open and can be integrated into the game. The agents are characters in Ooga Booga land too, right alongside the humans.

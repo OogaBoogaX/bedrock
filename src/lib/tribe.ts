@@ -16,8 +16,21 @@ export interface Member {
   followers: number;
   publicRepos: number;
   createdAt: string;
-  bananas: number;
-  repos: string[];
+  score: number;
+  contributions: ContributionTotals;
+  repos: RepoContribution[];
+}
+
+export interface ContributionTotals {
+  commits: number;
+  mergedPulls: number;
+  reviews: number;
+  resolvedIssues: number;
+}
+
+export interface RepoContribution extends ContributionTotals {
+  name: string;
+  score: number;
 }
 
 export interface Repo {
@@ -35,25 +48,28 @@ export interface Repo {
 
 export const tribe = data;
 export const members: Member[] = data.members;
-export const friends: Member[] = data.friends;
+export const contributors: Member[] = data.friends;
+export const friends = contributors;
+export const cavemen: Member[] = [...members, ...contributors];
 export const repos: Repo[] = data.repos;
 export const org = data.org;
+export const scoring = data.scoring;
 
-export const totalBananas = [...members, ...friends].reduce((n, m) => n + m.bananas, 0);
+export const totalScore = cavemen.reduce((total, member) => total + member.score, 0);
 
 export const RANKS = [
-  { min: 200, name: "silverback", blurb: "carries the tribe on their back" },
-  { min: 100, name: "alpha", blurb: "ships before the space ends" },
-  { min: 30, name: "hunter", blurb: "brings back code most nights" },
-  { min: 10, name: "fire keeper", blurb: "keeps the repo warm" },
-  { min: 1, name: "rock thrower", blurb: "first commit landed on rock" },
+  { min: 500, name: "silverback", blurb: "sustained impact across the caves" },
+  { min: 200, name: "cave architect", blurb: "ships and helps others ship" },
+  { min: 75, name: "fire keeper", blurb: "keeps the repositories moving" },
+  { min: 20, name: "rock shaper", blurb: "turns ideas into merged work" },
+  { min: 1, name: "contributor", blurb: "made a verified GitHub contribution" },
   { min: 0, name: "cave guest", blurb: "in the cave, sharpening a spear" },
 ] as const;
 
 export type Rank = (typeof RANKS)[number];
 
-export function rankOf(bananas: number): Rank {
-  return RANKS.find((r) => bananas >= r.min) ?? RANKS[RANKS.length - 1];
+export function rankOf(score: number): Rank {
+  return RANKS.find((rank) => score >= rank.min) ?? RANKS[RANKS.length - 1];
 }
 
 export function displayName(m: Pick<Member, "name" | "login">): string {
@@ -72,4 +88,15 @@ export function memberPath(m: Pick<Member, "login">): string {
 
 export function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+export function formatDateTime(iso: string): string {
+  return new Date(iso).toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
 }

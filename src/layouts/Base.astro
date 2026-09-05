@@ -51,6 +51,20 @@ const ogImageUrl = Astro.site ? new URL(ogImage, Astro.site).href : ogImage;
   <body>
     <slot />
     <StatusBar />
+    <script is:inline>
+      window.goatcounter = {
+        no_onload: location.hostname !== "oogabooga.rocks",
+        no_events: true,
+      };
+    </script>
+    <script
+      is:inline
+      data-goatcounter="https://oogabooga.goatcounter.com/count"
+      async
+      src="https://gc.zgo.at/count.v5.js"
+      crossorigin="anonymous"
+      integrity="sha384-atnOLvQb9t+jTSipvd75X2yginT4PjVbqDdlJAmxMm+wYElFmeR6EmLP5bYeoRVQ"
+    ></script>
     <script>
       import { initWindows } from "@/scripts/windows";
       import { initSparkles } from "@/scripts/sparkles";

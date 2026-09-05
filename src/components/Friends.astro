@@ -7,7 +7,7 @@ import { friends, avatarUrl } from "@/lib/tribe";
     <div class="friends">
       <div class="container">
         <p class="friends__label">
-          friends of the tribe: {friends.length} more cavemen pushed to a cave without joining the org (yet)
+          friends of the tribe: {friends.length} more cavemen contributed to a cave without joining the org (yet)
         </p>
       </div>
       <div class="marquee friends__marquee" style="--marquee-speed: 60s; --marquee-gap: 0.9rem">
@@ -18,7 +18,7 @@ import { friends, avatarUrl } from "@/lib/tribe";
                 <a class="friend" href={f.url} rel="noopener" tabindex={copy === 1 ? -1 : undefined}>
                   <img src={avatarUrl(f, 64)} alt="" width="32" height="32" loading="lazy" decoding="async" />
                   <span>{f.login}</span>
-                  <span class="friend__bananas">🍌{f.bananas}</span>
+                  <span class="friend__score">◆ {f.score}</span>
                 </a>
               ))}
             </div>
@@ -71,7 +71,7 @@ import { friends, avatarUrl } from "@/lib/tribe";
     box-shadow: var(--field-in);
     image-rendering: pixelated;
   }
-  .friend__bananas {
+  .friend__score {
     font-family: var(--mono);
     font-size: 0.75rem;
     color: #3a3a3a;

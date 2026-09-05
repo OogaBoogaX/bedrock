@@ -1,10 +1,11 @@
 ---
 import Window from "@/components/Window.astro";
-import { members, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
+import { members, contributors, cavemen, rankOf, displayName, avatarUrl, memberPath } from "@/lib/tribe";
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
 const kinds = assignKinds(members.map((m) => m.login));
-const max = Math.max(1, ...members.map((m) => m.bananas));
+const max = Math.max(1, ...cavemen.map((member) => member.score));
+const memberLogins = new Set(members.map((member) => member.login.toLowerCase()));
 ---
 
 <section class="section" id="tribe">
@@ -13,16 +14,18 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
       <span class="section__kicker">the roster</span>
       <h2 class="section__title">the tribe</h2>
       <p class="section__lede">
-        {members.length} cavemen, one org, zero degrees checked. every character is random on purpose. click one to open
-        their file.
+        one org, {cavemen.length} cavemen ({members.length} members + {contributors.length} contributors), ideas are welcome. the work gets reviewed.{" "}
+        click a caveman to open their file. roster and impact scores refresh from public GitHub activity every 15 minutes.
       </p>
     </div>
 
     <div class="roster" data-roster>
       {
-        members.map((m) => {
-          const rank = rankOf(m.bananas);
-          const kind = kinds.get(m.login) ?? "cube";
+        cavemen.map((m) => {
+          const rank = rankOf(m.score);
+          const isOrgMember = memberLogins.has(m.login.toLowerCase());
+          const kind = isOrgMember ? (kinds.get(m.login) ?? "cube") : "cube";
+          const affiliation = isOrgMember ? "org member" : "contributor";
           return (
             <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`} draggable="false">
               <Window as="article" title={`${m.login}.exe`} iconSrc={avatarUrl(m, 32)} pad="0.6rem" controls="decorative">
@@ -40,12 +43,12 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
                 </div>
                 <div class="card__meta">
                   <strong class="card__name">{displayName(m)}</strong>
-                  <span class="card__login">@{m.login}</span>
+                  <span class="card__login">@{m.login} · {affiliation}</span>
                   <span class="card__rank">{rank.name}</span>
-                  <div class="progress progress--banana card__bar" title={`${m.bananas} bananas`}>
-                    <div class="progress__bar" style={`--value:${Math.max(4, Math.round((m.bananas / max) * 100))}%`} />
+                  <div class="progress progress--banana card__bar" title={`Impact score: ${m.score}`}>
+                    <div class="progress__bar" style={`--value:${Math.max(4, Math.round((m.score / max) * 100))}%`} />
                   </div>
-                  <span class="card__bananas">🍌 {m.bananas.toLocaleString("en-US")}</span>
+                  <span class="card__score">◆ {m.score.toLocaleString("en-US")} impact</span>
                 </div>
               </Window>
             </a>
@@ -153,7 +156,7 @@ const max = Math.max(1, ...members.map((m) => m.bananas));
     padding: 2px;
     margin-top: 0.4rem;
   }
-  .card__bananas {
+  .card__score {
     font-family: var(--mono);
     font-weight: 700;
     font-size: 0.8rem;

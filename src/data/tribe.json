@@ -1,12 +1,23 @@
 {
-  "syncedAt": "2026-09-04T20:44:01.394Z",
-  "source": "org members",
+  "syncedAt": "2026-09-05T04:20:38.988Z",
+  "source": "GitHub org members + saved roster",
+  "scoring": {
+    "name": "impact score",
+    "source": "GitHub",
+    "cadenceMinutes": 15,
+    "weights": {
+      "commit": 1,
+      "mergedPull": 5,
+      "review": 2,
+      "resolvedIssue": 2
+    }
+  },
   "org": {
     "login": "OogaBoogaX",
     "name": "Team Ooga Booga",
     "url": "https://github.com/OogaBoogaX",
     "avatar": "https://avatars.githubusercontent.com/u/321613496?v=4",
-    "followers": 8,
+    "followers": 9,
     "createdAt": "2026-08-27T02:18:16Z"
   },
   "repos": [
@@ -17,22 +28,22 @@
       "description": "A fully offline, air-gapped Bitcoin key and wallet calculator. It turns user-supplied entropy, seed phrases, or private keys into BIP39 seeds, xpubs, descriptors, addresses, and recovery data, and can also build watch-only multisig wallets without exposing private keys online.",
       "stars": 51,
       "forks": 37,
-      "openIssues": 24,
+      "openIssues": 74,
       "defaultBranch": "rock",
       "language": "HTML",
-      "pushedAt": "2026-09-04T20:21:43Z"
+      "pushedAt": "2026-09-05T02:47:44Z"
     },
     {
       "name": "bedrock",
       "url": "https://github.com/OogaBoogaX/bedrock",
       "homepage": "https://oogabooga.rocks",
       "description": "Team Ooga Booga homepage. gorilla open source. every cave is a repository, this is the bedrock.",
-      "stars": 1,
+      "stars": 2,
       "forks": 0,
       "openIssues": 0,
       "defaultBranch": "rock",
       "language": "Astro",
-      "pushedAt": "2026-09-04T20:09:24Z"
+      "pushedAt": "2026-09-05T02:11:23Z"
     }
   ],
   "members": [
@@ -49,12 +60,25 @@
       "twitter": "PortlandHODL",
       "email": "admin@qrsnap.io",
       "nostr": null,
-      "followers": 156,
+      "followers": 157,
       "publicRepos": 109,
       "createdAt": "2012-12-22T09:39:05Z",
-      "bananas": 269,
+      "score": 586,
+      "contributions": {
+        "commits": 275,
+        "mergedPulls": 59,
+        "reviews": 2,
+        "resolvedIssues": 6
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 275,
+          "mergedPulls": 59,
+          "reviews": 2,
+          "resolvedIssues": 6,
+          "score": 586
+        }
       ]
     },
     {
@@ -70,33 +94,67 @@
       "twitter": "w_s_bitcoin",
       "email": null,
       "nostr": null,
-      "followers": 64,
+      "followers": 65,
       "publicRepos": 8,
       "createdAt": "2021-12-01T18:06:02Z",
-      "bananas": 162,
+      "score": 306,
+      "contributions": {
+        "commits": 167,
+        "mergedPulls": 27,
+        "reviews": 0,
+        "resolvedIssues": 2
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 164,
+          "mergedPulls": 26,
+          "reviews": 0,
+          "resolvedIssues": 2,
+          "score": 298
+        },
+        {
+          "name": "bedrock",
+          "commits": 3,
+          "mergedPulls": 1,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 8
+        }
       ]
     },
     {
-      "login": "dplusplus1024",
-      "id": 82842780,
-      "name": "D++",
-      "avatar": "https://avatars.githubusercontent.com/u/82842780?v=4",
-      "url": "https://github.com/dplusplus1024",
-      "bio": "Bitcoin educator.",
+      "login": "MrHodlX",
+      "id": 289396684,
+      "name": null,
+      "avatar": "https://avatars.githubusercontent.com/u/289396684?v=4",
+      "url": "https://github.com/MrHodlX",
+      "bio": null,
       "location": null,
       "company": null,
       "website": null,
-      "twitter": "d_plus__plus",
+      "twitter": null,
       "email": null,
       "nostr": null,
-      "followers": 94,
-      "publicRepos": 32,
-      "createdAt": "2021-04-19T20:11:54Z",
-      "bananas": 44,
+      "followers": 5,
+      "publicRepos": 2,
+      "createdAt": "2026-05-31T11:35:39Z",
+      "score": 135,
+      "contributions": {
+        "commits": 20,
+        "mergedPulls": 23,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 20,
+          "mergedPulls": 23,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 135
+        }
       ]
     },
     {
@@ -115,10 +173,64 @@
       "followers": 9,
       "publicRepos": 1,
       "createdAt": "2026-01-14T14:21:32Z",
-      "bananas": 26,
+      "score": 110,
+      "contributions": {
+        "commits": 30,
+        "mergedPulls": 16,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab",
-        "bedrock"
+        {
+          "name": "entropylab",
+          "commits": 24,
+          "mergedPulls": 16,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 104
+        },
+        {
+          "name": "bedrock",
+          "commits": 6,
+          "mergedPulls": 0,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 6
+        }
+      ]
+    },
+    {
+      "login": "dplusplus1024",
+      "id": 82842780,
+      "name": "D++",
+      "avatar": "https://avatars.githubusercontent.com/u/82842780?v=4",
+      "url": "https://github.com/dplusplus1024",
+      "bio": "Bitcoin educator.",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "d_plus__plus",
+      "email": null,
+      "nostr": null,
+      "followers": 94,
+      "publicRepos": 32,
+      "createdAt": "2021-04-19T20:11:54Z",
+      "score": 104,
+      "contributions": {
+        "commits": 44,
+        "mergedPulls": 10,
+        "reviews": 0,
+        "resolvedIssues": 5
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 44,
+          "mergedPulls": 10,
+          "reviews": 0,
+          "resolvedIssues": 5,
+          "score": 104
+        }
       ]
     },
     {
@@ -137,30 +249,22 @@
       "followers": 15,
       "publicRepos": 4,
       "createdAt": "2022-05-31T16:40:05Z",
-      "bananas": 24,
+      "score": 94,
+      "contributions": {
+        "commits": 24,
+        "mergedPulls": 14,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "MrHodlX",
-      "id": 289396684,
-      "name": null,
-      "avatar": "https://avatars.githubusercontent.com/u/289396684?v=4",
-      "url": "https://github.com/MrHodlX",
-      "bio": null,
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": null,
-      "email": null,
-      "nostr": null,
-      "followers": 4,
-      "publicRepos": 2,
-      "createdAt": "2026-05-31T11:35:39Z",
-      "bananas": 20,
-      "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 24,
+          "mergedPulls": 14,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 94
+        }
       ]
     },
     {
@@ -176,12 +280,25 @@
       "twitter": null,
       "email": null,
       "nostr": null,
-      "followers": 23,
+      "followers": 24,
       "publicRepos": 42,
       "createdAt": "2021-04-29T14:46:05Z",
-      "bananas": 11,
+      "score": 55,
+      "contributions": {
+        "commits": 11,
+        "mergedPulls": 8,
+        "reviews": 0,
+        "resolvedIssues": 2
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 11,
+          "mergedPulls": 8,
+          "reviews": 0,
+          "resolvedIssues": 2,
+          "score": 55
+        }
       ]
     },
     {
@@ -200,9 +317,56 @@
       "followers": 21,
       "publicRepos": 8,
       "createdAt": "2020-10-15T19:38:18Z",
-      "bananas": 9,
+      "score": 49,
+      "contributions": {
+        "commits": 9,
+        "mergedPulls": 8,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 9,
+          "mergedPulls": 8,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 49
+        }
+      ]
+    },
+    {
+      "login": "Rob1Ham",
+      "id": 6456095,
+      "name": "Rob Hamilton",
+      "avatar": "https://avatars.githubusercontent.com/u/6456095?v=4",
+      "url": "https://github.com/Rob1Ham",
+      "bio": "Bitcoin",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "Rob1Ham",
+      "email": null,
+      "nostr": null,
+      "followers": 79,
+      "publicRepos": 52,
+      "createdAt": "2014-01-21T01:41:17Z",
+      "score": 48,
+      "contributions": {
+        "commits": 0,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 19
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 0,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 19,
+          "score": 48
+        }
       ]
     },
     {
@@ -221,9 +385,22 @@
       "followers": 5,
       "publicRepos": 1,
       "createdAt": "2026-08-27T02:25:43Z",
-      "bananas": 2,
+      "score": 14,
+      "contributions": {
+        "commits": 2,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 1
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 2,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 1,
+          "score": 14
+        }
       ]
     },
     {
@@ -242,74 +419,26 @@
       "followers": 1,
       "publicRepos": 5,
       "createdAt": "2023-07-26T10:50:23Z",
-      "bananas": 2,
+      "score": 12,
+      "contributions": {
+        "commits": 2,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 2,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 12
+        }
       ]
-    },
-    {
-      "login": "Rob1Ham",
-      "id": 6456095,
-      "name": "Rob Hamilton",
-      "avatar": "https://avatars.githubusercontent.com/u/6456095?v=4",
-      "url": "https://github.com/Rob1Ham",
-      "bio": "Bitcoin",
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": "Rob1Ham",
-      "email": null,
-      "nostr": null,
-      "followers": 78,
-      "publicRepos": 45,
-      "createdAt": "2014-01-21T01:41:17Z",
-      "bananas": 0,
-      "repos": []
     }
   ],
   "friends": [
-    {
-      "login": "pdubl22",
-      "id": 16267790,
-      "name": "pdubl22",
-      "avatar": "https://avatars.githubusercontent.com/u/16267790?v=4",
-      "url": "https://github.com/pdubl22",
-      "bio": null,
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": null,
-      "email": null,
-      "nostr": null,
-      "followers": 0,
-      "publicRepos": 1,
-      "createdAt": "2015-12-12T14:00:57Z",
-      "bananas": 23,
-      "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "RandyMcMillan",
-      "id": 152159,
-      "name": "randymcmillan",
-      "avatar": "https://avatars.githubusercontent.com/u/152159?v=4",
-      "url": "https://github.com/RandyMcMillan",
-      "bio": "Operations Specialist @usnavy\r\n\r\nE616FA7221A1613E5B99206297966C06 BB06757B",
-      "location": "₿:8333",
-      "company": "@bitcoincore-dev",
-      "website": "https://www.randymcmillan.net",
-      "twitter": "RandyMcMillan",
-      "email": "randymcmillan@protonmail.com",
-      "nostr": null,
-      "followers": 505,
-      "publicRepos": 1882,
-      "createdAt": "2009-11-12T06:10:29Z",
-      "bananas": 12,
-      "repos": [
-        "entropylab"
-      ]
-    },
     {
       "login": "J25dunn",
       "id": 133827581,
@@ -326,17 +455,64 @@
       "followers": 2,
       "publicRepos": 2,
       "createdAt": "2023-05-17T00:36:15Z",
-      "bananas": 8,
+      "score": 49,
+      "contributions": {
+        "commits": 8,
+        "mergedPulls": 7,
+        "reviews": 3,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 8,
+          "mergedPulls": 7,
+          "reviews": 3,
+          "resolvedIssues": 0,
+          "score": 49
+        }
       ]
     },
     {
-      "login": "MHODL",
-      "id": 224054482,
-      "name": "MHODL GLOBAL",
-      "avatar": "https://avatars.githubusercontent.com/u/224054482?v=4",
-      "url": "https://github.com/MHODL",
+      "login": "RandyMcMillan",
+      "id": 152159,
+      "name": "randymcmillan",
+      "avatar": "https://avatars.githubusercontent.com/u/152159?v=4",
+      "url": "https://github.com/RandyMcMillan",
+      "bio": "Operations Specialist @usnavy\r\n\r\nE616FA7221A1613E5B99206297966C06 BB06757B",
+      "location": "₿:8333",
+      "company": "@bitcoincore-dev",
+      "website": "https://www.randymcmillan.net",
+      "twitter": "RandyMcMillan",
+      "email": "randymcmillan@protonmail.com",
+      "nostr": null,
+      "followers": 505,
+      "publicRepos": 1883,
+      "createdAt": "2009-11-12T06:10:29Z",
+      "score": 36,
+      "contributions": {
+        "commits": 12,
+        "mergedPulls": 4,
+        "reviews": 0,
+        "resolvedIssues": 2
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 12,
+          "mergedPulls": 4,
+          "reviews": 0,
+          "resolvedIssues": 2,
+          "score": 36
+        }
+      ]
+    },
+    {
+      "login": "pdubl22",
+      "id": 16267790,
+      "name": "pdubl22",
+      "avatar": "https://avatars.githubusercontent.com/u/16267790?v=4",
+      "url": "https://github.com/pdubl22",
       "bio": null,
       "location": null,
       "company": null,
@@ -345,32 +521,24 @@
       "email": null,
       "nostr": null,
       "followers": 0,
-      "publicRepos": 0,
-      "createdAt": "2025-08-01T11:39:53Z",
-      "bananas": 7,
+      "publicRepos": 1,
+      "createdAt": "2015-12-12T14:00:57Z",
+      "score": 33,
+      "contributions": {
+        "commits": 23,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "Jdelg718",
-      "id": 150862258,
-      "name": "FF2K",
-      "avatar": "https://avatars.githubusercontent.com/u/150862258?v=4",
-      "url": "https://github.com/Jdelg718",
-      "bio": "I'm keeping busy, messing around, learning stuff i probably shouldn't while I HODL.",
-      "location": null,
-      "company": "EverstoneBTC",
-      "website": "https://everstonebtc.com",
-      "twitter": "fartface2000",
-      "email": null,
-      "nostr": null,
-      "followers": 1,
-      "publicRepos": 11,
-      "createdAt": "2023-11-14T22:23:35Z",
-      "bananas": 5,
-      "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 23,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 33
+        }
       ]
     },
     {
@@ -389,30 +557,22 @@
       "followers": 3,
       "publicRepos": 4,
       "createdAt": "2023-11-08T03:08:45Z",
-      "bananas": 2,
+      "score": 21,
+      "contributions": {
+        "commits": 2,
+        "mergedPulls": 1,
+        "reviews": 0,
+        "resolvedIssues": 7
+      },
       "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "dani69654",
-      "id": 60792849,
-      "name": "Dani",
-      "avatar": "https://avatars.githubusercontent.com/u/60792849?v=4",
-      "url": "https://github.com/dani69654",
-      "bio": null,
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": null,
-      "email": null,
-      "nostr": null,
-      "followers": 23,
-      "publicRepos": 30,
-      "createdAt": "2020-02-07T18:16:25Z",
-      "bananas": 2,
-      "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 2,
+          "mergedPulls": 1,
+          "reviews": 0,
+          "resolvedIssues": 7,
+          "score": 21
+        }
       ]
     },
     {
@@ -431,72 +591,56 @@
       "followers": 29,
       "publicRepos": 7,
       "createdAt": "2021-10-20T12:40:56Z",
-      "bananas": 2,
+      "score": 17,
+      "contributions": {
+        "commits": 2,
+        "mergedPulls": 1,
+        "reviews": 0,
+        "resolvedIssues": 5
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 2,
+          "mergedPulls": 1,
+          "reviews": 0,
+          "resolvedIssues": 5,
+          "score": 17
+        }
       ]
     },
     {
-      "login": "csuwildcat",
-      "id": 131786,
-      "name": "Daniel Buchner",
-      "avatar": "https://avatars.githubusercontent.com/u/131786?v=4",
-      "url": "https://github.com/csuwildcat",
-      "bio": "Director of Digital Assets @ Proof",
-      "location": "Wouldn't you like to know",
-      "company": "Gemini",
-      "website": "http://www.backalleycoder.com",
-      "twitter": null,
-      "email": "danieljb2@gmail.com",
-      "nostr": null,
-      "followers": 589,
-      "publicRepos": 97,
-      "createdAt": "2009-09-27T05:48:11Z",
-      "bananas": 1,
-      "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "doggyballs",
-      "id": 322880795,
-      "name": null,
-      "avatar": "https://avatars.githubusercontent.com/u/322880795?v=4",
-      "url": "https://github.com/doggyballs",
-      "bio": null,
+      "login": "Jdelg718",
+      "id": 150862258,
+      "name": "FF2K",
+      "avatar": "https://avatars.githubusercontent.com/u/150862258?v=4",
+      "url": "https://github.com/Jdelg718",
+      "bio": "I'm keeping busy, messing around, learning stuff i probably shouldn't while I HODL.",
       "location": null,
-      "company": null,
-      "website": null,
-      "twitter": null,
-      "email": null,
-      "nostr": null,
-      "followers": 0,
-      "publicRepos": 2,
-      "createdAt": "2026-08-30T17:56:03Z",
-      "bananas": 1,
-      "repos": [
-        "entropylab"
-      ]
-    },
-    {
-      "login": "FNBIP",
-      "id": 130150246,
-      "name": "AN",
-      "avatar": "https://avatars.githubusercontent.com/u/130150246?v=4",
-      "url": "https://github.com/FNBIP",
-      "bio": null,
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": null,
+      "company": "EverstoneBTC",
+      "website": "https://everstonebtc.com",
+      "twitter": "fartface2000",
       "email": null,
       "nostr": null,
       "followers": 1,
-      "publicRepos": 9,
-      "createdAt": "2023-04-07T11:11:01Z",
-      "bananas": 1,
+      "publicRepos": 12,
+      "createdAt": "2023-11-14T22:23:35Z",
+      "score": 15,
+      "contributions": {
+        "commits": 5,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 5,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 15
+        }
       ]
     },
     {
@@ -515,9 +659,226 @@
       "followers": 1,
       "publicRepos": 3,
       "createdAt": "2023-04-11T19:17:26Z",
-      "bananas": 1,
+      "score": 13,
+      "contributions": {
+        "commits": 1,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 1
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 1,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 1,
+          "score": 13
+        }
+      ]
+    },
+    {
+      "login": "dani69654",
+      "id": 60792849,
+      "name": "Dani",
+      "avatar": "https://avatars.githubusercontent.com/u/60792849?v=4",
+      "url": "https://github.com/dani69654",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 23,
+      "publicRepos": 30,
+      "createdAt": "2020-02-07T18:16:25Z",
+      "score": 12,
+      "contributions": {
+        "commits": 2,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 2,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 12
+        }
+      ]
+    },
+    {
+      "login": "csuwildcat",
+      "id": 131786,
+      "name": "Daniel Buchner",
+      "avatar": "https://avatars.githubusercontent.com/u/131786?v=4",
+      "url": "https://github.com/csuwildcat",
+      "bio": "Director of Digital Assets @ Proof",
+      "location": "Wouldn't you like to know",
+      "company": "Gemini",
+      "website": "http://www.backalleycoder.com",
+      "twitter": null,
+      "email": "danieljb2@gmail.com",
+      "nostr": null,
+      "followers": 589,
+      "publicRepos": 97,
+      "createdAt": "2009-09-27T05:48:11Z",
+      "score": 11,
+      "contributions": {
+        "commits": 1,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 1,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 11
+        }
+      ]
+    },
+    {
+      "login": "FNBIP",
+      "id": 130150246,
+      "name": "AN",
+      "avatar": "https://avatars.githubusercontent.com/u/130150246?v=4",
+      "url": "https://github.com/FNBIP",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 9,
+      "createdAt": "2023-04-07T11:11:01Z",
+      "score": 11,
+      "contributions": {
+        "commits": 1,
+        "mergedPulls": 2,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 1,
+          "mergedPulls": 2,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 11
+        }
+      ]
+    },
+    {
+      "login": "MHODL",
+      "id": 224054482,
+      "name": "MHODL GLOBAL",
+      "avatar": "https://avatars.githubusercontent.com/u/224054482?v=4",
+      "url": "https://github.com/MHODL",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 0,
+      "createdAt": "2025-08-01T11:39:53Z",
+      "score": 7,
+      "contributions": {
+        "commits": 7,
+        "mergedPulls": 0,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 7,
+          "mergedPulls": 0,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 7
+        }
+      ]
+    },
+    {
+      "login": "Bitcoin-Bill",
+      "id": 185141343,
+      "name": "Bitcoin Guide",
+      "avatar": "https://avatars.githubusercontent.com/u/185141343?v=4",
+      "url": "https://github.com/Bitcoin-Bill",
+      "bio": "A la verga!",
+      "location": null,
+      "company": null,
+      "website": "https://bitcoinguide.app",
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 1,
+      "createdAt": "2024-10-15T23:34:39Z",
+      "score": 6,
+      "contributions": {
+        "commits": 0,
+        "mergedPulls": 0,
+        "reviews": 0,
+        "resolvedIssues": 3
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 0,
+          "mergedPulls": 0,
+          "reviews": 0,
+          "resolvedIssues": 3,
+          "score": 6
+        }
+      ]
+    },
+    {
+      "login": "doggyballs",
+      "id": 322880795,
+      "name": null,
+      "avatar": "https://avatars.githubusercontent.com/u/322880795?v=4",
+      "url": "https://github.com/doggyballs",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 2,
+      "createdAt": "2026-08-30T17:56:03Z",
+      "score": 6,
+      "contributions": {
+        "commits": 1,
+        "mergedPulls": 1,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 1,
+          "mergedPulls": 1,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 6
+        }
       ]
     },
     {
@@ -536,9 +897,90 @@
       "followers": 38,
       "publicRepos": 72,
       "createdAt": "2019-08-25T23:01:18Z",
-      "bananas": 1,
+      "score": 6,
+      "contributions": {
+        "commits": 1,
+        "mergedPulls": 1,
+        "reviews": 0,
+        "resolvedIssues": 0
+      },
       "repos": [
-        "entropylab"
+        {
+          "name": "entropylab",
+          "commits": 1,
+          "mergedPulls": 1,
+          "reviews": 0,
+          "resolvedIssues": 0,
+          "score": 6
+        }
+      ]
+    },
+    {
+      "login": "100megasats",
+      "id": 322601232,
+      "name": null,
+      "avatar": "https://avatars.githubusercontent.com/u/322601232?v=4",
+      "url": "https://github.com/100megasats",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 0,
+      "publicRepos": 0,
+      "createdAt": "2026-08-29T20:22:51Z",
+      "score": 2,
+      "contributions": {
+        "commits": 0,
+        "mergedPulls": 0,
+        "reviews": 0,
+        "resolvedIssues": 1
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 0,
+          "mergedPulls": 0,
+          "reviews": 0,
+          "resolvedIssues": 1,
+          "score": 2
+        }
+      ]
+    },
+    {
+      "login": "lularocha",
+      "id": 1051634,
+      "name": "Lula Rocha",
+      "avatar": "https://avatars.githubusercontent.com/u/1051634?v=4",
+      "url": "https://github.com/lularocha",
+      "bio": null,
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": null,
+      "email": null,
+      "nostr": null,
+      "followers": 1,
+      "publicRepos": 11,
+      "createdAt": "2011-09-14T23:06:02Z",
+      "score": 2,
+      "contributions": {
+        "commits": 0,
+        "mergedPulls": 0,
+        "reviews": 0,
+        "resolvedIssues": 1
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 0,
+          "mergedPulls": 0,
+          "reviews": 0,
+          "resolvedIssues": 1,
+          "score": 2
+        }
       ]
     }
   ]
