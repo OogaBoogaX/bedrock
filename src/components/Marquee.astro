@@ -1,23 +1,28 @@
 ---
 interface Props {
-  items: string[];
+  items: Array<string | { text: string; highlighted?: boolean }>;
   speed?: string;
   class?: string;
 }
 const { items, speed = "38s", class: className = "" } = Astro.props;
+const textOf = (item: Props["items"][number]) => typeof item === "string" ? item : item.text;
 ---
 
 <div
   class:list={["marquee", "ticker", className]}
   style={`--marquee-speed:${speed}`}
   role="marquee"
-  aria-label={items.join(". ")}
+  aria-label={items.map(textOf).join(". ")}
   data-draggable-marquee
 >
   <div class="marquee__track">
     {[0, 1].map((copy) => (
       <span class="marquee__group" aria-hidden={copy === 1 || undefined}>
-        {items.map((item) => <span class="ticker__item">{item}</span>)}
+        {items.map((item) => (
+          <span class="ticker__item">
+            {typeof item === "string" || !item.highlighted ? textOf(item) : <mark class="theme-update">{item.text}</mark>}
+          </span>
+        ))}
       </span>
     ))}
   </div>

@@ -18,7 +18,7 @@ const stars = repos.reduce((n, r) => n + r.stars, 0);
 const ticker = [
   "welcome to the official homepage of Team Ooga Booga",
   `${members.length} cavemen · ${repos.length} cave · ${stars} stars`,
-  `new: the manifesto is out. ${manifesto.minutes} minutes, zero degrees`,
+  { text: `new: the manifesto is out. ${manifesto.minutes} minutes. built in public`, highlighted: true },
   "we eat bananas. we make code. we give code to tribe.",
   "prompting is grunting",
   "main branch is called rock",

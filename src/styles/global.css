@@ -94,6 +94,17 @@ html.sky-dragging * {
   color: var(--ink);
 }
 
+/* Temporary review marker for the open-door/public-review copy pass. */
+.theme-update {
+  padding: 0 0.16em;
+  color: #fff !important;
+  background: #075dcc;
+  font: inherit;
+  text-shadow: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 a {
   color: var(--link);
   text-decoration: underline;
