@@ -157,7 +157,7 @@ const paths = cavemen.map(memberPath);
     };
     const load = async () => {
       try {
-        const response = await fetch("https://oogabooga.goatcounter.com/counter/TOTAL.json", {
+        const response = await fetch("https://oogabooga.goatcounter.com/counter/TOTAL.json?start=2026-09-05", {
           cache: "no-store",
         });
         if (!response.ok) throw new Error(`GoatCounter returned ${response.status}`);
