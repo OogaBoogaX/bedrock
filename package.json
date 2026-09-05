@@ -10,7 +10,10 @@
     "preview": "astro preview",
     "check": "astro check",
     "tribe:sync": "node scripts/sync-tribe.mjs",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "visits:dev": "wrangler dev --config workers/visits/wrangler.jsonc",
+    "visits:deploy": "wrangler deploy --config workers/visits/wrangler.jsonc",
+    "visits:test": "node --test workers/visits/test/index.test.mjs"
   },
   "dependencies": {
     "@fontsource/comic-neue": "^5.3.0",
@@ -21,6 +24,7 @@
     "@astrojs/check": "^0.9.10",
     "@types/three": "^0.185.4",
     "puppeteer-core": "^25.10.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "wrangler": "^4.129.0"
   }
 }

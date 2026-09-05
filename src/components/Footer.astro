@@ -4,12 +4,16 @@ import { cavemen, memberPath, org, tribe, formatDate } from "@/lib/tribe";
 const first = cavemen[0];
 const last = cavemen[cavemen.length - 1];
 const paths = cavemen.map(memberPath);
+const fallbackCounterUrl = "https://oogabooga.goatcounter.com/counter/TOTAL.json?start=2026-09-05";
+const configuredCounterUrl = import.meta.env.PUBLIC_VISITS_API_URL?.trim();
+const counterUrl = configuredCounterUrl || fallbackCounterUrl;
+const usesLiveCounter = Boolean(configuredCounterUrl);
 ---
 
 <footer class="footer">
   <hr class="hr" />
   <div class="container footer__inner">
-    <div class="counter" data-counter>
+    <div class="counter" data-counter data-counter-url={counterUrl} data-counter-live={usesLiveCounter ? "true" : "false"}>
       <span class="counter__label">recorded site visits</span>
       <span class="odometer is-pending" aria-live="polite" aria-label="Loading recorded site visits">
         {[0, 1, 2, 3, 4, 5, 6, 7].map(() => (
@@ -18,7 +22,9 @@ const paths = cavemen.map(memberPath);
           </span>
         ))}
       </span>
-      <span class="counter__note" data-counter-status>privacy-friendly. no cookies. updates periodically.</span>
+      <span class="counter__note" data-counter-status>
+        {usesLiveCounter ? "privacy-friendly. no cookies. updates about once a minute." : "privacy-friendly. no cookies. updates periodically."}
+      </span>
     </div>
 
     <div class="badges" aria-label="badges">
@@ -144,40 +150,86 @@ const paths = cavemen.map(memberPath);
 <script>
   const counter = document.querySelector<HTMLElement>("[data-counter]");
   if (counter) {
+    const POLL_INTERVAL_MS = 60_000;
     const odometer = counter.querySelector<HTMLElement>(".odometer");
     const status = counter.querySelector<HTMLElement>("[data-counter-status]");
     const strips = counter.querySelectorAll<HTMLElement>(".odometer__strip");
-    const show = (value: string) => {
-      const raw = value.replace(/\D/g, "");
-      if (!raw) throw new Error("GoatCounter returned no numeric count");
-      const digits = raw.padStart(strips.length, "0").slice(-strips.length);
+    const counterUrl = counter.dataset.counterUrl;
+    const usesLiveCounter = counter.dataset.counterLive === "true";
+    let displayedCount: number | undefined;
+    let requestInFlight: Promise<void> | undefined;
+    let started = false;
+
+    const show = (value: unknown) => {
+      let count: number;
+      if (typeof value === "number") {
+        count = value;
+      } else if (typeof value === "string") {
+        const raw = value.replace(/[^\d]/g, "");
+        if (!raw) throw new Error("Visit API returned no count");
+        count = Number(raw);
+      } else {
+        throw new Error("Visit API returned no count");
+      }
+      if (!Number.isSafeInteger(count) || count < 0) throw new Error("Visit API returned an invalid count");
+      if (count === displayedCount) return;
+
+      const digits = String(count).padStart(strips.length, "0").slice(-strips.length);
       strips.forEach((strip, index) => strip.style.setProperty("--d", digits[index]));
       odometer?.classList.remove("is-pending");
-      odometer?.setAttribute("aria-label", `${Number(raw).toLocaleString("en-US")} recorded site visits`);
+      odometer?.setAttribute("aria-label", `${count.toLocaleString("en-US")} recorded site visits`);
+      displayedCount = count;
     };
-    const load = async () => {
-      try {
-        const response = await fetch("https://oogabooga.goatcounter.com/counter/TOTAL.json?start=2026-09-05", {
-          cache: "no-store",
-        });
-        if (!response.ok) throw new Error(`GoatCounter returned ${response.status}`);
-        const data: { count?: string } = await response.json();
-        show(data.count ?? "");
-      } catch (error) {
-        console.warn("Visitor count unavailable", error);
-        odometer?.setAttribute("aria-label", "Recorded site visit count unavailable");
-        if (status) status.textContent = "counter awaiting GoatCounter setup.";
-      }
+
+    const load = () => {
+      if (!counterUrl || requestInFlight || document.visibilityState === "hidden") return requestInFlight;
+
+      requestInFlight = (async () => {
+        try {
+          const response = await fetch(counterUrl, { cache: "no-store" });
+          if (!response.ok) throw new Error(`Visit API returned ${response.status}`);
+          const data: { count?: string | number } = await response.json();
+          show(data.count);
+          if (status && usesLiveCounter) status.textContent = "privacy-friendly. no cookies. updates about once a minute.";
+        } catch (error) {
+          console.warn("Visitor count unavailable", error);
+          if (displayedCount === undefined) {
+            odometer?.setAttribute("aria-label", "Recorded site visit count unavailable");
+            if (status) status.textContent = "counter unavailable. retrying.";
+          } else if (status) {
+            status.textContent = "last update missed. retrying.";
+          }
+        } finally {
+          requestInFlight = undefined;
+        }
+      })();
+
+      return requestInFlight;
     };
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      void load();
+      window.setInterval(() => void load(), POLL_INTERVAL_MS);
+    };
+
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
-        void load();
+        start();
       },
       { threshold: 0.5 },
     );
     io.observe(counter);
+
+    document.addEventListener("visibilitychange", () => {
+      if (started && document.visibilityState === "visible") void load();
+    });
+    window.addEventListener("focus", () => {
+      if (started) void load();
+    });
   }
 
   const random = document.querySelector<HTMLAnchorElement>("[data-random]");
