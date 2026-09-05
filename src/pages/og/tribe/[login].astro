@@ -1,7 +1,7 @@
 ---
 import Card from "@/layouts/Card.astro";
 import Window from "@/components/Window.astro";
-import { members, rankOf, displayName, avatarUrl, formatDate, totalBananas, type Member } from "@/lib/tribe";
+import { members, rankOf, displayName, avatarUrl, formatDate, totalScore, type Member } from "@/lib/tribe";
 
 export function getStaticPaths() {
   return members.map((member) => ({ params: { login: member.login.toLowerCase() }, props: { member } }));
@@ -12,8 +12,8 @@ interface Props {
 }
 
 const { member } = Astro.props;
-const rank = rankOf(member.bananas);
-const share = totalBananas ? Math.round((member.bananas / totalBananas) * 100) : 0;
+const rank = rankOf(member.score);
+const share = totalScore ? Math.round((member.score / totalScore) * 100) : 0;
 ---
 
 <Card title={`${member.login} Properties`}>
@@ -22,7 +22,7 @@ const share = totalBananas ? Math.round((member.bananas / totalBananas) * 100) :
     <div class="pf__win">
     <Window title={`${member.login} Properties`} iconSrc={avatarUrl(member, 32)} pad="8px" controls="decorative" active>
       <div class="pf__tabs" aria-hidden="true">
-        <span class="pf__tab is-on">General</span><span class="pf__tab">Socials</span><span class="pf__tab">Bananas</span>
+        <span class="pf__tab is-on">General</span><span class="pf__tab">Socials</span><span class="pf__tab">Impact</span>
       </div>
       <div class="pf__panel">
         <img class="pf__avatar" src={avatarUrl(member, 460)} width="250" height="250" alt="" />
@@ -40,10 +40,10 @@ const share = totalBananas ? Math.round((member.bananas / totalBananas) * 100) :
             <dd><span class="rank">{rank.name}</span> <span class="muted">{rank.blurb}</span></dd>
           </div>
           <div>
-            <dt>bananas</dt>
+            <dt>GitHub impact</dt>
             <dd>
-              <span class="mono">🍌 {member.bananas.toLocaleString("en-US")}</span> eaten
-              <span class="progress progress--banana pf__bar"><span class="progress__bar" style={`--value:${Math.max(share, member.bananas ? 2 : 0)}%`}></span></span>
+              <span class="mono">◆ {member.score.toLocaleString("en-US")}</span> score
+              <span class="progress progress--banana pf__bar"><span class="progress__bar" style={`--value:${Math.max(share, member.score ? 2 : 0)}%`}></span></span>
             </dd>
           </div>
           <div>

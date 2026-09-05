@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [rock]
+  schedule:
+    # Refresh public GitHub activity every 15 minutes without a code change.
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -26,6 +29,13 @@ jobs:
           cache: pnpm
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
+      - name: Sync GitHub roster and impact scores
+        # A read:org PAT in TRIBE_GITHUB_TOKEN also discovers private memberships;
+        # the workflow token still covers all public scoring data.
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.TRIBE_GITHUB_TOKEN || github.token }}
+        run: pnpm tribe:sync
       - name: Type check
         run: pnpm check
       - name: Build static site

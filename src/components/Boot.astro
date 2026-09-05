@@ -1,5 +1,5 @@
 ---
-import { members, totalBananas } from "@/lib/tribe";
+import { members, totalScore } from "@/lib/tribe";
 ---
 
 <script is:inline>
@@ -13,7 +13,7 @@ import { members, totalBananas } from "@/lib/tribe";
 </span><span class="boot__line">Main branch ........................ rock
 </span><span class="boot__line">Detecting intelligence ............. <b class="boot__bad">not found</b>
 </span><span class="boot__line">Detecting cavemen .................. {members.length} found
-</span><span class="boot__line">Counting bananas ................... {totalBananas.toLocaleString("en-US")}
+</span><span class="boot__line">Calculating GitHub impact .......... {totalScore.toLocaleString("en-US")}
 </span><span class="boot__line">Loading clankers ................... OK
 </span><span class="boot__line">Connecting to tribe @ 56.6 kbps .... <span class="boot__bar" data-boot-bar></span>
 </span><span class="boot__line boot__prompt blink">Press any key to enter the cave_</span></pre>

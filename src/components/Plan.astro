@@ -1,6 +1,6 @@
 ---
 import Window from "@/components/Window.astro";
-import { members, friends, org, repos, totalBananas } from "@/lib/tribe";
+import { members, friends, org, repos, totalScore } from "@/lib/tribe";
 
 const stars = repos.reduce((n, r) => n + r.stars, 0);
 const forks = repos.reduce((n, r) => n + r.forks, 0);
@@ -47,10 +47,9 @@ const forks = repos.reduce((n, r) => n + r.forks, 0);
             <p class="banana__caption" data-banana-caption>click to eat</p>
           </div>
           <dl class="stats">
-            <div><dt>bananas eaten by the tribe</dt><dd data-status-text="1 banana = 1 commit to rock">{totalBananas.toLocaleString("en-US")}</dd></div>
             <div><dt>eaten by you</dt><dd data-banana-count>0</dd></div>
           </dl>
-          <p class="note">bananas are tokens. clankers run on them. we feed them in public so anyone can see where the bananas go.</p>
+          <p class="note">bananas are the mascot, not the scoreboard. contribution credit comes directly from GitHub.</p>
         </Window>
       </div>
 
@@ -80,7 +79,7 @@ C:\TRIBE&gt; git push origin rock
             <legend>everything in the open</legend>
             <label class="check"><input type="checkbox" checked disabled /> team meetings, live on X Spaces</label>
             <label class="check"><input type="checkbox" checked disabled /> prompts, readable by anyone</label>
-            <label class="check"><input type="checkbox" checked disabled /> token spend, visible per contributor</label>
+            <label class="check"><input type="checkbox" checked disabled /> GitHub work, credited per contributor</label>
             <label class="check"><input type="checkbox" checked disabled /> code review by engineers and clankers, in public</label>
             <label class="check"><input type="checkbox" checked disabled /> no gatekeeping. no permission. no degree.</label>
           </fieldset>
@@ -90,7 +89,7 @@ C:\TRIBE&gt; git push origin rock
             <div><dt>caves</dt><dd>{repos.length}</dd></div>
             <div><dt>stars</dt><dd>{stars}</dd></div>
             <div><dt>forks</dt><dd>{forks}</dd></div>
-            <div><dt>branch</dt><dd>rock</dd></div>
+            <div><dt>impact</dt><dd>{totalScore.toLocaleString("en-US")}</dd></div>
           </dl>
         </Window>
       </div>
