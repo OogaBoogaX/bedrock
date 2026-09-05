@@ -29,8 +29,9 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
           <section class="wizard__page is-on" data-page>
             <h3>Welcome to the Gorilla Open Source Setup Wizard</h3>
             <p>This wizard will install you into the tribe.</p>
-            <p>Requirements: one idea, one clanker, and the will to be reviewed in public.</p>
-            <p>No degree will be checked. No permission will be asked. Click Next to continue.</p>
+            <p>Requirements: one idea, one clanker, and your contribution gets reviewed.</p>
+            <p>No degree check. No permission asked.</p>
+            <p>Click Next to continue.</p>
           </section>
 
           <section class="wizard__page" data-page data-eula hidden>
@@ -128,10 +129,10 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
   }
   .wizard__side {
     display: grid;
-    align-content: end;
+    align-content: start;
     justify-items: center;
     gap: 0.25rem;
-    padding: 1rem;
+    padding: 1.5rem 1rem 1rem;
     background: linear-gradient(180deg, var(--title-b) 0%, var(--title-a) 100%);
     color: var(--paper);
     text-align: center;
@@ -141,7 +142,7 @@ const lab = repos.find((r) => r.name === "entropylab") ?? repos[0];
     height: 96px;
     border: 2px solid var(--paper);
     box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
-    margin-bottom: auto;
+    margin-bottom: 0.35rem;
     image-rendering: pixelated;
   }
   .wizard__brand {

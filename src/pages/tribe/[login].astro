@@ -57,7 +57,7 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
           <div class="general">
             <div class="general__view">
               <div class="viewport" data-viewport data-login={member.login} data-kind={kind} data-avatar={member.avatar} data-model={model?.url} data-size="512" data-drag>
-                <img class="viewport__fallback" src={avatarUrl(member, 460)} alt={`${name}'s GitHub avatar`} width="460" height="460" decoding="async" />
+                <img class="viewport__fallback" src={avatarUrl(member, 460)} alt={`${name}'s GitHub avatar`} width="460" height="460" decoding="async" draggable="false" />
               </div>
               <p class="general__kind">{model?.label ?? KIND_LABEL[kind]} · drag to rotate</p>
             </div>
@@ -260,6 +260,9 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
     box-shadow: var(--field-in);
     cursor: grab;
     overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
   }
   .viewport:active {
     cursor: grabbing;
@@ -272,6 +275,8 @@ const description = `${name} (@${member.login}) is a ${rank.name} of Team Ooga B
     opacity: 0.25;
     filter: grayscale(1);
     transition: opacity 300ms ease;
+    pointer-events: none;
+    -webkit-user-drag: none;
   }
   .viewport.is-ready .viewport__fallback {
     opacity: 0;

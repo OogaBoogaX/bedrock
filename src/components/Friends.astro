@@ -13,13 +13,15 @@ import { friends, avatarUrl } from "@/lib/tribe";
       <div class="marquee friends__marquee" style="--marquee-speed: 60s; --marquee-gap: 0.9rem">
         <div class="marquee__track">
           {[0, 1].map((copy) =>
-            friends.map((f) => (
-              <a class="friend" href={f.url} rel="noopener" aria-hidden={copy === 1 || undefined} tabindex={copy === 1 ? -1 : undefined}>
-                <img src={avatarUrl(f, 64)} alt="" width="32" height="32" loading="lazy" decoding="async" />
-                <span>{f.login}</span>
-                <span class="friend__bananas">🍌{f.bananas}</span>
-              </a>
-            )),
+            <div class="marquee__group" aria-hidden={copy === 1 || undefined}>
+              {friends.map((f) => (
+                <a class="friend" href={f.url} rel="noopener" tabindex={copy === 1 ? -1 : undefined}>
+                  <img src={avatarUrl(f, 64)} alt="" width="32" height="32" loading="lazy" decoding="async" />
+                  <span>{f.login}</span>
+                  <span class="friend__bananas">🍌{f.bananas}</span>
+                </a>
+              ))}
+            </div>
           )}
         </div>
       </div>

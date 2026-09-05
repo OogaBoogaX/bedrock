@@ -1,6 +1,6 @@
 ---
 import Window from "@/components/Window.astro";
-import { members, friends, repos, totalBananas } from "@/lib/tribe";
+import { members, friends, org, repos, totalBananas } from "@/lib/tribe";
 
 const stars = repos.reduce((n, r) => n + r.stars, 0);
 const forks = repos.reduce((n, r) => n + r.forks, 0);
@@ -18,40 +18,33 @@ const forks = repos.reduce((n, r) => n + r.forks, 0);
         <h3 class="plan__line" data-type="we eat bananas.">we eat bananas.</h3>
         <Window title="bananas.exe" icon="🍌" pad="0.75rem">
           <div class="panel banana" data-banana>
-            <svg class="banana__svg" viewBox="0 0 200 200" aria-hidden="true">
-              <defs>
-                <linearGradient id="bananaFill" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#fff3a0" />
-                  <stop offset="0.5" stop-color="#ffe135" />
-                  <stop offset="1" stop-color="#d9a900" />
-                </linearGradient>
-              </defs>
-              <g class="banana__fruit">
-                <path
-                  d="M38 44c-6 40 8 86 44 110 24 16 60 20 84 6 6-3 8-10 2-12-8-3-16-1-30-5-36-10-60-40-70-84-2-9-4-14-9-20-8-8-19-6-21 5z"
-                  fill="url(#bananaFill)"
-                  stroke="#3a2a00"
-                  stroke-width="3"
-                  stroke-linejoin="round"
-                />
-                <path d="M40 46c-2 34 12 74 44 96" fill="none" stroke="#b58a00" stroke-width="3" opacity=".6" />
-                <path d="M36 38l-6-12c-1-3 2-5 5-3l8 8z" fill="#5a3a00" />
-                <path d="M160 150c8 2 12 4 10 8-2 2-8 2-14 0z" fill="#5a3a00" />
-                <g class="banana__bites">
-                  <circle cx="150" cy="150" r="17" />
-                  <circle cx="112" cy="134" r="18" />
-                  <circle cx="72" cy="100" r="19" />
-                </g>
-              </g>
-              <g class="banana__peel">
-                <path d="M60 172c20-30 40-30 60-8 6 8 18 8 24 0-14 30-40 36-58 22-8 10-20 8-26-14z" fill="#e6c200" stroke="#3a2a00" stroke-width="3" stroke-linejoin="round" />
-                <path d="M100 100c-10 30-30 60-40 72M100 100c10 28 30 52 44 64" fill="none" stroke="#3a2a00" stroke-width="3" stroke-linecap="round" />
-                <path d="M88 96c-14-6-26 6-30 24 12-6 24-6 30-24z" fill="#ffe135" stroke="#3a2a00" stroke-width="3" />
-                <path d="M112 96c14-6 26 6 30 24-12-6-24-6-30-24z" fill="#ffe135" stroke="#3a2a00" stroke-width="3" />
+            <div
+              class="banana__model"
+              data-viewport
+              data-kind="banana"
+              data-login={org.login}
+              data-avatar={org.avatar}
+              data-size="256"
+              data-zoom="0.82"
+              data-tilt="-0.35"
+              data-angle="0"
+              data-hide-sticker
+              data-follow-overlay=".banana__bites"
+              data-static
+              role="img"
+              aria-label="A side view of the Team Ooga Booga 3D banana"
+            >
+              <span class="banana__fallback" aria-hidden="true">🍌</span>
+            </div>
+            <svg class="banana__bites" viewBox="0 0 240 220" aria-hidden="true">
+              <g fill="#000">
+                <path class="banana__bite" d="M240 0v220h-50v-51c-12-1-15-11-4-16-12-5-10-16 2-18-9-8-3-17 8-14h44z" />
+                <path class="banana__bite" d="M240 0v220H135v-43c-13 0-17-11-5-18-13-4-12-16 1-20-10-8-4-18 8-17-7-10 1-19 13-14h88z" />
+                <path class="banana__bite" d="M240 0v220H58v-67c0-15 5-29 22-37-14-5-11-18 7-20-14-8-7-22 9-20-12-11-3-25 15-21h129z" />
               </g>
             </svg>
+            <img class="banana__fed" src="/img/caveman-fed.png" alt="A satisfied caveman surrounded by banana peels" width="512" height="512" />
             <p class="banana__caption" data-banana-caption>click to eat</p>
-            <button class="btn btn--banana banana__more" type="button" data-banana-more>more bananas</button>
           </div>
           <dl class="stats">
             <div><dt>bananas eaten by the tribe</dt><dd data-status-text="1 banana = 1 commit to rock">{totalBananas.toLocaleString("en-US")}</dd></div>
@@ -85,7 +78,7 @@ C:\TRIBE&gt; git push origin rock
         <Window title="Tribe Properties" icon="🦍" pad="0.75rem">
           <fieldset class="open">
             <legend>everything in the open</legend>
-            <label class="check"><input type="checkbox" checked disabled /> meetings, live on X Spaces, almost nightly</label>
+            <label class="check"><input type="checkbox" checked disabled /> team meetings, live on X Spaces</label>
             <label class="check"><input type="checkbox" checked disabled /> prompts, readable by anyone</label>
             <label class="check"><input type="checkbox" checked disabled /> token spend, visible per contributor</label>
             <label class="check"><input type="checkbox" checked disabled /> code review by engineers and clankers, in public</label>
@@ -131,64 +124,80 @@ C:\TRIBE&gt; git push origin rock
   .banana {
     position: relative;
     display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     place-items: center;
+    row-gap: 0.3rem;
+    height: 260px;
     padding: 0.5rem;
     cursor: pointer;
     user-select: none;
   }
-  .banana__svg {
-    width: min(100%, 220px);
-    aspect-ratio: 1;
-    transition: transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  .banana__model,
+  .banana__bites {
+    grid-row: 1;
+    grid-column: 1;
+    width: min(100%, 270px);
+    height: 220px;
+    max-height: 100%;
   }
-  .banana:hover .banana__svg {
-    transform: rotate(-6deg) scale(1.04);
+  .banana__model {
+    position: relative;
   }
-  .banana.is-chomp .banana__svg {
-    animation: chomp 260ms ease;
+  .banana__fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    place-items: center;
+    font-size: 6rem;
+    line-height: 1;
   }
-  @keyframes chomp {
-    30% {
-      transform: scale(0.92) rotate(4deg);
-    }
+  .banana__model.no-webgl .banana__fallback {
+    display: grid;
   }
-  .banana__bites circle {
-    fill: var(--ink);
-    stroke: #3a2a00;
-    stroke-width: 3;
+  .banana__bites {
+    position: relative;
+    z-index: 6;
+    pointer-events: none;
+  }
+  .banana__bite {
     opacity: 0;
-    transform-origin: center;
-    transform: scale(0.6);
-    transition: opacity 120ms ease, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .banana[data-bites="1"] .banana__bites circle:nth-child(1),
-  .banana[data-bites="2"] .banana__bites circle:nth-child(-n + 2),
-  .banana[data-bites="3"] .banana__bites circle {
+  .banana[data-bites="1"] .banana__bite:nth-child(1),
+  .banana[data-bites="2"] .banana__bite:nth-child(2),
+  .banana[data-bites="3"] .banana__bite:nth-child(3),
+  .banana[data-bites="4"] .banana__bite:nth-child(4) {
     opacity: 1;
-    transform: scale(1);
   }
-  .banana__peel {
+  .banana__fed {
+    display: none;
+    grid-row: 1;
+    grid-column: 1;
+    width: min(100%, 220px);
+    max-height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 7;
+  }
+  .banana[data-bites="4"] .banana__model,
+  .banana[data-bites="4"] .banana__bites,
+  .banana.is-gone .banana__model,
+  .banana.is-gone .banana__bites {
     display: none;
   }
-  .banana.is-gone .banana__fruit {
-    display: none;
-  }
-  .banana.is-gone .banana__peel {
+  .banana[data-bites="4"] .banana__fed,
+  .banana.is-gone .banana__fed {
     display: block;
   }
   .banana__caption {
+    grid-row: 2;
+    position: relative;
+    z-index: 7;
     margin: 0;
     font-size: 0.85rem;
     color: #bdbdbd;
+    text-align: center;
+    white-space: nowrap;
   }
-  .banana__more {
-    display: none;
-    margin-top: 0.5rem;
-  }
-  .banana.is-gone .banana__more {
-    display: inline-flex;
-  }
-
   .stats {
     margin: 0.75rem 0 0;
     display: grid;
@@ -251,16 +260,26 @@ C:\TRIBE&gt; git push origin rock
 
   .open {
     margin: 0;
-    padding: 0.5rem 0.75rem 0.75rem;
+    padding: 0.62rem 0.85rem 0.85rem;
     border: 0;
     box-shadow: inset 1px 1px var(--face-shadow), inset -1px -1px var(--face-lighter), inset 2px 2px var(--face-lighter),
       inset -2px -2px var(--face-shadow);
     display: grid;
-    gap: 0.35rem;
+    gap: 0.48rem;
   }
   .open legend {
-    padding: 0 0.3rem;
+    margin-left: 0.45rem;
+    padding: 0.05rem 0.55rem 0.12rem;
+    background: var(--face);
     font-weight: 700;
+    line-height: 1.1;
+  }
+  .open .check {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    align-items: start;
+    gap: 0.65rem;
+    line-height: 1.45;
   }
 </style>
 
@@ -300,33 +319,34 @@ C:\TRIBE&gt; git push origin rock
   if (banana) {
     const caption = banana.querySelector<HTMLElement>("[data-banana-caption]");
     const counter = document.querySelector<HTMLElement>("[data-banana-count]");
-    const more = banana.querySelector<HTMLButtonElement>("[data-banana-more]");
-    const captions = ["nom.", "nom nom.", "banana gone. tribe fed."];
+    const captions = ["nom.", "nom nom.", "nom nom nom.", "banana gone. tribe fed."];
     let bites = 0;
     let eaten = 0;
 
-    banana.addEventListener("click", (event) => {
-      if ((event.target as HTMLElement).closest("[data-banana-more]")) {
-        bites = 0;
-        banana.dataset.bites = "0";
-        banana.classList.remove("is-gone");
-        if (caption) caption.textContent = "click to eat";
+    const resetBanana = () => {
+      bites = 0;
+      banana.dataset.bites = "0";
+      banana.classList.remove("is-gone", "is-chomp");
+      if (caption) caption.textContent = "click to eat";
+    };
+
+    banana.addEventListener("click", () => {
+      if (bites >= 4) {
+        resetBanana();
         return;
       }
-      if (bites >= 3) return;
       bites++;
       banana.dataset.bites = String(bites);
       banana.classList.remove("is-chomp");
       void banana.offsetWidth;
       banana.classList.add("is-chomp");
       if (caption) caption.textContent = captions[bites - 1];
-      if (bites === 3) {
+      if (bites === 4) {
         eaten++;
         if (counter) counter.textContent = String(eaten);
         setTimeout(() => banana.classList.add("is-gone"), 260);
       }
     });
-    more?.addEventListener("click", (e) => e.stopPropagation());
   }
 
   // terminal

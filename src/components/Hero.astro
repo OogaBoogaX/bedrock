@@ -20,10 +20,14 @@ const palette = [
       data-login={org.login}
       data-avatar={org.avatar}
       data-size="256"
-      data-zoom="0.82"
-      data-tilt="0.38"
+      data-zoom="1.05"
+      data-zoom-min="0.55"
+      data-zoom-max="1.5"
+      data-overflow-y="0.55"
+      data-tilt="0.15"
       data-spin="1.25"
       data-drag
+      data-wheel-zoom
       data-kick
       data-status-text="🍌 click the banana"
       role="img"
@@ -119,11 +123,15 @@ const palette = [
     font-size: clamp(2.6rem, 9.5vw, 7rem);
     padding: 0.2em 0.3em;
     margin-top: -0.35em;
+    user-select: none;
+    -webkit-user-select: none;
   }
   .hero__banana {
     position: relative;
-    width: clamp(200px, 30vw, 320px);
-    aspect-ratio: 1;
+    width: min(100%, clamp(360px, 60vw, 700px));
+    height: clamp(225px, 40vw, 440px);
+    /* Keep the larger render area, but restore the row's original vertical footprint. */
+    margin-block: calc((clamp(200px, 30vw, 320px) - clamp(225px, 40vw, 440px)) / 2);
     cursor: grab;
     user-select: none;
     -webkit-user-select: none;
@@ -151,55 +159,59 @@ const palette = [
   }
   .hero__bubble {
     position: absolute;
-    left: 78%;
-    top: 4%;
-    padding: 0.3rem 0.7rem;
+    right: clamp(0.35rem, 2%, 0.9rem);
+    top: 5%;
+    z-index: 3;
+    padding: 0.5rem 0.9rem 0.56rem;
     background: var(--paper);
     color: var(--ink);
     border: 2px solid var(--ink);
-    border-radius: 14px;
+    border-radius: 1.15rem;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
     white-space: nowrap;
-    box-shadow: 2px 2px 0 var(--ink);
-    transform-origin: 0 100%;
-    transform: scale(0);
+    filter: drop-shadow(0 3px 0 rgb(0 0 0 / 0.8)) drop-shadow(0 7px 8px rgb(0 0 0 / 0.25));
+    transform-origin: 1.25rem calc(100% + 0.55rem);
+    transform: translate(-0.2rem, 0.45rem) scale(0.72);
     opacity: 0;
     pointer-events: none;
   }
   .hero__bubble::after {
     content: "";
     position: absolute;
-    left: 10px;
-    bottom: -9px;
-    width: 10px;
-    height: 10px;
+    pointer-events: none;
+    left: 1rem;
+    bottom: -14px;
+    width: 22px;
+    height: 19px;
     background: var(--paper);
-    border-right: 2px solid var(--ink);
-    border-bottom: 2px solid var(--ink);
-    transform: skewX(-20deg) rotate(45deg);
+    /* A single curved silhouette overlaps the bubble interior before
+       tapering away, so there is neither a seam nor a pasted-on triangle. */
+    clip-path: path("M0 0 C6 2 15 2 22 0 C18 6 12 12 4 19 C6 11 4 4 0 0 Z");
   }
   .hero__bubble.is-on {
-    animation: bubble 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: bubble 1350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   @keyframes bubble {
     0% {
-      transform: scale(0);
+      transform: translate(-0.2rem, 0.45rem) scale(0.72);
       opacity: 0;
     }
-    18% {
-      transform: scale(1.08);
+    14% {
+      transform: translate(0, 0) scale(1.045);
       opacity: 1;
     }
-    30% {
-      transform: scale(1);
+    23% {
+      transform: translate(0, 0) scale(1);
     }
-    82% {
-      transform: scale(1);
+    78% {
+      transform: translate(0, 0) scale(1);
       opacity: 1;
     }
     100% {
-      transform: scale(0.8) translateY(-6px);
+      transform: translate(0.15rem, -0.45rem) scale(0.94);
       opacity: 0;
     }
   }
@@ -419,7 +431,7 @@ const palette = [
   const heroBanana = document.querySelector<HTMLElement>("[data-hero-banana]");
   const bubble = heroBanana?.querySelector<HTMLElement>("[data-bubble]");
   if (heroBanana && bubble) {
-    const GRUNTS = ["BANANA!", "OOGA!", "BOOGA!", "nom.", "we eat bananas.", "1 banana = 1 commit", "merge to rock!", "where clanker?"];
+    const GRUNTS = ["BANANA!", "OOGA!", "BOOGA!", "nom.", "we eat bananas.", "merge to rock!", "push rock!", "pull rock!", "where clanker?"];
     let last = -1;
     heroBanana.addEventListener("viewport:kick", () => {
       let i = Math.floor(Math.random() * GRUNTS.length);
