@@ -4,8 +4,7 @@ import { members, contributors, cavemen, rankOf, displayName, avatarUrl, memberP
 import { assignKinds, KIND_LABEL, MODELS } from "@/lib/kinds";
 
 const kinds = assignKinds(members.map((m) => m.login));
-const max = Math.max(1, ...cavemen.map((member) => member.score));
-const memberLogins = new Set(members.map((member) => member.login.toLowerCase()));
+const max = Math.max(1, ...members.map((member) => member.score));
 ---
 
 <section class="section" id="tribe">
@@ -21,11 +20,9 @@ const memberLogins = new Set(members.map((member) => member.login.toLowerCase())
 
     <div class="roster" data-roster>
       {
-        cavemen.map((m) => {
+        members.map((m) => {
           const rank = rankOf(m.score);
-          const isOrgMember = memberLogins.has(m.login.toLowerCase());
-          const kind = isOrgMember ? (kinds.get(m.login) ?? "cube") : "cube";
-          const affiliation = isOrgMember ? "org member" : "contributor";
+          const kind = kinds.get(m.login) ?? "cube";
           return (
             <a class="card" href={memberPath(m)} data-status-text={`Opening ${m.login}.exe`} draggable="false">
               <Window as="article" title={`${m.login}.exe`} iconSrc={avatarUrl(m, 32)} pad="0.6rem" controls="decorative">
@@ -36,6 +33,7 @@ const memberLogins = new Set(members.map((member) => member.login.toLowerCase())
                   data-kind={kind}
                   data-avatar={m.avatar}
                   data-model={MODELS[m.login]?.url}
+                  data-frame-inset="2"
                   data-drag
                   title={MODELS[m.login]?.label ?? KIND_LABEL[kind]}
                 >
@@ -43,7 +41,7 @@ const memberLogins = new Set(members.map((member) => member.login.toLowerCase())
                 </div>
                 <div class="card__meta">
                   <strong class="card__name">{displayName(m)}</strong>
-                  <span class="card__login">@{m.login} · {affiliation}</span>
+                  <span class="card__login">@{m.login} · org member</span>
                   <span class="card__rank">{rank.name}</span>
                   <div class="progress progress--banana card__bar" title={`Impact score: ${m.score}`}>
                     <div class="progress__bar" style={`--value:${Math.max(4, Math.round((m.score / max) * 100))}%`} />

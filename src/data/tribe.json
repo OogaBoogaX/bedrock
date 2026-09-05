@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-05T04:20:38.988Z",
+  "syncedAt": "2026-09-05T11:28:06.064Z",
   "source": "GitHub org members + saved roster",
   "scoring": {
     "name": "impact score",
@@ -28,10 +28,11 @@
       "description": "A fully offline, air-gapped Bitcoin key and wallet calculator. It turns user-supplied entropy, seed phrases, or private keys into BIP39 seeds, xpubs, descriptors, addresses, and recovery data, and can also build watch-only multisig wallets without exposing private keys online.",
       "stars": 51,
       "forks": 37,
-      "openIssues": 74,
+      "openIssues": 53,
+      "openPulls": 19,
       "defaultBranch": "rock",
       "language": "HTML",
-      "pushedAt": "2026-09-05T02:47:44Z"
+      "pushedAt": "2026-09-05T09:13:01Z"
     },
     {
       "name": "bedrock",
@@ -41,9 +42,10 @@
       "stars": 2,
       "forks": 0,
       "openIssues": 0,
+      "openPulls": 0,
       "defaultBranch": "rock",
       "language": "Astro",
-      "pushedAt": "2026-09-05T02:11:23Z"
+      "pushedAt": "2026-09-05T11:10:31Z"
     }
   ],
   "members": [
@@ -63,21 +65,21 @@
       "followers": 157,
       "publicRepos": 109,
       "createdAt": "2012-12-22T09:39:05Z",
-      "score": 586,
+      "score": 597,
       "contributions": {
-        "commits": 275,
-        "mergedPulls": 59,
+        "commits": 281,
+        "mergedPulls": 60,
         "reviews": 2,
         "resolvedIssues": 6
       },
       "repos": [
         {
           "name": "entropylab",
-          "commits": 275,
-          "mergedPulls": 59,
+          "commits": 281,
+          "mergedPulls": 60,
           "reviews": 2,
           "resolvedIssues": 6,
-          "score": 586
+          "score": 597
         }
       ]
     },
@@ -97,10 +99,10 @@
       "followers": 65,
       "publicRepos": 8,
       "createdAt": "2021-12-01T18:06:02Z",
-      "score": 306,
+      "score": 312,
       "contributions": {
-        "commits": 167,
-        "mergedPulls": 27,
+        "commits": 168,
+        "mergedPulls": 28,
         "reviews": 0,
         "resolvedIssues": 2
       },
@@ -115,11 +117,11 @@
         },
         {
           "name": "bedrock",
-          "commits": 3,
-          "mergedPulls": 1,
+          "commits": 4,
+          "mergedPulls": 2,
           "reviews": 0,
           "resolvedIssues": 0,
-          "score": 8
+          "score": 14
         }
       ]
     },
@@ -268,6 +270,40 @@
       ]
     },
     {
+      "login": "Rob1Ham",
+      "id": 6456095,
+      "name": "Rob Hamilton",
+      "avatar": "https://avatars.githubusercontent.com/u/6456095?v=4",
+      "url": "https://github.com/Rob1Ham",
+      "bio": "Bitcoin",
+      "location": null,
+      "company": null,
+      "website": null,
+      "twitter": "Rob1Ham",
+      "email": null,
+      "nostr": null,
+      "followers": 79,
+      "publicRepos": 52,
+      "createdAt": "2014-01-21T01:41:17Z",
+      "score": 56,
+      "contributions": {
+        "commits": 1,
+        "mergedPulls": 3,
+        "reviews": 0,
+        "resolvedIssues": 20
+      },
+      "repos": [
+        {
+          "name": "entropylab",
+          "commits": 1,
+          "mergedPulls": 3,
+          "reviews": 0,
+          "resolvedIssues": 20,
+          "score": 56
+        }
+      ]
+    },
+    {
       "login": "itme-brain",
       "id": 83414300,
       "name": "₿ryan",
@@ -332,40 +368,6 @@
           "reviews": 0,
           "resolvedIssues": 0,
           "score": 49
-        }
-      ]
-    },
-    {
-      "login": "Rob1Ham",
-      "id": 6456095,
-      "name": "Rob Hamilton",
-      "avatar": "https://avatars.githubusercontent.com/u/6456095?v=4",
-      "url": "https://github.com/Rob1Ham",
-      "bio": "Bitcoin",
-      "location": null,
-      "company": null,
-      "website": null,
-      "twitter": "Rob1Ham",
-      "email": null,
-      "nostr": null,
-      "followers": 79,
-      "publicRepos": 52,
-      "createdAt": "2014-01-21T01:41:17Z",
-      "score": 48,
-      "contributions": {
-        "commits": 0,
-        "mergedPulls": 2,
-        "reviews": 0,
-        "resolvedIssues": 19
-      },
-      "repos": [
-        {
-          "name": "entropylab",
-          "commits": 0,
-          "mergedPulls": 2,
-          "reviews": 0,
-          "resolvedIssues": 19,
-          "score": 48
         }
       ]
     },

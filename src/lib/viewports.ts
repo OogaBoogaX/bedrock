@@ -17,6 +17,7 @@ import type { Kind } from "./kinds";
 //   data-wheel-zoom  wheel zooms the model without scrolling the page
 //   data-zoom-min / data-zoom-max  wheel-scale limits (defaults .78 / 1.22)
 //   data-overflow-y  vertical render overflow per side, as a fraction of height
+//   data-frame-inset  keeps this many CSS pixels clear for a DOM border above WebGL
 //   data-angle  initial y rotation in radians
 //   data-static  holds the initial angle instead of idly or hover-spinning
 //   data-hide-sticker  hides the procedural banana's avatar sticker
@@ -42,6 +43,7 @@ interface View {
   zoom: number;
   zoomHold: number;
   overflowY: number;
+  frameInset: number;
   flip: number;
   flipTarget: number;
   hover: boolean;
@@ -95,6 +97,7 @@ export function mountViewports(root: ParentNode): () => void {
     const wheelMin = Number(el.dataset.zoomMin) || 0.78;
     const wheelMax = Number(el.dataset.zoomMax) || 1.22;
     const overflowY = Math.max(0, Number(el.dataset.overflowY) || 0);
+    const frameInset = Math.max(0, Number(el.dataset.frameInset) || 0);
     const staticView = "static" in el.dataset;
     const followOverlay = el.dataset.followOverlay
       ? (el.parentElement?.querySelector<HTMLElement>(el.dataset.followOverlay) ?? null)
@@ -131,6 +134,7 @@ export function mountViewports(root: ParentNode): () => void {
       zoom: 1,
       zoomHold: 0,
       overflowY,
+      frameInset,
       flip: 0,
       flipTarget: 0,
       hover: false,
@@ -317,10 +321,17 @@ export function mountViewports(root: ParentNode): () => void {
         view.followOverlay.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       }
       const viewportBottom = h - (rect.bottom + overflow);
-      const scissorTop = Math.max(0, rect.top - overflow);
-      const scissorBottomEdge = Math.min(h, rect.bottom + overflow);
+      const scissorLeft = Math.max(0, rect.left + view.frameInset);
+      const scissorRight = Math.min(innerWidth, rect.right - view.frameInset);
+      const scissorTop = Math.max(0, rect.top - overflow + view.frameInset);
+      const scissorBottomEdge = Math.min(h, rect.bottom + overflow - view.frameInset);
       renderer.setViewport(rect.left, viewportBottom, rect.width, renderHeight);
-      renderer.setScissor(rect.left, h - scissorBottomEdge, rect.width, Math.max(0, scissorBottomEdge - scissorTop));
+      renderer.setScissor(
+        scissorLeft,
+        h - scissorBottomEdge,
+        Math.max(0, scissorRight - scissorLeft),
+        Math.max(0, scissorBottomEdge - scissorTop),
+      );
       renderer.render(view.scene, view.camera);
     }
   }

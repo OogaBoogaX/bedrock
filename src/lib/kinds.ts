@@ -24,15 +24,15 @@ export interface CustomModel {
 }
 export const MODELS: Record<string, CustomModel> = {
   "w-s-bitcoin": { url: "/models/w-s-bitcoin.glb", label: "grumpy apple, hand-modeled" },
-  MrHodlX: { url: "/models/mrhodlx.glb", label: "hooded gas mask, hand-modeled" },
+  MrHodlX: { url: "/models/mrhodlx.glb", label: "hooded gas mask surrounded by animated smoke, hand-modeled" },
   timechainb: { url: "/models/timechainb.glb", label: "winged guardian, hand-modeled" },
   ottorockx: { url: "/models/ottorockx.glb", label: "Otto Rocket, thumbs up, hand-modeled" },
   dplusplus1024: { url: "/models/dplusplus1024.glb", label: "full body, hand-modeled" },
   "2140data": { url: "/models/2140data.glb", label: "bust with red eyes, hand-modeled" },
   "itme-brain": { url: "/models/itme-brain.glb", label: "full body, shades on, hand-modeled" },
   portlandhodl: { url: "/models/portlandhodl.glb", label: "hand-modeled" },
-  Rob1Ham: { url: "/models/rob1ham.glb", label: "full body, hand-modeled" },
-  "rules-without-rulers": { url: "/models/rules-without-rulers.glb", label: "chained bust, hand-modeled" },
+  Rob1Ham: { url: "/models/rob1ham.glb", label: "rain-soaked, standing in a reflective puddle" },
+  "rules-without-rulers": { url: "/models/rules-without-rulers.glb", label: "high-contrast chained bust, hand-modeled" },
   SaniExp: { url: "/models/saniexp.glb", label: "astronaut, hand-modeled" },
 };
 

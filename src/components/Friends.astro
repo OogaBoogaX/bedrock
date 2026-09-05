@@ -1,5 +1,5 @@
 ---
-import { friends, avatarUrl } from "@/lib/tribe";
+import { friends, avatarUrl, memberPath } from "@/lib/tribe";
 ---
 
 {
@@ -7,7 +7,7 @@ import { friends, avatarUrl } from "@/lib/tribe";
     <div class="friends">
       <div class="container">
         <p class="friends__label">
-          friends of the tribe: {friends.length} more cavemen contributed to a cave without joining the org (yet)
+          contributors: {friends.length} cavemen have contributed to a cave without joining the org (yet)
         </p>
       </div>
       <div class="marquee friends__marquee" style="--marquee-speed: 60s; --marquee-gap: 0.9rem">
@@ -15,7 +15,12 @@ import { friends, avatarUrl } from "@/lib/tribe";
           {[0, 1].map((copy) =>
             <div class="marquee__group" aria-hidden={copy === 1 || undefined}>
               {friends.map((f) => (
-                <a class="friend" href={f.url} rel="noopener" tabindex={copy === 1 ? -1 : undefined}>
+                <a
+                  class="friend"
+                  href={memberPath(f)}
+                  data-status-text={`Opening ${f.login}.exe`}
+                  tabindex={copy === 1 ? -1 : undefined}
+                >
                   <img src={avatarUrl(f, 64)} alt="" width="32" height="32" loading="lazy" decoding="async" />
                   <span>{f.login}</span>
                   <span class="friend__score">◆ {f.score}</span>
