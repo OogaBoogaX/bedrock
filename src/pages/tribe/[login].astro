@@ -65,7 +65,7 @@ const description = `${name} (@${member.login}) is ${isOrgMember ? "an org membe
         <div class="tabs" role="tablist" aria-label="Sections">
           <button class="tab is-on" role="tab" type="button" aria-selected="true" aria-controls="tab-general" id="tabbtn-general" data-tab="general">General</button>
           <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-socials" id="tabbtn-socials" data-tab="socials" tabindex="-1">Socials</button>
-          <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-impact" id="tabbtn-impact" data-tab="impact" tabindex="-1">Impact</button>
+          <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tab-impact" id="tabbtn-impact" data-tab="impact" tabindex="-1">GH Impact</button>
         </div>
 
         <div class="tabpanel" role="tabpanel" id="tab-general" aria-labelledby="tabbtn-general" data-panel="general">
@@ -151,12 +151,12 @@ const description = `${name} (@${member.login}) is ${isOrgMember ? "an org membe
 
         <div class="tabpanel" role="tabpanel" id="tab-impact" aria-labelledby="tabbtn-impact" data-panel="impact" hidden>
           <div class="impact">
-            <p class="impact__big"><span class="mono">◆ {member.score.toLocaleString("en-US")}</span> impact score</p>
+            <p class="impact__big"><span class="mono">◆ {member.score.toLocaleString("en-US")}</span> GitHub impact score</p>
             <p class="muted">Verified GitHub work across every public cave in the org.</p>
-            <div class="progress progress--banana" title={`${share}% of all tribe impact`}>
+            <div class="progress progress--banana" title={`${share}% of all tribe GitHub impact`}>
               <div class="progress__bar" style={`--value:${Math.max(share, member.score ? 2 : 0)}%`}></div>
             </div>
-            <p class="muted">{share}% of the tribe's {totalScore.toLocaleString("en-US")} total impact.</p>
+            <p class="muted">{share}% of the tribe's {totalScore.toLocaleString("en-US")} total GitHub impact.</p>
             <dl class="impact__breakdown">
               <div><dt>default-branch commits</dt><dd>{member.contributions.commits} × {scoring.weights.commit}</dd></div>
               <div><dt>merged pull requests</dt><dd>{member.contributions.mergedPulls} × {scoring.weights.mergedPull}</dd></div>

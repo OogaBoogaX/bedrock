@@ -10,7 +10,12 @@ import { friends, avatarUrl, memberPath } from "@/lib/tribe";
           contributors: {friends.length} cavemen have contributed to a cave without joining the org (yet)
         </p>
       </div>
-      <div class="marquee friends__marquee" style="--marquee-speed: 60s; --marquee-gap: 0.9rem">
+      <div
+        class="marquee friends__marquee"
+        style="--marquee-speed: 60s; --marquee-gap: 0.9rem"
+        data-draggable-marquee
+        data-pause-on-hover
+      >
         <div class="marquee__track">
           {[0, 1].map((copy) =>
             <div class="marquee__group" aria-hidden={copy === 1 || undefined}>
@@ -26,6 +31,11 @@ import { friends, avatarUrl, memberPath } from "@/lib/tribe";
                   <span class="friend__score">◆ {f.score}</span>
                 </a>
               ))}
+              <span class="friend friend--you">
+                <span class="friend__avatar" aria-hidden="true"></span>
+                <span>you!</span>
+                <span class="friend__score">◆ 0</span>
+              </span>
             </div>
           )}
         </div>
@@ -70,11 +80,22 @@ import { friends, avatarUrl, memberPath } from "@/lib/tribe";
   .friend:hover {
     transform: translateY(-2px);
   }
-  .friend img {
+  .friend--you {
+    cursor: default;
+  }
+  .friend--you:hover {
+    transform: none;
+  }
+  .friend img,
+  .friend__avatar {
+    display: inline-block;
     width: 32px;
     height: 32px;
     box-shadow: var(--field-in);
     image-rendering: pixelated;
+  }
+  .friend__avatar {
+    background: var(--face-light);
   }
   .friend__score {
     font-family: var(--mono);

@@ -320,7 +320,6 @@ export function initStarfield(): () => void {
   };
 
   const onPageHide = () => persistSkyPosition();
-
   resize();
   addEventListener("resize", resize);
   addEventListener("pointerdown", onPointerDown);

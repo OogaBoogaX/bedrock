@@ -14,7 +14,7 @@ const max = Math.max(1, ...members.map((member) => member.score));
       <h2 class="section__title">the tribe</h2>
       <p class="section__lede">
         one org, {cavemen.length} cavemen ({members.length} members + {contributors.length} contributors), ideas are welcome. the work gets reviewed.{" "}
-        click a caveman to open their file. roster and impact scores refresh from public GitHub activity every 15 minutes.
+        click a caveman to open their file. roster and GitHub impact scores refresh from public GitHub activity every 15 minutes.
       </p>
     </div>
 
@@ -43,10 +43,10 @@ const max = Math.max(1, ...members.map((member) => member.score));
                   <strong class="card__name">{displayName(m)}</strong>
                   <span class="card__login">@{m.login} · org member</span>
                   <span class="card__rank">{rank.name}</span>
-                  <div class="progress progress--banana card__bar" title={`Impact score: ${m.score}`}>
+                  <div class="progress progress--banana card__bar" title={`GitHub impact score: ${m.score}`}>
                     <div class="progress__bar" style={`--value:${Math.max(4, Math.round((m.score / max) * 100))}%`} />
                   </div>
-                  <span class="card__score">◆ {m.score.toLocaleString("en-US")} impact</span>
+                  <span class="card__score">◆ {m.score.toLocaleString("en-US")} GH impact</span>
                 </div>
               </Window>
             </a>

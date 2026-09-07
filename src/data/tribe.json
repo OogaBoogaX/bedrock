@@ -2,7 +2,7 @@
   "syncedAt": "2026-09-05T11:28:06.064Z",
   "source": "GitHub org members + saved roster",
   "scoring": {
-    "name": "impact score",
+    "name": "GitHub impact score",
     "source": "GitHub",
     "cadenceMinutes": 15,
     "weights": {

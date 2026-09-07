@@ -229,7 +229,7 @@ const data = {
   syncedAt: new Date().toISOString(),
   source,
   scoring: {
-    name: "impact score",
+    name: "GitHub impact score",
     source: "GitHub",
     cadenceMinutes: 15,
     weights: SCORE_WEIGHTS,

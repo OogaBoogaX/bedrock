@@ -13,6 +13,7 @@ const { items, speed = "38s", class: className = "" } = Astro.props;
   role="marquee"
   aria-label={items.join(". ")}
   data-draggable-marquee
+  data-pause-on-hover
 >
   <div class="marquee__track">
     {[0, 1].map((copy) => (
@@ -65,18 +66,25 @@ const { items, speed = "38s", class: className = "" } = Astro.props;
     let startX = 0;
     let startTime = 0;
     let animation: Animation | null = null;
+    let dragged = false;
+    let suppressClick = false;
 
     const marqueeAnimation = () =>
       track.getAnimations().find((candidate) => candidate instanceof CSSAnimation && candidate.animationName === "marquee") ?? null;
 
     const endDrag = (event: PointerEvent) => {
       if (event.pointerId !== pointerId) return;
+      if (dragged) {
+        suppressClick = true;
+        setTimeout(() => (suppressClick = false), 0);
+      }
       pointerId = -1;
       marquee.classList.remove("is-dragging");
-      animation?.play();
       animation = null;
+      dragged = false;
     };
 
+    marquee.addEventListener("dragstart", (event) => event.preventDefault());
     marquee.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || pointerId !== -1) return;
       animation = marqueeAnimation();
@@ -84,15 +92,16 @@ const { items, speed = "38s", class: className = "" } = Astro.props;
       pointerId = event.pointerId;
       startX = event.clientX;
       startTime = Number(animation.currentTime ?? 0);
-      animation.pause();
+      dragged = false;
       marquee.classList.add("is-dragging");
       marquee.setPointerCapture(event.pointerId);
       event.stopPropagation();
-      event.preventDefault();
     });
 
     marquee.addEventListener("pointermove", (event) => {
       if (event.pointerId !== pointerId || !animation) return;
+      if (!dragged && Math.abs(event.clientX - startX) < 5) return;
+      dragged = true;
       const duration = Number(animation.effect?.getComputedTiming().duration ?? 0);
       const distance = group.getBoundingClientRect().width;
       if (duration <= 0 || distance <= 0) return;
@@ -104,5 +113,16 @@ const { items, speed = "38s", class: className = "" } = Astro.props;
     marquee.addEventListener("pointerup", endDrag);
     marquee.addEventListener("pointercancel", endDrag);
     marquee.addEventListener("lostpointercapture", endDrag);
+    marquee.addEventListener(
+      "click",
+      (event) => {
+        if (!suppressClick) return;
+        event.preventDefault();
+        event.stopPropagation();
+        suppressClick = false;
+      },
+      true,
+    );
   });
+
 </script>

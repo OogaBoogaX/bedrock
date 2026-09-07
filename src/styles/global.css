@@ -418,7 +418,17 @@ p {
   padding-right: var(--marquee-gap, 3rem);
   flex: none;
 }
-.marquee:not([data-draggable-marquee]):hover .marquee__track {
+.marquee[data-draggable-marquee] {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.marquee[data-draggable-marquee].is-dragging {
+  cursor: grabbing;
+}
+.marquee[data-pause-on-hover]:hover .marquee__track,
+.marquee.is-dragging .marquee__track {
   animation-play-state: paused;
 }
 @keyframes marquee {
