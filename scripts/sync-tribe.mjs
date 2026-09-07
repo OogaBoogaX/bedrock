@@ -54,6 +54,8 @@ async function gh(path, { optional = false } = {}) {
     if (optional) return null;
     throw new Error(`GET ${path} → ${res.status} ${await res.text()}`);
   }
+  // GitHub returns 204 No Content for collection endpoints on empty repos.
+  if (res.status === 204) return [];
   return res.json();
 }
 
